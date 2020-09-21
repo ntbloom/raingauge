@@ -3,6 +3,7 @@
 
 int _write_pin_num_to_file(int pin, const char* fdesc);
 int _write_string_to_file(const char* msg, const char* fdesc);
+char* _read_contents(const char* filename);
 
 int create_pin(int pin);
 int remove_pin(int pin);

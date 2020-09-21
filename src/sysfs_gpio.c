@@ -67,9 +67,33 @@ int set_direction(int pin, const char* dir) {
   return EXIT_SUCCESS;
 }
 
+char* _read_contents(const char* fdesc) {
+  /* read contents of file */
+  FILE* handler = fopen(fdesc, "r");
+  if (!handler) {
+    perror("error on fopen");
+  }
+  char* contents = malloc(255);
+  fgets(contents, sizeof(contents), handler);
+  fclose(handler);
+  return contents;
+}
+
 const char* get_direction(int pin) {
   /* get the direction of a pin */
-  return "";
+  char* path = _get_full_gpio_name(pin);
+  char* value = _read_contents(path);
+  free(path);
+  if (value == "in") {
+    free(value);
+    return "in";
+  } else if (value == "out") {
+    free(value);
+    return "out";
+  } else {
+    free(value);
+    return "";
+  };
 }
 
 int set_value(int pin) {
