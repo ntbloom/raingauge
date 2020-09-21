@@ -12,14 +12,13 @@ const char* FDESC = "/sys/class/gpio/gpio18/";
 
 void setUp(void) {
   /* create a pin where it previously did not exist */
-  TEST_ASSERT_EQUAL_INT_MESSAGE(0, create_pin(PIN), "problem in create_pin()");
-  TEST_ASSERT_EQUAL_INT_MESSAGE(0, access(FDESC, F_OK), "gpio18 not created");
+  TEST_ASSERT_EQUAL_INT(0, create_pin(PIN));
+  TEST_ASSERT_EQUAL_INT(0, access(FDESC, F_OK));
 }
 void tearDown(void) {
   /* unexport pin at the end of the tests */
-  TEST_ASSERT_EQUAL_INT_MESSAGE(0, remove_pin(PIN), "problem in remove_pin()");
-  TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(FDESC, F_OK),
-                                "gpio18 was not unexported");
+  TEST_ASSERT_EQUAL_INT(0, remove_pin(PIN));
+  TEST_ASSERT_EQUAL_INT(-1, access(FDESC, F_OK));
 }
 
 void test_giving_direction(void) {
@@ -30,16 +29,12 @@ void test_giving_direction(void) {
   create_pin(pin);
 
   // set it to out
-  TEST_ASSERT_EQUAL_INT_MESSAGE(0, set_direction(pin, "out"),
-                                "problem with direction('out')");
-  TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("out", get_direction(pin), 4,
-                                       "gpio18 is not set to `out`");
+  TEST_ASSERT_EQUAL_INT(0, set_direction(pin, "out"));
+  TEST_ASSERT_EQUAL_CHAR_ARRAY("out", get_direction(pin), 4);
 
   // set it to in
-  TEST_ASSERT_EQUAL_INT_MESSAGE(0, set_direction(pin, "in"),
-                                "problem with direction('in')");
-  TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("in", get_direction(pin), 3,
-                                       "gpio18 is not set to `in`");
+  TEST_ASSERT_EQUAL_INT(0, set_direction(pin, "in"));
+  TEST_ASSERT_EQUAL_CHAR_ARRAY("in", get_direction(pin), 3);
 }
 
 int main(void) {
