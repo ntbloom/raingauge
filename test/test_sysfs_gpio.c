@@ -7,31 +7,45 @@
 #include "../src/sysfs_gpio.h"
 #include "vendor/unity.h"
 
-void setUp(void) {}
-void tearDown(void) {}
+int PIN = 18;
+const char* FDESC = "/sys/class/gpio/gpio18/";
 
-void test_export_unexport_pin(void) {
-  /* can we turn on and turn off a pin */
+void setUp(void) {
+  /* create a pin where it previously did not exist */
+  TEST_ASSERT_EQUAL_INT_MESSAGE(0, create_pin(PIN), "problem in create_pin()");
+  TEST_ASSERT_EQUAL_INT_MESSAGE(0, access(FDESC, F_OK), "gpio18 not created");
+}
+void tearDown(void) {
+  /* unexport pin at the end of the tests */
+  TEST_ASSERT_EQUAL_INT_MESSAGE(0, remove_pin(PIN), "problem in remove_pin()");
+  TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(FDESC, F_OK),
+                                "gpio18 was not unexported");
+}
+
+void test_giving_direction(void) {
+  /* a pin gets set to in and out*/
+
   // given a pin
   int pin = 18;
-  const char* fdescr = "/sys/class/gpio/gpio18/";
-  TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(fdescr, F_OK),
-                                "gpio18 already exists");
+  create_pin(pin);
 
-  // turn it on
-  TEST_ASSERT_EQUAL_INT_MESSAGE(0, create_pin(pin), "problem in create_pin()");
-  TEST_ASSERT_EQUAL_INT_MESSAGE(0, access(fdescr, F_OK), "gpio18 not created");
+  // set it to out
+  TEST_ASSERT_EQUAL_INT_MESSAGE(0, set_direction(pin, "out"),
+                                "problem with direction('out')");
+  TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("out", get_direction(pin), 4,
+                                       "gpio18 is not set to `out`");
 
-  // turn it back off again
-  TEST_ASSERT_EQUAL_INT_MESSAGE(0, remove_pin(pin), "problem in remove_pin()");
-  TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(fdescr, F_OK),
-                                "gpio18 was not unexported");
+  // set it to in
+  TEST_ASSERT_EQUAL_INT_MESSAGE(0, set_direction(pin, "in"),
+                                "problem with direction('in')");
+  TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("in", get_direction(pin), 3,
+                                       "gpio18 is not set to `in`");
 }
 
 int main(void) {
   UnityBegin("test/test_sysfs_gpio.c");
 
-  RUN_TEST(test_export_unexport_pin);
+  RUN_TEST(test_giving_direction);
 
   UnityEnd();
 

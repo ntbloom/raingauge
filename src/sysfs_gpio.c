@@ -38,12 +38,14 @@ int _write_num_to_file(int pin, const char* fdesc) {
   return EXIT_SUCCESS;
 }
 
-int direction(int pin, int direction) {
-  /* specify the direction of a pin
-    0 ->  in
-    1 ->  out
-  */
+int set_direction(int pin, const char* dir) {
+  /* specify the direction of a pin */
   return EXIT_SUCCESS;
+}
+
+const char* get_direction(int pin) {
+  /* get the direction of a pin */
+  return "";
 }
 
 int turn_on(int pin) {
