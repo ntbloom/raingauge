@@ -10,7 +10,11 @@ struct Pin {
   const char* fvalue;
 };
 
+int _write_to_file(const char* msg, const char* fdesc);
+
 int create_pin(struct Pin pin);
 int remove_pin(struct Pin pin);
+const char* get_direction(struct Pin pin);
+int set_direction(struct Pin pin, const char* dir);
 
 #endif

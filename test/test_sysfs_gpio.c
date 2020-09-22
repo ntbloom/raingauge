@@ -47,10 +47,25 @@ void test_export_unexport_pin(void) {
   TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fname, F_OK), msg3);
 }
 
+void test_pin_direction(void) {
+  /* set the direction out and in and out */
+  set_direction(GPIO18, "out");
+  const char* msg1 = "pin is set to 'in'";
+  TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("out", get_direction(GPIO18), 4, msg1);
+
+  set_direction(GPIO18, "in");
+  const char* msg2 = "pin is set to 'out'";
+  TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("in", get_direction(GPIO18), 4, msg2);
+
+  set_direction(GPIO18, "out");
+  TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("out", get_direction(GPIO18), 4, msg1);
+}
+
 int main(void) {
   UnityBegin("test/test_sysfs_gpio.c");
 
   RUN_TEST_NO_SETUP(test_export_unexport_pin);
+  // RUN_TEST(test_pin_direction);
 
   UnityEnd();
 

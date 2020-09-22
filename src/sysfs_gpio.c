@@ -15,24 +15,32 @@
 
 int create_pin(struct Pin pin) {
   /* export a pin */
-  FILE* handler = fopen(pin.fexport, "r+");
-  if (!handler) {
-    perror("error on fopen in create_pin()");
-    return EXIT_FAILURE;
-  }
-  fputs(pin.num, handler);
-  fclose(handler);
-  return EXIT_SUCCESS;
+  return _write_to_file(pin.num, pin.fexport);
 }
 
 int remove_pin(struct Pin pin) {
   /* unexport a pin */
-  FILE* handler = fopen(pin.funexport, "r+");
+  return _write_to_file(pin.num, pin.funexport);
+}
+
+const char* get_direction(struct Pin pin) {
+  /* get direction of a pin */
+  return "";
+}
+
+int set_direction(struct Pin pin, const char* dir) {
+  /* set direction of a pin */
+  return EXIT_SUCCESS;
+}
+
+int _write_to_file(const char* msg, const char* fdesc) {
+  /* write a string to a file */
+  FILE* handler = fopen(fdesc, "r+");
   if (!handler) {
-    perror("error on fopen in remove_pin()");
+    perror("error on fopen");
     return EXIT_FAILURE;
   }
-  fputs(pin.num, handler);
+  fputs(msg, handler);
   fclose(handler);
   return EXIT_SUCCESS;
 }
