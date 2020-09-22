@@ -11,6 +11,7 @@ struct Pin {
 };
 
 int _write_to_file(const char* msg, const char* fdesc);
+char* _read_file(const char* fdesc);
 
 int create_pin(struct Pin pin);
 int remove_pin(struct Pin pin);

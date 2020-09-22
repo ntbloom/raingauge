@@ -13,6 +13,20 @@
 #define RAIN_IN 18;
 #define RAIN_OUT 23;
 
+int _write_to_file(const char* msg, const char* fdesc) {
+  /* write a string to a file */
+  FILE* handler = fopen(fdesc, "r+");
+  if (!handler) {
+    char msg[255];
+    sprintf("fopen error on write: %s", fdesc);
+    perror(msg);
+    return EXIT_FAILURE;
+  }
+  fputs(msg, handler);
+  fclose(handler);
+  return EXIT_SUCCESS;
+}
+
 int create_pin(struct Pin pin) {
   /* export a pin */
   return _write_to_file(pin.num, pin.fexport);
@@ -23,24 +37,47 @@ int remove_pin(struct Pin pin) {
   return _write_to_file(pin.num, pin.funexport);
 }
 
+int set_direction(struct Pin pin, const char* direction) {
+  // set direction of a pin
+  // why is this causing a segfault?
+  return _write_to_file(direction, pin.fdirection);
+}
+
 const char* get_direction(struct Pin pin) {
-  /* get direction of a pin */
-  return "";
+  // get direction of a pin
+  return "out";
 }
 
-int set_direction(struct Pin pin, const char* dir) {
-  /* set direction of a pin */
-  return EXIT_SUCCESS;
+/*
+ * BAD CODE
+ *
+ *
+ *
+ */
+
+/*
+const char* get_direction(struct Pin pin) {
+  // get direction of a pin
+  return _read_file(pin.fdirection);
 }
 
-int _write_to_file(const char* msg, const char* fdesc) {
-  /* write a string to a file */
+
+char* _read_file(const char* fdesc) {
+  // read contents of a file
   FILE* handler = fopen(fdesc, "r+");
+  printf("fdesc=%s", fdesc);
   if (!handler) {
-    perror("error on fopen");
-    return EXIT_FAILURE;
+    char msg[255];
+    sprintf("fopen error on read: %s", fdesc);
+    perror(msg);
   }
-  fputs(msg, handler);
+  char buf[255];
+  fscanf(handler, buf);
   fclose(handler);
-  return EXIT_SUCCESS;
+  if (strcmp(buf, "in") == 0) {
+    return "in";
+  } else if (strcmp(buf, "out") == 0) {
+    return "out";
+  }
 }
+*/
