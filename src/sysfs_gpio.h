@@ -1,15 +1,16 @@
 #ifndef SYSFS_GPIO_H
 #define SYSFS_GPIO_H
 
-int _write_pin_num_to_file(int pin, const char* fdesc);
-int _write_string_to_file(const char* msg, const char* fdesc);
-char* _read_contents(const char* filename);
+struct Pin {
+  const char* num;
+  const char* fname;
+  const char* fexport;
+  const char* funexport;
+  const char* fdirection;
+  const char* fvalue;
+};
 
-int create_pin(int pin);
-int remove_pin(int pin);
-int set_direction(int pin, const char* dir);
-const char* get_direction(int pin);
-int set_value(int pin);
-int get_value(int pin);
+int create_pin(struct Pin pin);
+int remove_pin(struct Pin pin);
 
 #endif
