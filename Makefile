@@ -1,11 +1,12 @@
 FLAGS  = -std=c99
 CFLAGS += -g
-#CFLAGS += -Wall
+CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
 
 VFLAGS  = --quiet
+VFLAGS += -v
 VFLAGS += --tool=memcheck
 VFLAGS += --leak-check=full
 VFLAGS += --error-exitcode=1
