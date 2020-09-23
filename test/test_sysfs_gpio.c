@@ -45,7 +45,6 @@ void test_export_unexport_pin(void) {
   TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg3);
 }
 
-/*
 void test_pin_direction(void) {
   // set the direction out and in and out
   set_direction(GPIO18, IN);
@@ -59,13 +58,12 @@ void test_pin_direction(void) {
   set_direction(GPIO18, IN);
   TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("out", get_direction(GPIO18), 4, msg1);
 }
-*/
 
 int main(void) {
   UnityBegin("test/test_sysfs_gpio.c");
 
   RUN_TEST_NO_SETUP(test_export_unexport_pin);
-  // RUN_TEST(test_pin_direction);
+  RUN_TEST(test_pin_direction);
 
   UnityEnd();
 
