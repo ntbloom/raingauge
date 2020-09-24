@@ -26,7 +26,7 @@ void setUp(void) {
 }
 void tearDown(void) {
   // unexport pin at the end of the tests
-  // remove_pin(GPIO18);
+  remove_pin(GPIO18);
 }
 
 void test_export_unexport_pin(void) {
@@ -48,7 +48,7 @@ void test_export_unexport_pin(void) {
 
 void test_pin_direction(void) {
   // set the direction out and in and out
-  set_direction(GPIO18, IN);
+  set_direction(GPIO18, OUT);
   const char* msg1 = "pin is set to 'in'";
   TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("out", get_direction(GPIO18), 4, msg1);
 
@@ -56,21 +56,21 @@ void test_pin_direction(void) {
   const char* msg2 = "pin is set to 'out'";
   TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("in", get_direction(GPIO18), 3, msg2);
 
-  set_direction(GPIO18, IN);
+  set_direction(GPIO18, OUT);
   TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("out", get_direction(GPIO18), 4, msg1);
 }
 
-void test_nothing(void) {
-  // empty test for debugging preconditions
+void test_setup(void) {
+  // empty test for testing setup preconditions
   TEST_ASSERT_EQUAL_INT(1, 1);
 }
 
 int main(void) {
   UnityBegin("test/test_sysfs_gpio.c");
 
-  RUN_TEST(test_nothing);
-  // RUN_TEST_NO_SETUP(test_export_unexport_pin);
-  // RUN_TEST(test_pin_direction);
+  RUN_TEST(test_setup);
+  RUN_TEST_NO_SETUP(test_export_unexport_pin);
+  RUN_TEST(test_pin_direction);
 
   UnityEnd();
 

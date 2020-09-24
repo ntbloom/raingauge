@@ -12,6 +12,13 @@
 
 int _write_to_file(const char* msg, const char* fdesc) {
   /* write a string to a file */
+
+  // wait for permissions to catch up
+  while (access(fdesc, W_OK) != 0) {
+    printf("waiting for file to open: %s\n", fdesc);
+    continue;
+  }
+
   FILE* handler = fopen(fdesc, "r+");
   if (!handler) {
     char* err = malloc(255);
@@ -41,9 +48,13 @@ int _write_to_file(const char* msg, const char* fdesc) {
 
 char* _read_file(const char* fdesc) {
   /* get contents of a file */
-  while (access(fdesc, W_OK) != 0) {
+
+  // wait for permissions to catch up
+  while (access(fdesc, R_OK) != 0) {
+    printf("waiting for file to open: %s\n", fdesc);
     continue;
   }
+
   char* contents = malloc(5);
   FILE* handler = fopen(fdesc, "r");
   if (!handler) {
@@ -65,26 +76,7 @@ char* _read_file(const char* fdesc) {
 
 int create_pin(struct Pin pin) {
   /* export a pin */
-  _write_to_file(pin.num, EXPORT);
-
-  clock_t start_t, end_t;
-  start_t = clock();
-  end_t = clock();
-
-  while (access(pin.fdesc, F_OK) != 0 &&
-         ((end_t - start_t) / CLOCKS_PER_SEC <= TIMEOUT)) {
-    end_t = clock();
-  }
-  if (access(pin.fdesc, F_OK) != 0) {
-    char* err = malloc(255);
-    sprintf(err, "ERROR LINE %d:\n\terror turning on pin at %s\n", __LINE__,
-            pin.fdesc);
-    perror(err);
-    free(err);
-    return EXIT_FAILURE;
-  } else {
-    return EXIT_SUCCESS;
-  }
+  return _write_to_file(pin.num, EXPORT);
 }
 
 int remove_pin(struct Pin pin) {
@@ -103,10 +95,10 @@ int set_direction(struct Pin pin, const char* direction) {
 const char* get_direction(struct Pin pin) {
   //  get the direction of a pin
   char* direction = _read_file(pin.direction);
-  if (strcmp(direction, IN) == 0) {
+  if (strncmp(direction, IN, 2) == 0) {
     free(direction);
     return IN;
-  } else if (strcmp(direction, OUT) == 0) {
+  } else if (strncmp(direction, OUT, 3) == 0) {
     free(direction);
     return OUT;
   }
