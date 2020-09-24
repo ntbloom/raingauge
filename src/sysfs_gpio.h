@@ -8,6 +8,7 @@
 #define UNEXPORT "/sys/class/gpio/unexport"
 #define HIGH "1"
 #define LOW "0"
+#define TIMEOUT 5
 
 struct Pin {
   const char* num;
