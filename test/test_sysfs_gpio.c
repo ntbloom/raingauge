@@ -94,11 +94,36 @@ void test_catch_illegal_functions_on_unexported_pins(void) {
     TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg1);
 
     // try to set the direction
-    const char* msg2 = "error was not thown";
-    TEST_ASSERT_EQUAL_INT_MESSAGE(-1, set_direction(GPIO18, IN), msg2);
+    const char* msg2 = "error was not thown on setting direction";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(1, set_direction(GPIO18, IN), msg2);
+
+    // try to set the value
+    const char* msg3 = "error was not thrown on setting value";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(1, set_value(GPIO18, HIGH), msg3);
+    TEST_ASSERT_EQUAL_INT_MESSAGE(1, set_value(GPIO18, LOW), msg3);
 
     // put it back
     export_pin(GPIO18);
+}
+
+void test_setting_value_on_pin_set_to_in(void) {
+    /* make sure you can't toggle a pin on or off when it is set to IN */
+
+    // start with an in pin
+    set_direction(GPIO18, IN);
+
+    // try to set the value to high and low
+    const char* msg1 = "IN pin was illegally set to HIGH";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(1, set_value(GPIO18, HIGH), msg1);
+    const char* msg2 = "IN pin was illegally set to HIGH";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(1, set_value(GPIO18, LOW), msg2);
+
+    // set pin back to OUT and make sure it works again
+    set_direction(GPIO18, OUT);
+    const char* msg3 = "OUT pin was prevented from seting to HIGH";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, set_value(GPIO18, HIGH), msg3);
+    const char* msg4 = "OUT pin was prevented from setting to LOW";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, set_value(GPIO18, LOW), msg4);
 }
 
 int main(void) {
@@ -109,7 +134,7 @@ int main(void) {
     RUN_TEST(test_pin_direction);
     RUN_TEST(test_pin_value);
     RUN_TEST(test_catch_illegal_functions_on_unexported_pins);
-
+    RUN_TEST(test_setting_value_on_pin_set_to_in);
     UnityEnd();
 
     return EXIT_SUCCESS;

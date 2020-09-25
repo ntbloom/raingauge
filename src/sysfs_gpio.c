@@ -10,12 +10,24 @@
 #include <time.h>
 #include <unistd.h>
 
+int file_exists(const char *fdesc, int mode, int timeout) {
+    /* checks that file <fdesc> is accessible in <mode> mode, with timeout in seconds */
+    long i = timeout;
+    time_t start = time(0);
+
+    while (time(0) - start <= i) {
+        if (access(fdesc, mode) == 0) {
+            return 0;
+        }
+    }
+    return -1;
+}
+
 int _write_to_file(const char *msg, const char *fdesc) {
     /* write a string to a file */
-
-    // wait for permissions to catch up
-    while (access(fdesc, W_OK) != 0) {
-        continue;
+    if (file_exists(fdesc, W_OK, TIMEOUT) != 0) {
+        fprintf(stderr, "unable to access %s\n", fdesc);
+        return EXIT_FAILURE;
     }
 
     FILE *handler = fopen(fdesc, "r+");
@@ -47,10 +59,9 @@ int _write_to_file(const char *msg, const char *fdesc) {
 char *_read_file(const char *fdesc) {
     /* get contents of a file */
 
-    // wait for permissions to catch up
-    while (access(fdesc, R_OK) != 0) {
-        printf("waiting for file to open: %s\n", fdesc);
-        continue;
+    if (file_exists(fdesc, W_OK, TIMEOUT) != 0) {
+        fprintf(stderr, "unable to access %s\n", fdesc);
+        return "";
     }
 
     char *contents = malloc(5);
@@ -67,7 +78,6 @@ char *_read_file(const char *fdesc) {
         sprintf(err, "ERROR LINE %d:\n\tfgets error on %s\n", __LINE__, fdesc);
         perror(err);
         free(err);
-        sprintf(contents, "");
     }
     return contents;
 }
@@ -84,9 +94,6 @@ int unexport_pin(struct Pin pin) {
 
 int set_direction(struct Pin pin, const char *direction) {
     /* set the direction of the pin */
-    while (access(pin.direction, W_OK) != 0) {
-        continue;
-    }
     return _write_to_file(direction, pin.direction);
 }
 
@@ -106,9 +113,6 @@ const char *get_direction(struct Pin pin) {
 
 int set_value(struct Pin pin, const char *value) {
     /* set the value of a pin to high or low */
-    while (access(pin.value, W_OK) != 0) {
-        continue;
-    }
     return _write_to_file(value, pin.value);
 }
 

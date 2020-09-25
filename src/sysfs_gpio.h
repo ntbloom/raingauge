@@ -8,7 +8,7 @@
 #define UNEXPORT "/sys/class/gpio/unexport"
 #define HIGH "1"
 #define LOW "0"
-#define TIMEOUT 5
+#define TIMEOUT 1
 
 struct Pin {
     const char* num;
@@ -26,5 +26,6 @@ const char* get_direction(struct Pin);
 int set_direction(struct Pin, const char*);
 int set_value(struct Pin, const char*);
 const char* get_value(struct Pin);
+int file_exists(const char*, int, int);
 
 #endif
