@@ -72,12 +72,12 @@ char *_read_file(const char *fdesc) {
     return contents;
 }
 
-int create_pin(struct Pin pin) {
+int export_pin(struct Pin pin) {
     /* export a pin */
     return _write_to_file(pin.num, EXPORT);
 }
 
-int remove_pin(struct Pin pin) {
+int unexport_pin(struct Pin pin) {
     /* unexport a pin */
     return _write_to_file(pin.num, UNEXPORT);
 }

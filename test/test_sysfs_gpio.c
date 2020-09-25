@@ -22,12 +22,12 @@ struct Pin const GPIO18 = {.num = "18",
 
 void setUp(void) {
     // export a pin where it previously did not exist
-    create_pin(GPIO18);
+    export_pin(GPIO18);
     set_direction(GPIO18, OUT);
 }
 void tearDown(void) {
     // unexport pin at the end of the tests
-    remove_pin(GPIO18);
+    unexport_pin(GPIO18);
 }
 
 void test_setup(void) {
@@ -41,12 +41,12 @@ void test_export_unexport_pin(void) {
     TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg1);
 
     // turn it on
-    create_pin(GPIO18);
+    export_pin(GPIO18);
     const char* msg2 = "pin not created";
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, access(GPIO18.fdesc, F_OK), msg2);
 
     // turn it back off again
-    remove_pin(GPIO18);
+    unexport_pin(GPIO18);
     const char* msg3 = "pin was not unexported";
     TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg3);
 }
@@ -84,6 +84,23 @@ void test_pin_value(void) {
     TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE(LOW, get_value(GPIO18), strlen(LOW), msg1);
 }
 
+void test_catch_illegal_functions_on_unexported_pins(void) {
+    /* make sure setting direction or value on unexported pin returns -1 */
+
+    // unexport a pin
+
+    unexport_pin(GPIO18);
+    const char* msg1 = "pin was not unexported";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg1);
+
+    // try to set the direction
+    const char* msg2 = "error was not thown";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(-1, set_direction(GPIO18, IN), msg2);
+
+    // put it back
+    export_pin(GPIO18);
+}
+
 int main(void) {
     UnityBegin("test/test_sysfs_gpio.c");
 
@@ -91,6 +108,7 @@ int main(void) {
     RUN_TEST_NO_SETUP(test_export_unexport_pin);
     RUN_TEST(test_pin_direction);
     RUN_TEST(test_pin_value);
+    RUN_TEST(test_catch_illegal_functions_on_unexported_pins);
 
     UnityEnd();
 
