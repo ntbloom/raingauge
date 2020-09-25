@@ -10,6 +10,8 @@ VFLAGS += -v
 VFLAGS += --tool=memcheck
 VFLAGS += --leak-check=full
 VFLAGS += --error-exitcode=1
+VFLAGS += --show-reachable=yes
+
 
 test: tests.out
 		@./tests.out
