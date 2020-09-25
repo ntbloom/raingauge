@@ -17,12 +17,12 @@ struct Pin {
   const char* value;
 };
 
-int _write_to_file(const char* msg, const char* fdesc);
-char* _read_file(const char* fdesc);
+int _write_to_file(const char*, const char*);
+char* _read_file(const char*);
 
-int create_pin(struct Pin pin);
-int remove_pin(struct Pin pin);
-const char* get_direction(struct Pin pin);
-int set_direction(struct Pin pin, const char* direction);
+int create_pin(struct Pin);
+int remove_pin(struct Pin);
+const char* get_direction(struct Pin);
+int set_direction(struct Pin, const char*);
 
 #endif

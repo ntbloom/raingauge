@@ -95,10 +95,10 @@ int set_direction(struct Pin pin, const char* direction) {
 const char* get_direction(struct Pin pin) {
   //  get the direction of a pin
   char* direction = _read_file(pin.direction);
-  if (strncmp(direction, IN, 2) == 0) {
+  if (strncmp(direction, IN, strlen(IN)) == 0) {
     free(direction);
     return IN;
-  } else if (strncmp(direction, OUT, 3) == 0) {
+  } else if (strncmp(direction, OUT, strlen(OUT)) == 0) {
     free(direction);
     return OUT;
   }
