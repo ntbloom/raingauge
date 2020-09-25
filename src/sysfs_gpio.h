@@ -24,5 +24,7 @@ int create_pin(struct Pin);
 int remove_pin(struct Pin);
 const char* get_direction(struct Pin);
 int set_direction(struct Pin, const char*);
+int set_value(struct Pin, const char*);
+const char* get_value(struct Pin);
 
 #endif
