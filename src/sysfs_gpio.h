@@ -11,10 +11,10 @@
 #define TIMEOUT 5
 
 struct Pin {
-  const char* num;
-  const char* fdesc;
-  const char* direction;
-  const char* value;
+    const char* num;
+    const char* fdesc;
+    const char* direction;
+    const char* value;
 };
 
 int _write_to_file(const char*, const char*);

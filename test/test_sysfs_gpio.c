@@ -30,10 +30,13 @@ void tearDown(void) {
     remove_pin(GPIO18);
 }
 
+void test_setup(void) {
+    /* empty test for testing setup preconditions */
+    TEST_ASSERT_EQUAL_INT(1, 1);
+}
 void test_export_unexport_pin(void) {
     /* can we turn on and turn off a pin */
 
-    // start first test from preconditions
     const char* msg1 = "pin already exists";
     TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg1);
 
@@ -50,27 +53,35 @@ void test_export_unexport_pin(void) {
 
 void test_pin_direction(void) {
     /* check setting the direction out and in and out */
+
+    // start first test from preconditions, set to out
     const char* msg1 = "pin is set to 'in'";
     TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE(OUT, get_direction(GPIO18), strlen(OUT), msg1);
 
+    // set it in
     set_direction(GPIO18, IN);
     const char* msg2 = "pin is set to 'out'";
     TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE(IN, get_direction(GPIO18), strlen(IN), msg2);
 
+    // set it out again
     set_direction(GPIO18, OUT);
     TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE(OUT, get_direction(GPIO18), strlen(OUT), msg1);
 }
 
 void test_pin_value(void) {
     /* on a pin set to out, can we turn it to low and high */
-    const char* msg1 = "pin is set to '0'";
-    set_value(GPIO18, HIGH);
-    TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE("1", get_value(GPIO18), strlen(HIGH), msg1);
-}
 
-void test_setup(void) {
-    // empty test for testing setup preconditions
-    TEST_ASSERT_EQUAL_INT(1, 1);
+    // should be low to start
+    const char* msg1 = "pin is set to '0'";
+    TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE(LOW, get_value(GPIO18), strlen(LOW), msg1);
+
+    // turn pin to "1"
+    set_value(GPIO18, HIGH);
+    TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE(HIGH, get_value(GPIO18), strlen(HIGH), msg1);
+
+    // turn it off again
+    set_value(GPIO18, LOW);
+    TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE(LOW, get_value(GPIO18), strlen(LOW), msg1);
 }
 
 int main(void) {
@@ -79,6 +90,7 @@ int main(void) {
     RUN_TEST(test_setup);
     RUN_TEST_NO_SETUP(test_export_unexport_pin);
     RUN_TEST(test_pin_direction);
+    RUN_TEST(test_pin_value);
 
     UnityEnd();
 

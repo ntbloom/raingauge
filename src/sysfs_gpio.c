@@ -111,3 +111,17 @@ int set_value(struct Pin pin, const char *value) {
     }
     return _write_to_file(value, pin.value);
 }
+
+const char *get_value(struct Pin pin) {
+    /* value of the pin */
+    char *value = _read_file(pin.value);
+    if (strncmp(value, HIGH, strlen(HIGH)) == 0) {
+        free(value);
+        return HIGH;
+    } else if (strncmp(value, LOW, strlen(LOW)) == 0) {
+        free(value);
+        return LOW;
+    }
+    free(value);
+    return "";
+}
