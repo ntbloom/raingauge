@@ -15,10 +15,10 @@
     }                               \
     UnityConcludeTest();
 
-struct Pin const GPIO18 = {.num = "18",
-                           .fdesc = "/sys/class/gpio/gpio18",
-                           .direction = "/sys/class/gpio/gpio18/direction",
-                           .value = "/sys/class/gpio/gpio18/value"};
+Pin const GPIO18 = {.num = "18",
+                    .fdesc = "/sys/class/gpio/gpio18",
+                    .fdirection = "/sys/class/gpio/gpio18/direction",
+                    .fvalue = "/sys/class/gpio/gpio18/value"};
 
 void setUp(void) {
     // export a pin where it previously did not exist

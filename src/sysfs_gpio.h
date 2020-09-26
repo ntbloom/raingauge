@@ -10,22 +10,25 @@
 #define LOW "0"
 #define TIMEOUT 1
 
+typedef struct Pin Pin;
 struct Pin {
-    const char* num;
-    const char* fdesc;
-    const char* direction;
-    const char* value;
+    /* Representing a gpio pin */
+    const char* num;         // pin number on raspberry pi 3
+    const char* fdesc;       // sysfs file for the pin, ie: /sys/class/gpio/gpio18
+    const char* fdirection;  // sysfs file for direction, ie : .../gpio18/direction
+    const char* fvalue;      // sysfs file for value, ie: .../gpio18/value
 };
+
+int export_pin(Pin);
+int unexport_pin(Pin);
 
 int _write_to_file(const char*, const char*);
 char* _read_file(const char*);
 
-int export_pin(struct Pin);
-int unexport_pin(struct Pin);
-const char* get_direction(struct Pin);
+const char* get_direction(Pin);
 int set_direction(struct Pin, const char*);
-int set_value(struct Pin, const char*);
-const char* get_value(struct Pin);
+int set_value(Pin, const char*);
+const char* get_value(Pin);
 int file_exists(const char*, int, int);
 
 #endif

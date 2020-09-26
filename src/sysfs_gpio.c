@@ -82,24 +82,24 @@ char *_read_file(const char *fdesc) {
     return contents;
 }
 
-int export_pin(struct Pin pin) {
+int export_pin(Pin pin) {
     /* export a pin */
     return _write_to_file(pin.num, EXPORT);
 }
 
-int unexport_pin(struct Pin pin) {
+int unexport_pin(Pin pin) {
     /* unexport a pin */
     return _write_to_file(pin.num, UNEXPORT);
 }
 
-int set_direction(struct Pin pin, const char *direction) {
+int set_direction(Pin pin, const char *direction) {
     /* set the direction of the pin */
-    return _write_to_file(direction, pin.direction);
+    return _write_to_file(direction, pin.fdirection);
 }
 
-const char *get_direction(struct Pin pin) {
+const char *get_direction(Pin pin) {
     /*  get the direction of a pin */
-    char *direction = _read_file(pin.direction);
+    char *direction = _read_file(pin.fdirection);
     if (strncmp(direction, IN, strlen(IN)) == 0) {
         free(direction);
         return IN;
@@ -111,14 +111,14 @@ const char *get_direction(struct Pin pin) {
     return "";
 }
 
-int set_value(struct Pin pin, const char *value) {
+int set_value(Pin pin, const char *value) {
     /* set the value of a pin to high or low */
-    return _write_to_file(value, pin.value);
+    return _write_to_file(value, pin.fvalue);
 }
 
-const char *get_value(struct Pin pin) {
+const char *get_value(Pin pin) {
     /* value of the pin */
-    char *value = _read_file(pin.value);
+    char *value = _read_file(pin.fvalue);
     if (strncmp(value, HIGH, strlen(HIGH)) == 0) {
         free(value);
         return HIGH;
