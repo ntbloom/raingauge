@@ -23,7 +23,7 @@ int file_exists(const char *fdesc, int mode, int timeout) {
     return -1;
 }
 
-int _write_to_file(const char *msg, const char *fdesc) {
+int write_to_file(const char *msg, const char *fdesc) {
     /* write a string to a file */
     if (file_exists(fdesc, W_OK, TIMEOUT) != 0) {
         fprintf(stderr, "unable to access %s\n", fdesc);
@@ -56,7 +56,7 @@ int _write_to_file(const char *msg, const char *fdesc) {
     return EXIT_SUCCESS;
 }
 
-char *_read_file(const char *fdesc) {
+char *read_file(const char *fdesc) {
     /* get contents of a file */
 
     if (file_exists(fdesc, W_OK, TIMEOUT) != 0) {
@@ -84,22 +84,22 @@ char *_read_file(const char *fdesc) {
 
 int export_pin(Pin pin) {
     /* export a pin */
-    return _write_to_file(pin.num, EXPORT);
+    return write_to_file(pin.num, EXPORT);
 }
 
 int unexport_pin(Pin pin) {
     /* unexport a pin */
-    return _write_to_file(pin.num, UNEXPORT);
+    return write_to_file(pin.num, UNEXPORT);
 }
 
 int set_direction(Pin pin, const char *direction) {
     /* set the direction of the pin */
-    return _write_to_file(direction, pin.fdirection);
+    return write_to_file(direction, pin.fdirection);
 }
 
 const char *get_direction(Pin pin) {
     /*  get the direction of a pin */
-    char *direction = _read_file(pin.fdirection);
+    char *direction = read_file(pin.fdirection);
     if (strncmp(direction, IN, strlen(IN)) == 0) {
         free(direction);
         return IN;
@@ -113,12 +113,12 @@ const char *get_direction(Pin pin) {
 
 int set_value(Pin pin, const char *value) {
     /* set the value of a pin to high or low */
-    return _write_to_file(value, pin.fvalue);
+    return write_to_file(value, pin.fvalue);
 }
 
 const char *get_value(Pin pin) {
     /* value of the pin */
-    char *value = _read_file(pin.fvalue);
+    char *value = read_file(pin.fvalue);
     if (strncmp(value, HIGH, strlen(HIGH)) == 0) {
         free(value);
         return HIGH;

@@ -31,11 +31,12 @@ void tearDown(void) {
 }
 
 void test_setup(void) {
-    /* empty test for testing setup preconditions */
+    /* if this test fails, the `setUp()` function was misconfigured */
     TEST_ASSERT_EQUAL_INT(1, 1);
 }
+
 void test_export_unexport_pin(void) {
-    /* can we turn on and turn off a pin */
+    /* can we turn on and turn off a pin.  bypasses `setUp()` */
 
     const char* msg1 = "pin already exists";
     TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg1);
@@ -45,10 +46,14 @@ void test_export_unexport_pin(void) {
     const char* msg2 = "pin not created";
     TEST_ASSERT_EQUAL_INT_MESSAGE(0, access(GPIO18.fdesc, F_OK), msg2);
 
+    // verify new pin is set to OUT
+    const char* msg3 = "pin is OUT; should be automatically set to IN after export";
+    TEST_ASSERT_EQUAL_CHAR_ARRAY_MESSAGE(IN, get_direction(GPIO18), strlen(IN), msg3);
+
     // turn it back off again
     unexport_pin(GPIO18);
-    const char* msg3 = "pin was not unexported";
-    TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg3);
+    const char* msg4 = "pin was not unexported";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(-1, access(GPIO18.fdesc, F_OK), msg4);
 }
 
 void test_pin_direction(void) {
