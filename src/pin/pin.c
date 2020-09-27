@@ -7,8 +7,8 @@ Pin* construct_pin(size_t number) {
         return NULL;
     };
 
+    // create the pin
     Pin* pin = malloc(sizeof(Pin));
-    // string lengths for malloc
     size_t base_n = strlen(SYSFS) + 1;
     size_t snum_n = strlen("GPIOXX/");
     size_t fdesc_n = base_n + snum_n;
@@ -35,17 +35,23 @@ Pin* construct_pin(size_t number) {
     pin->direc_out = false;
     pin->value_on = false;
 
-    // print debugging
-    // printf("address of snum: %p\n", &snum);
-    // printf("snum=%d\nfdesc=%d\nfdirec=%d\nfvalue=%d\n", snum_n, fdesc_n, fdirec,
-    // fvalue_n);
+    // export the pin to make it available in the filesystem
+    if (write_to_file(EXPORT, pin->snum) != EXIT_SUCCESS) {
+        return NULL;
+    }
 
-    // TODO: export a pin, read its value
+    // TODO: read its value
     return pin;
 }
 
 /* deconstruct a Pin */
 int deconstruct_pin(Pin* pin_ptr) {
+    // TODO: unexport a pin;
+    if (write_to_file(UNEXPORT, pin_ptr->snum) != EXIT_SUCCESS) {
+        perror("failure to export pin");
+        return EXIT_FAILURE;
+    }
+
     free((void*)pin_ptr->snum);
     free((void*)pin_ptr->fdesc);
     free((void*)pin_ptr->fdirec);
