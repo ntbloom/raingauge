@@ -27,12 +27,12 @@ TEST_SYSFS = $(UNITY) + $(SYSFS)
 TEST_SYSFS += test/test_sysfs.c
 
 
-test: pin_test.out sysfs_test.out
+test: sysfs_test.out pin_test.out
 	@echo
 	@echo Running test suite..
 	@echo
-	@./pin_test.out 
 	@./sysfs_test.out
+	@./pin_test.out 
 
 memcheck: pin_test.out 
 	@valgrind $(VFLAGS) ./pin_test.out

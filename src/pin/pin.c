@@ -2,48 +2,45 @@
 
 /* create a new Pin */
 Pin* construct_pin(size_t number) {
-    if (number > MAX_PIN) {
-        return NULL;
-    };
-    int base = strlen(SYSFS) + 9;  // allows for 3-digit pins
-    char* snum = malloc(4);
-    sprintf(snum, "%d", number);
-
-    char* fdesc = malloc(base);
-    sprintf(fdesc, SYSFS "%d", number);
-
-    char* fdirection = malloc(sizeof(base) + 9);
-    sprintf(fdirection, SYSFS "%d/direction", number);
-
-    char* fvalue = malloc(sizeof(base) + 5);
-    sprintf(fvalue, SYSFS "%d/value", number);
-
-    // create a pin, find out its value
-    if (write_to_file(snum, EXPORT) != EXIT_SUCCESS) {
+    if (number > MAX_PIN || number <= 0) {
+        // TODO: prevent illegal pins, like gnd
         return NULL;
     };
 
-    Pin pin = {snum = snum, fdesc, fdirection, fvalue, number, 0, 0};
+    Pin* pin = malloc(sizeof(Pin));
+    // string lengths for malloc
+    size_t base_n = strlen(SYSFS + 1);
+    size_t snum_n = strlen("GPIOXX/");
+    size_t fdesc_n = base_n + snum_n;
+    size_t fdirec_n = fdesc_n + strlen("direction");
+    size_t fvalue_n = fdesc_n + strlen("value");
 
-    Pin* p = NULL;
-    return p;
+    char* snum = malloc(snum_n);
+    sprintf(snum, "GPIO%d", number);
+    pin->snum = NULL;
+
+    char* fdesc = malloc(fdesc_n);
+    sprintf(fdesc, SYSFS "gpio%d", number);
+    pin->fdesc = fdesc;
+
+    char* fdirec = malloc(fdirec_n);
+    sprintf(fdirec, SYSFS "gpio%d/direction", number);
+    pin->fdirec = fdirec;
+
+    char* fvalue = malloc(fvalue_n);
+    sprintf(fvalue, SYSFS "gpio%d/value", number);
+    pin->fvalue = fvalue;
+
+    pin->num = number;
+    pin->direc_out = false;
+    pin->value_on = 0;
+
+    return pin;
 }
 
 /* deconstruct a Pin */
-int deconstruct_pin(Pin* pin) {
-    // do some stuff
+int deconstruct_pin(Pin** pin) {
+    free(pin);
+    *pin = NULL;
     return EXIT_SUCCESS;
-}
-/*  get the direction of a pin */
-const char* get_direction(Pin pin) {
-    char* direction = read_file(pin.fdirection);
-    if (strncmp(direction, IN, strlen(IN)) == 0) {
-        free(direction);
-        return IN;
-    } else if (strncmp(direction, OUT, strlen(OUT)) == 0) {
-        free(direction);
-        return OUT;
-    }
-    free(direction);
-    return "";
 }
