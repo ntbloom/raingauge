@@ -29,6 +29,9 @@ void test_construct_pin(void) {
     size_t num = 18;
     Pin* pin = construct_pin(num);
 
+    const char* snum = "gpio18";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(snum, pin->snum, "bad snum");
+
     const char* fdesc = "/sys/class/gpio/gpio18";
     TEST_ASSERT_EQUAL_STRING_MESSAGE(fdesc, pin->fdesc, "bad fdesc");
 

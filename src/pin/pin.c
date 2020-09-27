@@ -16,8 +16,9 @@ Pin* construct_pin(size_t number) {
     size_t fvalue_n = fdesc_n + strlen("value");
 
     char* snum = malloc(snum_n);
-    sprintf(snum, "GPIO%d", number);
-    pin->snum = NULL;
+    sprintf(snum, "gpio%d", number);
+    printf("address of snum: %p\n", &snum);
+    pin->snum = snum;
 
     char* fdesc = malloc(fdesc_n);
     sprintf(fdesc, SYSFS "gpio%d", number);
@@ -35,12 +36,20 @@ Pin* construct_pin(size_t number) {
     pin->direc_out = false;
     pin->value_on = false;
 
+    printf("snum=%d\nfdesc=%d\nfdirec=%d\nfvalue=%d\n", snum_n, fdesc_n, fdirec_n,
+           fvalue_n);
     return pin;
 }
 
 /* deconstruct a Pin */
 int deconstruct_pin(Pin** pin) {
-    free(*pin);
-    *pin = NULL;
+    // void* p = &pin;
+    // free(p->snum);
+    // free(&pin->snum);
+    // free(&pin->fdesc);
+    // free(&pin->fdirec);
+    // free(&pin->fvalue);
+    // free(pin);
+    // free(pin);
     return EXIT_SUCCESS;
 }
