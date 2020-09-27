@@ -27,10 +27,4 @@ struct Pin {
 Pin* construct_pin(size_t);
 int deconstruct_pin(Pin*);
 
-/* Look up information about a Pin directly from the file descriptor */
-int set_direction(struct Pin, const char*);
-const char* get_direction(Pin);
-int set_value(Pin, const char*);
-const char* get_value(Pin);
-
 #endif

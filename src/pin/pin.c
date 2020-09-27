@@ -5,12 +5,13 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
-#include "constants.h"
-#include "sysfs.h"
+#include "../common/constants.h"
+#include "../sysfs/sysfs.h"
 
 /* create a new Pin */
 Pin* construct_pin(size_t number) {
-    if (number > MAX_PIN) { /* TODO: catch this error */
+    if (number > MAX_PIN) {
+        return NULL;
     };
 
     int base = strlen(SYSFS) + 9;  // allows for 3-digit pins
@@ -27,7 +28,8 @@ Pin* construct_pin(size_t number) {
     sprintf(fvalue, SYSFS "%d/value", number);
 
     // create a pin, find out its value
-    if (write_to_file(snum, EXPORT) != EXIT_SUCCESS) { /* TODO: catch this error */
+    if (write_to_file(snum, EXPORT) != EXIT_SUCCESS) {
+        return NULL;
     };
 
     Pin pin = {snum = snum, fdesc, fdirection, fvalue, number, 0, 0};
@@ -52,22 +54,5 @@ const char* get_direction(Pin pin) {
         return OUT;
     }
     free(direction);
-    return "";
-}
-
-/* set the value of a pin to high or low */
-int set_value(Pin pin, const char* value) { return write_to_file(value, pin.fvalue); }
-
-/* get value of the pin */
-const char* get_value(Pin pin) {
-    char* value = read_file(pin.fvalue);
-    if (strncmp(value, HIGH, strlen(HIGH)) == 0) {
-        free(value);
-        return HIGH;
-    } else if (strncmp(value, LOW, strlen(LOW)) == 0) {
-        free(value);
-        return LOW;
-    }
-    free(value);
     return "";
 }
