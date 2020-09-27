@@ -1,20 +1,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "../src/pin.h"
-#include "../src/sysfs.h"
+#include "../src/constants.h"
+#include "../src/sysfs.c"
 #include "vendor/unity.h"
 
-const char* msg = "18";
+const char* eighteen = "18";
 const char* fdesc = "/sys/class/gpio/gpio18";
 
 void setUp(void) {
     // export a pin where it previously did not exist
-    write_to_file(msg, EXPORT);
+    write_to_file(eighteen, EXPORT);
 }
 void tearDown(void) {
     // unexport pin at the end of the tests
-    write_to_file(msg, UNEXPORT);
+    write_to_file(eighteen, UNEXPORT);
 }
 
 void test_file_exists_with_timeout(void) {

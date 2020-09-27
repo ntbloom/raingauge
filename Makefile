@@ -13,13 +13,13 @@ VFLAGS += --error-exitcode=1
 VFLAGS += --show-reachable=yes
 
 SRC = test/vendor/unity.c
-SRC += src/pin.c
-#uSRC += test/test_pin.c
+#SRC += src/pin.c
+#SRC += test/test_pin.c
 SRC += test/test_sysfs.c
 
 TESTS = test/test_sysfs.c
 #TESTS += test/test_pin.c
-TESTS += src/pin.h
+#TESTS += src/pin.h
 #TESTS += src/pin.c
 TESTS += src/sysfs.h
 TESTS += src/sysfs.c

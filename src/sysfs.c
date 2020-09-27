@@ -4,7 +4,7 @@
 
 /* write a string to a file */
 int write_to_file(const char* msg, const char* fdesc) {
-    if (file_exists(fdesc, W_OK, TIMEOUT) != 0) {
+    if (file_exists(fdesc, W_OK, 1) != 0) {
         perror("file does not exist");
         return EXIT_FAILURE;
     }
@@ -46,7 +46,11 @@ char* read_file(const char* fdesc) {
  */
 int file_exists(const char* fdesc, int mode, int timeout) {
     if (timeout == 0) {
-        return access(fdesc, mode) == 0;
+        if (access(fdesc, mode) == 0) {
+            return EXIT_SUCCESS;
+        } else {
+            return EXIT_FAILURE;
+        }
     }
     long i = timeout;
     time_t start = time(0);

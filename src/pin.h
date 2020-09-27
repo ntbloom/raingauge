@@ -8,15 +8,6 @@
 #ifndef PIN_H
 #define PIN_H
 
-#define OUT "out"
-#define IN "in"
-#define SYSFS "/sys/class/gpio/"
-#define EXPORT "/sys/class/gpio/export"
-#define UNEXPORT "/sys/class/gpio/unexport"
-#define HIGH "1"
-#define LOW "0"
-#define MAX_PIN 40  // highest legal pin number
-
 /* Pin struct representing a GPIO Pin over sysfs using the file descriptors located at
  * on a Linux machine at `/sys/class/gpio/`. Create and destroy Pin objects using the
  * `construct_pin()` and `deconstruct_pin()` methods.
