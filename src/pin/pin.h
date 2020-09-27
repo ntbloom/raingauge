@@ -26,6 +26,6 @@ struct Pin {
     bool value_on;   //  true is "high", false is "low"
 };
 Pin* construct_pin(size_t);
-int deconstruct_pin(Pin**);
+int deconstruct_pin(Pin*);
 
 #endif

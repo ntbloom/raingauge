@@ -9,7 +9,7 @@ Pin* construct_pin(size_t number) {
 
     Pin* pin = malloc(sizeof(Pin));
     // string lengths for malloc
-    size_t base_n = strlen(SYSFS + 1);
+    size_t base_n = strlen(SYSFS) + 1;
     size_t snum_n = strlen("GPIOXX/");
     size_t fdesc_n = base_n + snum_n;
     size_t fdirec_n = fdesc_n + strlen("direction");
@@ -17,7 +17,6 @@ Pin* construct_pin(size_t number) {
 
     char* snum = malloc(snum_n);
     sprintf(snum, "gpio%d", number);
-    printf("address of snum: %p\n", &snum);
     pin->snum = snum;
 
     char* fdesc = malloc(fdesc_n);
@@ -36,20 +35,21 @@ Pin* construct_pin(size_t number) {
     pin->direc_out = false;
     pin->value_on = false;
 
-    printf("snum=%d\nfdesc=%d\nfdirec=%d\nfvalue=%d\n", snum_n, fdesc_n, fdirec_n,
-           fvalue_n);
+    // print debugging
+    // printf("address of snum: %p\n", &snum);
+    // printf("snum=%d\nfdesc=%d\nfdirec=%d\nfvalue=%d\n", snum_n, fdesc_n, fdirec,
+    // fvalue_n);
+
+    // TODO: export a pin, read its value
     return pin;
 }
 
 /* deconstruct a Pin */
-int deconstruct_pin(Pin** pin) {
-    // void* p = &pin;
-    // free(p->snum);
-    // free(&pin->snum);
-    // free(&pin->fdesc);
-    // free(&pin->fdirec);
-    // free(&pin->fvalue);
-    // free(pin);
-    // free(pin);
+int deconstruct_pin(Pin* pin_ptr) {
+    free((void*)pin_ptr->snum);
+    free((void*)pin_ptr->fdesc);
+    free((void*)pin_ptr->fdirec);
+    free((void*)pin_ptr->fvalue);
+    free(pin_ptr);
     return EXIT_SUCCESS;
 }

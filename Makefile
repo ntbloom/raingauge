@@ -28,11 +28,14 @@ TEST_SYSFS += test/test_sysfs.c
 
 
 test: sysfs_test.out pin_test.out
-	@echo
-	@echo Running test suite..
-	@echo
+	@echo "=======================\n"
+	@echo "TESTING SYSFS MODULE...\n"
 	@./sysfs_test.out
+	@echo
+	@echo "=======================\n"
+	@echo "TESTING PIN MODULE...\n"
 	@./pin_test.out 
+	@echo
 
 memcheck: pin_test.out 
 	@valgrind $(VFLAGS) ./pin_test.out
