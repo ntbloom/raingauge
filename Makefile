@@ -38,9 +38,9 @@ memcheck: tests.out
 clean:
 		rm -rf *.o *.out *.out.dSYM
 
-test_pin.out: src/pin/pin.c test/test_pin.c
+test_pin.out: src/pin/pin.c test/test_pin.c 
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/pin/pin.c test/vendor/unity.c test/test_pin.c -o test_pin.out
+	@gcc $(CFLAGS) src/pin/pin.c src/sysfs/sysfs.c test/vendor/unity.c test/test_pin.c -o test_pin.out
 
 test_sysfs.out: src/sysfs/sysfs.c test/test_sysfs.c
 	@echo Compiling $@
