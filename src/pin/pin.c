@@ -1,19 +1,10 @@
 #include "pin.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-#include <unistd.h>
-#include "../common/constants.h"
-#include "../sysfs/sysfs.h"
 
 /* create a new Pin */
 Pin* construct_pin(size_t number) {
     if (number > MAX_PIN) {
         return NULL;
     };
-
     int base = strlen(SYSFS) + 9;  // allows for 3-digit pins
     char* snum = malloc(4);
     sprintf(snum, "%d", number);
