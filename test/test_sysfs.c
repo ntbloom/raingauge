@@ -17,10 +17,16 @@ void tearDown(void) {
     write_to_file(msg, UNEXPORT);
 }
 
-void test_file_exists(void) {
+void test_file_exists_with_timeout(void) {
     /* make sure `gpio/gpio18` is created and exists */
     const char* err = "pin was not exported";
     TEST_ASSERT_EQUAL_INT_MESSAGE(EXIT_SUCCESS, file_exists(fdesc, F_OK, 1), err);
+}
+
+void test_file_exists_without_timeout(void) {
+    /* make sure `gpio/gpio18` is created and exists */
+    const char* err = "pin was not exported";
+    TEST_ASSERT_EQUAL_INT_MESSAGE(EXIT_SUCCESS, file_exists(fdesc, F_OK, 0), err);
 }
 
 void test_read_and_write_file(void) {
@@ -39,7 +45,8 @@ void test_read_and_write_file(void) {
 int main(void) {
     UnityBegin("test/test_sysfs.c");
 
-    RUN_TEST(test_file_exists);
+    RUN_TEST(test_file_exists_with_timeout);
+    RUN_TEST(test_file_exists_without_timeout);
     RUN_TEST(test_read_and_write_file);
     UnityEnd();
 

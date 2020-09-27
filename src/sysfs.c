@@ -1,39 +1,25 @@
 #include "sysfs.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <time.h>
 #include <unistd.h>
 
 /* write a string to a file */
 int write_to_file(const char* msg, const char* fdesc) {
     if (file_exists(fdesc, W_OK, TIMEOUT) != 0) {
-        fprintf(stderr, "unable to access %s\n", fdesc);
+        perror("file does not exist");
         return EXIT_FAILURE;
     }
 
     FILE* handler = fopen(fdesc, "r+");
     if (!handler) {
-        char* err = malloc(255);
-        sprintf(err, "ERROR LINE %d:\n\tfopen error on write: %s\n", __LINE__, fdesc);
-        perror(err);
-        free(err);
+        perror("fopen");
         return EXIT_FAILURE;
     }
     if (fputs(msg, handler) == -1) {
-        char* err = malloc(255);
-        sprintf(err, "ERROR LINE %d: \n\tfputs error on msg=%s\n", __LINE__, msg);
-        perror(err);
-        fclose(handler);
-        free(err);
+        perror("fputs");
         return EXIT_FAILURE;
     }
     if (fclose(handler) == -1) {
-        char* err = malloc(255);
-        sprintf(err, "ERROR LINE %d:\n\tfclose error on %s\n", __LINE__, fdesc);
-        perror(err);
-        free(err);
+        perror("fclose");
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
@@ -41,38 +27,33 @@ int write_to_file(const char* msg, const char* fdesc) {
 
 /* get contents of a file */
 char* read_file(const char* fdesc) {
-    if (file_exists(fdesc, W_OK, TIMEOUT) != 0) {
-        fprintf(stderr, "unable to access %s\n", fdesc);
-        return "";
-    }
-
     char* contents = malloc(5);
     FILE* handler = fopen(fdesc, "r");
     if (!handler) {
-        char* err = malloc(255);
-        sprintf(err, "ERROR LINE %d:\n\tfopen error on %s\n", __LINE__, fdesc);
-        perror(err);
-        free(err);
-        return "";
+        perror("fopen");
+        return NULL;
     }
     if (fgets(contents, sizeof(contents), handler) == NULL) {
-        char* err = malloc(255);
-        sprintf(err, "ERROR LINE %d:\n\tfgets error on %s\n", __LINE__, fdesc);
-        perror(err);
-        free(err);
+        perror("fgets");
     }
     return contents;
 }
 
-/* check that file <fdesc> is accessible in <mode> mode, with timeout in seconds */
+/* Check that file <fdesc> is accessible in <mode> mode, with timeout in seconds. Using
+ * sysfs for GPIO in a fast language like C, there are possible race conditions on file
+ * permissions, so we set a short timeout (1 second is sufficient) to let things catch up.
+ * Set timeout to zero for an immediate checking if you know the permissions are static.
+ */
 int file_exists(const char* fdesc, int mode, int timeout) {
+    if (timeout == 0) {
+        return access(fdesc, mode) == 0;
+    }
     long i = timeout;
     time_t start = time(0);
-
     while (time(0) - start <= i) {
         if (access(fdesc, mode) == 0) {
-            return 0;
+            return EXIT_SUCCESS;
         }
     }
-    return -1;
+    return EXIT_FAILURE;
 }
