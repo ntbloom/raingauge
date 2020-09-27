@@ -28,15 +28,18 @@ TEST_SYSFS += test/test_sysfs.c
 
 
 test: pin_test.out sysfs_test.out
-		@./pin_test.out 
-		@./sysfs_test.out
+	@echo
+	@echo Running test suite..
+	@echo
+	@./pin_test.out 
+	@./sysfs_test.out
 
-memcheck: tests.out
-		@valgrind $(VFLAGS) ./tests.out
-			@echo "Memory check passed"
+memcheck: pin_test.out 
+	@valgrind $(VFLAGS) ./pin_test.out
+		@echo "Memory check passed"
 
 clean:
-		rm -rf *.o *.out *.out.dSYM
+	rm -rf *.o *.out *.out.dSYM
 
 pin_test.out: src/pin/pin.c test/test_pin.c 
 	@echo Compiling $@
