@@ -1,7 +1,4 @@
 #include "sysfs.h"
-#include <time.h>
-#include <unistd.h>
-#include "../common/constants.h"
 
 /* write a string to a file */
 int write_to_file(const char* msg, const char* fdesc) {

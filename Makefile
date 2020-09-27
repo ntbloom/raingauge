@@ -14,26 +14,21 @@ VFLAGS += --leak-check=full
 VFLAGS += --error-exitcode=1
 VFLAGS += --show-reachable=yes
 
+# modules
+PIN = src/pin/pin.c
+SYSFS = src/sysfs/sysfs.c
 UNITY = test/vendor/unity.c
 
-PINTEST = $(UNITY)
-PINTEST += src/pin.c
-PINTEST += src/pin.h
+# test modules
+TEST_PIN = $(UNITY) + $(PIN)
+TEST_PIN += test/test_pin.c
 
-SRC += test/test_pin.c
-SRC += test/test_sysfs.c
-
-TESTS = test/test_sysfs.c
-TESTS += test/test_pin.c
-TESTS += src/pin.h
-TESTS += src/pin.c
-TESTS += src/sysfs.h
-TESTS += src/sysfs.c
+TEST_SYSFS = $(UNITY) + $(SYSFS)
+TEST_SYSFS += test/test_sysfs.c
 
 
-
-test: tests.out pin_tests
-		@./tests.out
+test: test_sysfs.out
+		@./test_sysfs.out
 
 memcheck: tests.out
 		@valgrind $(VFLAGS) ./tests.out
@@ -42,14 +37,10 @@ memcheck: tests.out
 clean:
 		rm -rf *.o *.out *.out.dSYM
 
-tests.out: $(TESTS)
-		@echo Compiling $@
-			@gcc $(CFLAGS) $(SRC) -o tests.out
-
-pin_tests.out: $(PINTESTS)
+test_pin: $(TEST_PIN)
 	@echo Compiling $@
-	@gcc $(CFLAGS) $(PINSRC) -o pin_tests.out
+	@gcc $(CFLAGS) $(TEST_PIN) -o test_pin.out
 
-sysfs_tests.out: $(SYSFSTESTS)
+test_sysfs.out: src/sysfs/sysfs.c test/test_sysfs.c
 	@echo Compiling $@
-	@gcc $(CFLAGS) $(SYSFSSRC) -o sysfs_tests.out
+	@gcc $(CFLAGS) src/sysfs/sysfs.c test/vendor/unity.c test/test_sysfs.c -o test_sysfs.out

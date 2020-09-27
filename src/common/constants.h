@@ -1,3 +1,6 @@
+#ifndef CONSTANTS_H
+#define CONSTANTS_H
+
 /* global variable constants to be shared throught the program, typically things like
  * filepaths that are not likely to change
  */
@@ -10,3 +13,5 @@
 #define HIGH "1"                             // for /sys/class/gpio/gpio<n>/value
 #define LOW "0"                              // for /sys/class/gpio/gpio<n>/value
 #define MAX_PIN 40                           // highest legal pin number
+
+#endif
