@@ -27,9 +27,9 @@ TEST_SYSFS = $(UNITY) + $(SYSFS)
 TEST_SYSFS += test/test_sysfs.c
 
 
-test: test_pin.out #test_sysfs.out
-		#@./test_sysfs.out
-		@./test_pin.out
+test: pin_test.out sysfs_test.out
+		@./pin_test.out 
+		@./sysfs_test.out
 
 memcheck: tests.out
 		@valgrind $(VFLAGS) ./tests.out
@@ -38,10 +38,10 @@ memcheck: tests.out
 clean:
 		rm -rf *.o *.out *.out.dSYM
 
-test_pin.out: src/pin/pin.c test/test_pin.c 
+pin_test.out: src/pin/pin.c test/test_pin.c 
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/pin/pin.c src/sysfs/sysfs.c test/vendor/unity.c test/test_pin.c -o test_pin.out
+	@gcc $(CFLAGS) src/pin/pin.c src/sysfs/sysfs.c test/vendor/unity.c test/test_pin.c -o pin_test.out
 
-test_sysfs.out: src/sysfs/sysfs.c test/test_sysfs.c
+sysfs_test.out: src/sysfs/sysfs.c test/test_sysfs.c
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/sysfs/sysfs.c test/vendor/unity.c test/test_sysfs.c -o test_sysfs.out
+	@gcc $(CFLAGS) src/sysfs/sysfs.c test/vendor/unity.c test/test_sysfs.c -o sysfs_test.out
