@@ -33,14 +33,14 @@ Pin* construct_pin(size_t number) {
 
     pin->num = number;
     pin->direc_out = false;
-    pin->value_on = 0;
+    pin->value_on = false;
 
     return pin;
 }
 
 /* deconstruct a Pin */
 int deconstruct_pin(Pin** pin) {
-    free(pin);
+    free(*pin);
     *pin = NULL;
     return EXIT_SUCCESS;
 }

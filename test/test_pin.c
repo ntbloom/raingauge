@@ -7,9 +7,6 @@
 
 // TODO: use these values to verify tests on pin 18
 /*
-const char* fdesc = "/sys/class/gpio/gpio18";
-const char* fdirection = "/sys/class/gpio/gpio18/direction";
-const char* fvalue = "/sys/class/gpio/gpio18/value";
 int direction = 0;
 int value = 0;
 */
@@ -27,18 +24,31 @@ void test_setup(void) {
     TEST_ASSERT_EQUAL(false, 0);
 }
 
-void test_construct_pin_memsafety(void) {
+void test_construct_pin(void) {
     /* basic test of the constructor, run test with valgrind to confirm */
     size_t num = 18;
-    Pin* p = construct_pin(num);
-    deconstruct_pin(&p);
+    Pin* pin = construct_pin(num);
+
+    const char* fdesc = "/sys/class/gpio/gpio18";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(fdesc, pin->fdesc, "bad fdesc");
+
+    const char* fdirec = "/sys/class/gpio/gpio18/direction";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(fdirec, pin->fdirec, "bad fdirect");
+
+    const char* fvalue = "/sys/class/gpio/gpio18/value";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(fvalue, pin->fvalue, "bad fvalue");
+
+    TEST_ASSERT_EQUAL_INT_MESSAGE(false, pin->direc_out, "bad direc_on");
+    TEST_ASSERT_EQUAL_INT_MESSAGE(false, pin->value_on, "bad value_in");
+
+    deconstruct_pin(&pin);
 }
 
 int main(void) {
     UnityBegin("test/test_pin.c");
 
     RUN_TEST(test_setup);
-    RUN_TEST(test_construct_pin_memsafety);
+    RUN_TEST(test_construct_pin);
 
     UnityEnd();
 
