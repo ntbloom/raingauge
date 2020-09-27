@@ -12,6 +12,17 @@ VFLAGS += --leak-check=full
 VFLAGS += --error-exitcode=1
 VFLAGS += --show-reachable=yes
 
+SRC = test/vendor/unity.c
+SRC += src/pin.c
+#uSRC += test/test_pin.c
+SRC += test/test_sysfs.c
+
+TESTS = test/test_sysfs.c
+#TESTS += test/test_pin.c
+TESTS += src/pin.h
+#TESTS += src/pin.c
+TESTS += src/sysfs.h
+TESTS += src/sysfs.c
 
 test: tests.out
 		@./tests.out
@@ -23,6 +34,6 @@ memcheck: tests.out
 clean:
 		rm -rf *.o *.out *.out.dSYM
 
-tests.out: test/test_sysfs_gpio.c src/sysfs_gpio.c src/sysfs_gpio.h
+tests.out: $(TESTS)
 		@echo Compiling $@
-			@gcc $(CFLAGS) src/sysfs_gpio.c test/vendor/unity.c test/test_sysfs_gpio.c -o tests.out
+			@gcc $(CFLAGS) $(SRC) -o tests.out

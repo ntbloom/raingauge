@@ -1,11 +1,7 @@
-/*
-   test_sysfs_gpio.c
- */
-
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "../src/sysfs_gpio.h"
+#include "../src/pin.h"
 #include "vendor/unity.h"
 
 #define RUN_TEST_NO_SETUP(testfunc) \

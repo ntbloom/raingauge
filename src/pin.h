@@ -1,5 +1,12 @@
-#ifndef SYSFS_GPIO_H
-#define SYSFS_GPIO_H
+#include <stdbool.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <unistd.h>
+
+#ifndef PIN_H
+#define PIN_H
 
 #define OUT "out"
 #define IN "in"
@@ -8,7 +15,7 @@
 #define UNEXPORT "/sys/class/gpio/unexport"
 #define HIGH "1"
 #define LOW "0"
-#define TIMEOUT 1
+#define MAX_PIN 40  // highest legal pin number
 
 /* Pin struct representing a GPIO Pin over sysfs using the file descriptors located at
  * on a Linux machine at `/sys/class/gpio/`. Create and destroy Pin objects using the
@@ -17,12 +24,16 @@
 
 typedef struct Pin Pin;
 struct Pin {
-    const char* num;    // pin number; corresponds to `pinout` command on raspberry pi
-    const char* fdesc;  // sysfs file for the pin, ie: /sys/class/gpio/gpio18
+    const char* snum;        // pin number as string; see `pinout` command on raspberry pi
+    const char* fdesc;       // sysfs file for the pin, ie: /sys/class/gpio/gpio18
     const char* fdirection;  // sysfs file for direction, ie : .../gpio18/direction
     const char* fvalue;      // sysfs file for value, ie: .../gpio18/value
+
+    size_t num;      // gpio number as a digit
+    bool direction;  // 0 is in, 1 is out
+    bool value;      // 1 is high, 0 is low
 };
-Pin* construct_pin(int);
+Pin* construct_pin(size_t);
 int deconstruct_pin(Pin*);
 
 /* Look up information about a Pin directly from the file descriptor */
@@ -30,12 +41,5 @@ int set_direction(struct Pin, const char*);
 const char* get_direction(Pin);
 int set_value(Pin, const char*);
 const char* get_value(Pin);
-
-/* helper functions */
-int export_pin(Pin);
-int unexport_pin(Pin);
-int write_to_file(const char*, const char*);
-char* read_file(const char*);
-int file_exists(const char*, int, int);
 
 #endif
