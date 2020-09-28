@@ -6,12 +6,6 @@
 #include "../src/sysfs/sysfs.h"
 #include "vendor/unity.h"
 
-// TODO: use these values to verify tests on pin 18
-/*
-int direction = 0;
-int value = 0;
-*/
-
 void setUp(void) {
     // export a pin where it previously did not exist
 }
@@ -41,7 +35,12 @@ void test_construct_pin(void) {
     TEST_ASSERT_EQUAL_STRING_MESSAGE(fvalue, pin_ptr->fvalue, "bad fvalue");
 
     TEST_ASSERT_EQUAL_INT_MESSAGE(false, pin_ptr->direc_out, "bad direc_on");
-    TEST_ASSERT_EQUAL_INT_MESSAGE(false, pin_ptr->value_on, "bad value_in");
+
+    /* WARNING: Since the `value` parameter is read from sysfs after the pin is created,
+     * the following assertion could fail on physical hardware if the test pin is
+     * receiving a current from another pin via a physical connection or external device.
+     */
+    TEST_ASSERT_EQUAL_INT_MESSAGE(false, pin_ptr->value_hi, "bad value_in");
 
     deconstruct_pin(pin_ptr);
 }

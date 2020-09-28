@@ -1,13 +1,17 @@
 #include "pin.h"
 
-/* create a new Pin */
+/* Create a new Pin struct corresponding to a legal GPIO pin. Provide an integer between
+ * MIN_PIN and MAX_PIN and the constructor provides the rest, including exporting that
+ * number to /sys/class/gpio/export.  By default all pins are set to IN, so we read the
+ * value in case it's already receiving data.
+ */
 Pin* construct_pin(size_t number) {
-    if (number > MAX_PIN || number <= 0) {
-        // TODO: prevent illegal pins, like gnd
+    // don't allow  illegal
+    if (number > MAX_PIN) {
         return NULL;
     };
 
-    // create the pin
+    // create the pin, set everything but the value
     Pin* pin = malloc(sizeof(Pin));
     size_t base_n = strlen(SYSFS) + 1;
     size_t snum_n = strlen("GPIOXX/");
@@ -33,20 +37,35 @@ Pin* construct_pin(size_t number) {
 
     pin->num = number;
     pin->direc_out = false;
-    pin->value_on = false;
 
-    // export the pin to make it available in the filesystem
+    // export the pin, block until "value" is ready in the filesystem
     if (write_to_file(snum, EXPORT) != EXIT_SUCCESS) {
         perror("failure to export pin");
         fprintf(stderr, "\tsnum=%s\n\tEXPORT=%s\n", snum, EXPORT);
         return NULL;
     }
+    if (file_exists(fvalue, W_OK, 1) != EXIT_SUCCESS) {
+        perror("pin was not exported, no value exists");
+        fprintf(stderr, "\tgpio%d\n", number);
+        return NULL;
+    }
 
-    // TODO: read its value
+    // set the value now that we can look it up
+    char* value = read_file(fvalue);
+    if (value == NULL) {
+        return NULL;
+    } else if (strncmp(value, HIGH, strlen(HIGH)) == 0) {
+        pin->value_hi = true;
+    } else if (strncmp(value, LOW, strlen(LOW)) == 0) {
+        pin->value_hi = false;
+    }
+
     return pin;
 }
 
-/* deconstruct a Pin */
+/* Remove a pin when you're done with it. The deconstructor first removes the pin from
+ * the filesystem using /sysfs/class/gpio/unexport, then frees all of the memory.
+ */
 int deconstruct_pin(Pin* pin_ptr) {
     if (write_to_file(pin_ptr->snum, UNEXPORT) != EXIT_SUCCESS) {
         perror("failure to unexport pin");

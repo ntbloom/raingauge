@@ -25,7 +25,7 @@ struct Pin {
     // other data points
     size_t num;      // numeric representation of pin number, ie 18
     bool direc_out;  // pin direction: true = "out", false = "in"
-    bool value_on;   //  pin value: true = "high", false = "low"
+    bool value_hi;   //  pin value: true = "high", false = "low"
 };
 Pin* construct_pin(size_t);
 int deconstruct_pin(Pin*);
