@@ -29,7 +29,7 @@ void test_setup(void) {
 void test_construct_pin(void) {
     size_t num = 18;
     Pin* pin_ptr = construct_pin(num);
-    // TEST_ASSERT_NOT_NULL(pin_ptr);
+    TEST_ASSERT_NOT_NULL(pin_ptr);
 
     const char* fdesc = "/sys/class/gpio/gpio18";
     TEST_ASSERT_EQUAL_STRING_MESSAGE(fdesc, pin_ptr->fdesc, "bad fdesc");

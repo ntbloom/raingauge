@@ -13,20 +13,10 @@ VFLAGS += --tool=memcheck
 VFLAGS += --leak-check=full
 VFLAGS += --error-exitcode=1
 VFLAGS += --show-reachable=yes
+VFLAGS += --show-possibly-lost=yes
+VFLAGS += --undef-value-errors=yes
 
-# modules
-PIN = src/pin/pin.c
-SYSFS = src/sysfs/sysfs.c
-UNITY = test/vendor/unity.c
-
-# test modules
-TEST_PIN = $(UNITY) + $(PIN)
-TEST_PIN += test/test_pin.c
-
-TEST_SYSFS = $(UNITY) + $(SYSFS)
-TEST_SYSFS += test/test_sysfs.c
-
-
+# targets
 test: sysfs_test.out pin_test.out
 	@echo "=======================\n"
 	@echo "TESTING SYSFS MODULE...\n"
@@ -37,8 +27,8 @@ test: sysfs_test.out pin_test.out
 	@./pin_test.out 
 	@echo
 
-memcheck: pin_test.out 
-	@valgrind $(VFLAGS) ./pin_test.out
+memcheck: pin_test.out sysfs_test.out
+	@valgrind $(VFLAGS) ./pin_test.out ./sysfs_test.out
 		@echo "Memory check passed"
 
 clean:
