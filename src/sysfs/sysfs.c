@@ -3,7 +3,7 @@
 /* write a string to a file */
 int write_to_file(const char* msg, const char* fdesc) {
     if (file_exists(fdesc, W_OK, 1) != 0) {
-        char* err = malloc(255);
+        char* err = malloc(strlen(fdesc) + 50);
         sprintf(err, "file `%s` does not exist", fdesc);
         perror("err");
         free(err);

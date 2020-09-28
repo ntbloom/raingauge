@@ -7,14 +7,19 @@
  */
 Pin* construct_pin(size_t number) {
     // don't allow  illegal
-    if (number > MAX_PIN) {
+    if (number > MAX_PIN || number == 4) {
         return NULL;
     };
 
     // create the pin, set everything but the value
     Pin* pin = malloc(sizeof(Pin));
     size_t base_n = strlen(SYSFS) + 1;
-    size_t snum_n = strlen("GPIOXX/");
+    size_t snum_n;
+    if (number < 10) {
+        snum_n = strlen("GPIOX/");
+    } else {
+        snum_n = strlen("GPIOXX/");
+    }
     size_t fdesc_n = base_n + snum_n;
     size_t fdirec_n = fdesc_n + strlen("direction");
     size_t fvalue_n = fdesc_n + strlen("value");
@@ -59,6 +64,7 @@ Pin* construct_pin(size_t number) {
     } else if (strncmp(value, LOW, strlen(LOW)) == 0) {
         pin->value_hi = false;
     }
+    free(value);
 
     return pin;
 }

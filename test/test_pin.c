@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include "../src/common/constants.h"
 #include "../src/pin/pin.h"
 #include "../src/sysfs/sysfs.h"
 #include "vendor/unity.h"
@@ -58,12 +59,37 @@ void test_automatic_export_unexport(void) {
     TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) != 0, "pin not unexported");
 }
 
+/* check that the constructor/desctructor works with all legal pins, 0 through 26
+ * inclusive.
+ */
+void test_all_legal_pins(void) {
+    for (int i = 0; i <= MAX_PIN; i++) {
+        Pin* pin_ptr = construct_pin(i);
+
+        // pin 4 not legal in sysfs.
+        // TODO: find out why?
+        if (i == 4) {
+            TEST_ASSERT_NULL(pin_ptr);
+            continue;
+        }
+
+        char* err = malloc(50);
+        sprintf(err, "problem exporting pin %d", i);
+        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->fdesc, W_OK, 1) != EXIT_FAILURE, err);
+        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->fvalue, W_OK, 1) != EXIT_FAILURE, err);
+        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->fdirec, W_OK, 1) != EXIT_FAILURE, err);
+        free(err);
+        deconstruct_pin(pin_ptr);
+    }
+}
+
 int main(void) {
     UnityBegin("test/test_pin.c");
 
     RUN_TEST(test_setup);
     RUN_TEST(test_construct_pin);
     RUN_TEST(test_automatic_export_unexport);
+    RUN_TEST(test_all_legal_pins);
 
     UnityEnd();
 
