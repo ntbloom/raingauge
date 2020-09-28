@@ -3,21 +3,24 @@
 /* write a string to a file */
 int write_to_file(const char* msg, const char* fdesc) {
     if (file_exists(fdesc, W_OK, 1) != 0) {
-        perror("file does not exist");
+        char* err = malloc(255);
+        sprintf(err, "file `%s` does not exist", fdesc);
+        perror("err");
+        free(err);
         return EXIT_FAILURE;
     }
 
     FILE* handler = fopen(fdesc, "r+");
     if (!handler) {
-        perror("fopen");
+        perror("write_to_file() fopen error");
         return EXIT_FAILURE;
     }
-    if (fputs(msg, handler) == -1) {
-        perror("fputs");
+    if (fputs(msg, handler) == EOF) {
+        perror("write_to_file() fputs error");
         return EXIT_FAILURE;
     }
-    if (fclose(handler) == -1) {
-        perror("fclose");
+    if (fclose(handler) == EXIT_FAILURE) {
+        perror("write_to_file() fclose error");
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
@@ -28,11 +31,15 @@ char* read_file(const char* fdesc) {
     char* contents = malloc(5);
     FILE* handler = fopen(fdesc, "r");
     if (!handler) {
-        perror("fopen");
+        perror("read_file fopen error");
         return NULL;
     }
     if (fgets(contents, sizeof(contents), handler) == NULL) {
         perror("fgets");
+    }
+    if (fclose(handler) == EXIT_FAILURE) {
+        perror("read_file() fclose error");
+        return NULL;
     }
     return contents;
 }

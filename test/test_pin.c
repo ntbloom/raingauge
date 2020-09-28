@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "../src/pin/pin.h"
+#include "../src/sysfs/sysfs.h"
 #include "vendor/unity.h"
 
 // TODO: use these values to verify tests on pin 18
@@ -28,7 +29,7 @@ void test_setup(void) {
 void test_construct_pin(void) {
     size_t num = 18;
     Pin* pin_ptr = construct_pin(num);
-    TEST_ASSERT_NOT_NULL(pin_ptr);
+    // TEST_ASSERT_NOT_NULL(pin_ptr);
 
     const char* fdesc = "/sys/class/gpio/gpio18";
     TEST_ASSERT_EQUAL_STRING_MESSAGE(fdesc, pin_ptr->fdesc, "bad fdesc");
@@ -51,10 +52,11 @@ void test_automatic_export_unexport(void) {
     Pin* pin_ptr = construct_pin(num);
     TEST_ASSERT_NOT_NULL(pin_ptr);
 
-    TEST_ASSERT_MESSAGE(access(pin_ptr->fdesc, F_OK) == 0, "pin not exported");
+    const char* gpio18 = "/sys/class/gpio/gpio18";
+    TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) == 0, "pin not exported");
 
     deconstruct_pin(pin_ptr);
-    TEST_ASSERT_MESSAGE(access(pin_ptr->fdesc, F_OK) != 0, "pin not unexported");
+    TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) != 0, "pin not unexported");
 }
 
 int main(void) {

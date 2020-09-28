@@ -16,14 +16,16 @@
  */
 typedef struct Pin Pin;
 struct Pin {
-    const char* snum;    // pin number as string; see `pinout` command on raspberry pi
-    const char* fdesc;   // sysfs file for the pin, ie: /sys/class/gpio/gpio18
-    const char* fdirec;  // sysfs file for direction, ie : .../gpio18/direction
-    const char* fvalue;  // sysfs file for value, ie: .../gpio18/value
+    // file descriptors
+    const char* snum;    // pin number as string, ie: "18"
+    const char* fdesc;   // general file for the pin, ie: "/sys/class/gpio/gpio18"
+    const char* fdirec;  // file for direction, ie : "/sys/class/gpio/gpio18/direction"
+    const char* fvalue;  // file for value, ie: "/sys/class/gpio/gpio18/value"
 
-    size_t num;      // gpio number as a digit
-    bool direc_out;  // on true, pin is set to "out", on false set to "in"
-    bool value_on;   //  true is "high", false is "low"
+    // other data points
+    size_t num;      // numeric representation of pin number, ie 18
+    bool direc_out;  // pin direction: true = "out", false = "in"
+    bool value_on;   //  pin value: true = "high", false = "low"
 };
 Pin* construct_pin(size_t);
 int deconstruct_pin(Pin*);

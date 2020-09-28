@@ -16,7 +16,7 @@ Pin* construct_pin(size_t number) {
     size_t fvalue_n = fdesc_n + strlen("value");
 
     char* snum = malloc(snum_n);
-    sprintf(snum, "gpio%d", number);
+    sprintf(snum, "%d", number);
     pin->snum = snum;
 
     char* fdesc = malloc(fdesc_n);
@@ -36,7 +36,9 @@ Pin* construct_pin(size_t number) {
     pin->value_on = false;
 
     // export the pin to make it available in the filesystem
-    if (write_to_file(EXPORT, pin->snum) != EXIT_SUCCESS) {
+    if (write_to_file(snum, EXPORT) != EXIT_SUCCESS) {
+        perror("failure to export pin");
+        fprintf(stderr, "\tsnum=%s\n\tEXPORT=%s\n", snum, EXPORT);
         return NULL;
     }
 
@@ -46,9 +48,8 @@ Pin* construct_pin(size_t number) {
 
 /* deconstruct a Pin */
 int deconstruct_pin(Pin* pin_ptr) {
-    // TODO: unexport a pin;
-    if (write_to_file(UNEXPORT, pin_ptr->snum) != EXIT_SUCCESS) {
-        perror("failure to export pin");
+    if (write_to_file(pin_ptr->snum, UNEXPORT) != EXIT_SUCCESS) {
+        perror("failure to unexport pin");
         return EXIT_FAILURE;
     }
 
