@@ -23,6 +23,8 @@ Pin* construct_pin(size_t number) {
     size_t fdesc_n = base_n + snum_n;
     size_t fdirec_n = fdesc_n + strlen("direction");
     size_t fvalue_n = fdesc_n + strlen("value");
+    size_t fedge_n = fdesc_n + strlen("edge");
+    size_t factive_n = fdesc_n + strlen("active_low");
 
     char* snum = malloc(snum_n);
     sprintf(snum, "%d", number);
@@ -40,8 +42,18 @@ Pin* construct_pin(size_t number) {
     sprintf(fvalue, SYSFS "gpio%d/value", number);
     pin->fvalue = fvalue;
 
+    char* fedge = malloc(fedge_n);
+    sprintf(fedge, SYSFS "gpio%d/edge", number);
+    pin->fedge = fedge;
+
+    char* factive_low = malloc(factive_n);
+    sprintf(factive_low, SYSFS "gpio%d/active_low", number);
+    pin->factive_low = factive_low;
+
     pin->num = number;
     pin->direc_out = false;
+    pin->edge = 0;
+    pin->active_low = false;
 
     // export the pin, block until "value" is ready in the filesystem
     if (write_to_file(snum, EXPORT) != EXIT_SUCCESS) {
@@ -82,6 +94,8 @@ int deconstruct_pin(Pin* pin_ptr) {
     free((void*)pin_ptr->fdesc);
     free((void*)pin_ptr->fdirec);
     free((void*)pin_ptr->fvalue);
+    free((void*)pin_ptr->fedge);
+    free((void*)pin_ptr->factive_low);
     free(pin_ptr);
     return EXIT_SUCCESS;
 }

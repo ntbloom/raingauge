@@ -35,7 +35,18 @@ void test_construct_pin(void) {
     const char* fvalue = "/sys/class/gpio/gpio18/value";
     TEST_ASSERT_EQUAL_STRING_MESSAGE(fvalue, pin_ptr->fvalue, "bad fvalue");
 
+    const char* fedge = "/sys/class/gpio/gpio18/edge";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(fedge, pin_ptr->fedge, "bad fedge");
+
+    const char* factive_low = "/sys/class/gpio/gpio18/active_low";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(factive_low, pin_ptr->factive_low,
+                                     "bad factive_low");
+
     TEST_ASSERT_EQUAL_INT_MESSAGE(false, pin_ptr->direc_out, "bad direc_on");
+
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, pin_ptr->edge, "bad edge");
+
+    TEST_ASSERT_EQUAL_INT_MESSAGE(0, pin_ptr->active_low, "bad active_low");
 
     /* WARNING: Since the `value` parameter is read from sysfs after the pin is created,
      * the following assertion could fail on physical hardware if the test pin is
