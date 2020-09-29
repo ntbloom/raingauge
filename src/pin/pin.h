@@ -34,4 +34,11 @@ struct Pin {
 Pin* construct_pin(size_t);
 int deconstruct_pin(Pin*);
 
+/* Methods to be used on a pin. Since they rely on the filesystem and the existence of the
+ * basic file descriptor, these can only be called on a pin that has already been
+ * exported. Additional criteria like pin direction or value may also be checked as
+ * needed.
+ */
+int poll_pin(Pin*);
+
 #endif

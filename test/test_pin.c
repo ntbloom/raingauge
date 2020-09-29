@@ -1,3 +1,5 @@
+#include <fcntl.h>
+#include <poll.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -71,7 +73,7 @@ void test_automatic_export_unexport(void) {
 }
 
 /* check that the constructor/desctructor works with all legal pins, 0 through 26
- * inclusive.
+ * inclusive except GPIO4.
  */
 void test_all_legal_pins(void) {
     for (int i = 0; i <= MAX_PIN; i++) {
@@ -94,6 +96,18 @@ void test_all_legal_pins(void) {
     }
 }
 
+/* test the polling function */
+void test_poll(void) {
+    // create a pin, set edge to "rising"
+    Pin* pin_ptr = construct_pin(18);
+    write_to_file("rising", pin_ptr->fedge);
+
+    poll_pin(pin_ptr);  // TODO: do something with this!
+    TEST_ASSERT_EQUAL(1, 0);
+
+    deconstruct_pin(pin_ptr);
+}
+
 int main(void) {
     UnityBegin("test/test_pin.c");
 
@@ -101,6 +115,7 @@ int main(void) {
     RUN_TEST(test_construct_pin);
     RUN_TEST(test_automatic_export_unexport);
     RUN_TEST(test_all_legal_pins);
+    RUN_TEST(test_poll);
 
     UnityEnd();
 

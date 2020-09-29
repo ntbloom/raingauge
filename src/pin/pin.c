@@ -99,3 +99,12 @@ int deconstruct_pin(Pin* pin_ptr) {
     free(pin_ptr);
     return EXIT_SUCCESS;
 }
+
+/* poll a pin
+ * TODO: learn how to do this
+ */
+int poll_pin(Pin* pin_ptr) {
+    printf("value is found at %s", pin_ptr->fvalue);
+    return EXIT_SUCCESS;
+}
+
