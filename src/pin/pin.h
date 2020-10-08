@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/epoll.h>
 #include <time.h>
 #include <unistd.h>
 #include "../common/constants.h"

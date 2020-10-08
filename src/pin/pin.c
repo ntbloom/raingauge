@@ -104,7 +104,7 @@ int deconstruct_pin(Pin* pin_ptr) {
  * TODO: learn how to do this
  */
 int poll_pin(Pin* pin_ptr) {
-    printf("value is found at %s", pin_ptr->fvalue);
+    printf("value is found at %s\n", pin_ptr->fvalue);
     return EXIT_SUCCESS;
 }
 
