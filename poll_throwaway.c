@@ -1,4 +1,5 @@
 #include <fcntl.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/poll.h>
@@ -7,15 +8,18 @@
 /* figure out how poll works in this scenario
  * current setup:
  *      gpio18 -> out high
- *      gpio21 -> in
- *      gpio21/edge -> rising
- *      switch works as interrupt, temporarily switching gpio21 from 0 to 1 and back
+ *      gpio25 -> in
+ *      gpio25/edge -> rising
+ *      physical switch temporarily switches gpio25 between 0 and 1
+ *      current verified with multimeter
  */
 
-int main(void) {
-    static int fd;
+#define MAX_INTERRUPT 600000
 
-    const char* val = "/sys/class/gpio/gpio21/value";
+int main(void) {
+    int fd, interrupt;
+
+    const char* val = "/sys/class/gpio/gpio25/value";
     fd = open(val, O_RDONLY);
     if (fd < 0) {
         perror("can't open value");
@@ -26,29 +30,25 @@ int main(void) {
     struct pollfd fds[1];
     fds[0].fd = fd;
     fds[0].events = POLLPRI | POLLERR;
-    int ready = poll(fds, 1, 60);
-    printf("ready=%d\n", ready);
+    fds[0].revents = 0;
+    interrupt = poll(fds, 1, -1);
 
-    while (1) {
-        /*
+    /*
+    for (;;) {
         if (fds[0].revents & POLLPRI == POLLPRI) {
             printf("gpio is hot\n");
+            return EXIT_SUCCESS;
         } else if (fds[0].revents & POLLERR == POLLERR) {
-            perror("gpio error");
+            perror("poll failure");
+            return EXIT_FAILURE;
         }
-        */
-        printf("revents=%d\n", fds[0].revents);
     }
-    off_t now = lseek(fd, 0, 0);
-    printf("now=%s\n", now);
+    */
 
-    /* close the file */
     if (close(fd) != 0) {
         perror("problem closing file");
         return EXIT_FAILURE;
     }
 
-    /* figure out some macros */
-    printf("POLLPRI=%d\nPOLLERR=%d\n", POLLPRI, POLLERR);
-    return EXIT_SUCCESS;
+    return EXIT_FAILURE;
 }
