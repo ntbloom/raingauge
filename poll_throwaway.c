@@ -27,7 +27,7 @@ int polling(int fd) {
     fds[0].events = POLLPRI | POLLERR;
     fds[0].revents = -1;
     printf("events=%d\n", fds[0].events);
-    interrupt = poll(fds, 1, 3000);
+    interrupt = poll(fds, 1, -1);
     results = fds[0].revents;
 
     printf("revents=%d\n", results);
@@ -59,6 +59,10 @@ int main(void) {
     if (fd < 0) {
         perror("can't open value");
     }
+    /* perform a dummy read */
+    char buf[1];
+    read(fd, buf, 0);
+
     success = polling(fd);
 
     if (close(fd) != 0) {
