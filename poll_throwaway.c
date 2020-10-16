@@ -1,4 +1,5 @@
 #include <fcntl.h>
+#include <limits.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,41 +15,63 @@
  *      current verified with multimeter
  */
 
-#define MAX_INTERRUPT 600000
+int polling(int);
 
-int main(void) {
-    int fd, interrupt;
-
-    const char* val = "/sys/class/gpio/gpio25/value";
-    fd = open(val, O_RDONLY);
-    if (fd < 0) {
-        perror("can't open value");
-        return EXIT_FAILURE;
-    }
+/* poll a file descriptor */
+int polling(int fd) {
+    int interrupt, results;
 
     /* do the poll */
     struct pollfd fds[1];
     fds[0].fd = fd;
     fds[0].events = POLLPRI | POLLERR;
-    fds[0].revents = 0;
-    interrupt = poll(fds, 1, -1);
+    fds[0].revents = -1;
+    printf("events=%d\n", fds[0].events);
+    interrupt = poll(fds, 1, 3000);
+    results = fds[0].revents;
 
-    /*
-    for (;;) {
-        if (fds[0].revents & POLLPRI == POLLPRI) {
-            printf("gpio is hot\n");
-            return EXIT_SUCCESS;
-        } else if (fds[0].revents & POLLERR == POLLERR) {
-            perror("poll failure");
+    printf("revents=%d\n", results);
+    switch (interrupt) {
+        case -1:
+            perror("bad poll()");
             return EXIT_FAILURE;
-        }
+        case 0:
+            printf("no interrupt detected\n");
+            return EXIT_FAILURE;
+        default:
+            results = fds[0].revents;
+            if ((results & POLLERR) == POLLERR) {
+                printf("poll failure\n");
+                return EXIT_FAILURE;
+            } else if ((results & POLLPRI) == POLLPRI) {
+                printf("gpio was activated\n");
+                EXIT_SUCCESS;
+            }
     }
-    */
+}
+
+int main(void) {
+    const char* val = "/sys/class/gpio/gpio25/value";
+    int fd, success;
+
+    fd = open(val, O_RDONLY);
+    printf("fd=%d\n", fd);
+    if (fd < 0) {
+        perror("can't open value");
+    }
+    success = polling(fd);
 
     if (close(fd) != 0) {
         perror("problem closing file");
-        return EXIT_FAILURE;
     }
 
-    return EXIT_FAILURE;
+    /* print the bit masks if needed*/
+    /*
+    puts("");
+    printf("POLLPRI=%d\n", POLLPRI);
+    printf("POLLERR=%d\n", POLLERR);
+    printf("POLLIN=%d\n", POLLIN);
+    */
+
+    return EXIT_SUCCESS;
 }
