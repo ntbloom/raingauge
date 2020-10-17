@@ -15,22 +15,36 @@
  *      current verified with multimeter
  */
 
-int polling(int);
+int poll_one(int);
+int prep_file(const char*);
 
-/* poll a file descriptor */
-int polling(int fd) {
+static char buf[1];
+static int rd;
+
+/* prep a POSIX file name for polling */
+int prep_file(const char* file) {
+    int fd;
+
+    fd = open(file, O_RDONLY);
+    if (fd < 0) {
+        perror("open");
+        return EXIT_FAILURE;
+    }
+    rd = read(fd, buf, 0);
+    return fd;
+}
+
+/* poll a single file descriptor indefinitely on POLLPRI and POLLERR */
+int poll_one(int fd) {
     int interrupt, results;
-
-    /* do the poll */
     struct pollfd fds[1];
+
     fds[0].fd = fd;
     fds[0].events = POLLPRI | POLLERR;
     fds[0].revents = -1;
-    printf("events=%d\n", fds[0].events);
     interrupt = poll(fds, 1, -1);
     results = fds[0].revents;
 
-    printf("revents=%d\n", results);
     switch (interrupt) {
         case -1:
             perror("bad poll()");
@@ -40,42 +54,35 @@ int polling(int fd) {
             return EXIT_FAILURE;
         default:
             results = fds[0].revents;
-            if ((results & POLLERR) == POLLERR) {
-                printf("poll failure\n");
-                return EXIT_FAILURE;
-            } else if ((results & POLLPRI) == POLLPRI) {
+            if ((results & POLLPRI) == POLLPRI) {
                 printf("gpio was activated\n");
                 EXIT_SUCCESS;
-            }
+            } else
+                return EXIT_FAILURE;
     }
+    if (lseek(fd, 0, SEEK_SET) == -1) {
+        perror("lseek");
+        return EXIT_FAILURE;
+    }
+    rd = read(fd, buf, 0);
 }
 
 int main(void) {
-    const char* val = "/sys/class/gpio/gpio25/value";
-    int fd, success;
+    const char* value = "/sys/class/gpio/gpio25/value";
+    int fd, interrupt, count;
 
-    fd = open(val, O_RDONLY);
-    printf("fd=%d\n", fd);
-    if (fd < 0) {
-        perror("can't open value");
+    fd = prep_file(value);
+    if (fd == EXIT_FAILURE) {
+        return EXIT_FAILURE;
     }
-    /* perform a dummy read */
-    char buf[1];
-    read(fd, buf, 0);
-
-    success = polling(fd);
+    count = 10;
+    while (count != 0) {
+        interrupt = poll_one(fd);
+        count--;
+    }
 
     if (close(fd) != 0) {
         perror("problem closing file");
     }
-
-    /* print the bit masks if needed*/
-    /*
-    puts("");
-    printf("POLLPRI=%d\n", POLLPRI);
-    printf("POLLERR=%d\n", POLLERR);
-    printf("POLLIN=%d\n", POLLIN);
-    */
-
     return EXIT_SUCCESS;
 }
