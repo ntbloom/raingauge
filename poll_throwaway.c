@@ -15,8 +15,9 @@
  *      current verified with multimeter
  */
 
-int poll_one(int);
 int prep_file(const char*);
+int poll_one(int);
+int poll_loop(const char*, int);
 
 static char buf[1];
 static int rd;
@@ -60,6 +61,7 @@ int poll_one(int fd) {
             } else
                 return EXIT_FAILURE;
     }
+    /* reset fd to beginning of file */
     if (lseek(fd, 0, SEEK_SET) == -1) {
         perror("lseek");
         return EXIT_FAILURE;
@@ -67,22 +69,25 @@ int poll_one(int fd) {
     rd = read(fd, buf, 0);
 }
 
-int main(void) {
-    const char* value = "/sys/class/gpio/gpio25/value";
+int poll_loop(const char* value, int n) {
     int fd, interrupt, count;
 
     fd = prep_file(value);
     if (fd == EXIT_FAILURE) {
         return EXIT_FAILURE;
     }
-    count = 10;
-    while (count != 0) {
+    while (n != 0) {
         interrupt = poll_one(fd);
-        count--;
+        n--;
     }
 
     if (close(fd) != 0) {
         perror("problem closing file");
     }
     return EXIT_SUCCESS;
+}
+
+int main(void) {
+    const char* value = "/sys/class/gpio/gpio25/value";
+    return poll_loop(value, 10) == EXIT_SUCCESS;
 }
