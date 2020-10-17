@@ -1,6 +1,4 @@
 #include <fcntl.h>
-#include <limits.h>
-#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/poll.h>
@@ -96,7 +94,7 @@ int poll_loop(const char* value, int n) {
 }
 
 int main(void) {
-    int n = 3;
+    int n = 10;
     const char* value = "/sys/class/gpio/gpio25/value";
     return poll_loop(value, n) == EXIT_SUCCESS;
 }
