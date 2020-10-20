@@ -34,6 +34,10 @@ memcheck: pin_test.out sysfs_test.out
 clean:
 	rm -rf *.o *.out *.out.dSYM
 
+poll: 
+	@gcc $(CFLAGS) poll_throwaway.c -o poll_throwaway.out
+	@./poll_throwaway.out
+
 pin_test.out: src/pin/pin.c test/test_pin.c 
 	@echo Compiling $@
 	@gcc $(CFLAGS) src/pin/pin.c src/sysfs/sysfs.c test/vendor/unity.c test/test_pin.c -o pin_test.out
