@@ -78,8 +78,13 @@ int poll_one(int fd, int (*callback)(void)) {
 int poll_loop(const char* value, int n) {
     int fd, interrupt, count;
 
+    if (n < 0) {
+        printf("negative numbers not currently supported for poll_loop()\n");
+        return EXIT_FAILURE;
+    }
+
     fd = prep_file(value);
-    if (fd == EXIT_FAILURE) {
+    if (fd < 0) {
         return EXIT_FAILURE;
     }
     while (n != 0) {
