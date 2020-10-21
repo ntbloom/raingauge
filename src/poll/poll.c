@@ -1,22 +1,4 @@
-#include <fcntl.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/poll.h>
-#include <unistd.h>
-
-/* figure out how poll works in this scenario
- * current setup:
- *      gpio18 -> out high
- *      gpio25 -> in
- *      gpio25/edge -> rising
- *      physical switch temporarily switches gpio25 between 0 and 1
- *      current verified with multimeter
- */
-
-int prep_file(const char*);
-int poll_one(int, int (*)(void));
-int poll_loop(const char*, int);
-int interrupt_callback(void);
+#include "poll.h"
 
 static char buf[1];
 static int rd;
@@ -34,13 +16,11 @@ int prep_file(const char* file) {
     return fd;
 }
 
-/* generic callback function to return on interrupt */
 int interrupt_callback(void) {
     printf("interrupt triggered\n");
     return EXIT_SUCCESS;
 }
 
-/* poll a single file descriptor indefinitely on POLLPRI and POLLERR */
 int poll_one(int fd, int (*callback)(void)) {
     int interrupt, results;
     struct pollfd fds[1];
@@ -73,7 +53,6 @@ int poll_one(int fd, int (*callback)(void)) {
     return EXIT_SUCCESS;
 }
 
-/* poll the loop n number of times, use -1 for infinite loop */
 int poll_loop(const char* value, int n) {
     int fd, interrupt;
 
@@ -102,6 +81,7 @@ int poll_loop(const char* value, int n) {
 }
 
 int main(void) {
+    printf("waiting for input from interrupt\n");
     int n = 10;
     const char* value = "/sys/class/gpio/gpio25/value";
     if (poll_loop(value, n) != EXIT_SUCCESS) {

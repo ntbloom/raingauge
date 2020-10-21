@@ -26,17 +26,26 @@ test: sysfs_test.out pin_test.out
 	@echo "TESTING PIN MODULE...\n"
 	@./pin_test.out 
 	@echo
+	@echo "=======================\n"
 
-memcheck: pin_test.out sysfs_test.out
-	@valgrind $(VFLAGS) ./pin_test.out ./sysfs_test.out
+
+
+memcheck: pin_test.out sysfs_test.out poll_test.out
+	@valgrind $(VFLAGS) ./pin_test.out ./sysfs_test.out ./poll_test.out
 		@echo "Memory check passed"
 
 clean:
 	rm -rf *.o *.out *.out.dSYM
+	./src/poll/teardown.sh
 
-poll: 
-	@gcc $(CFLAGS) poll_throwaway.c -o poll_throwaway.out
-	@./poll_throwaway.out
+poll_test.out: src/poll/poll.c
+	@echo Compiling $@
+	@gcc $(CFLAGS) src/poll/poll.c -o poll_test.out
+
+poll: poll_test.out
+	@./src/poll/setup.sh
+	@./poll_test.out
+	@./src/poll/teardown.sh
 
 pin_test.out: src/pin/pin.c test/test_pin.c 
 	@echo Compiling $@
