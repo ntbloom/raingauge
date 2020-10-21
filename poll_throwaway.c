@@ -49,7 +49,6 @@ int poll_one(int fd, int (*callback)(void)) {
     fds[0].events = POLLPRI | POLLERR;
     fds[0].revents = -1;
     interrupt = poll(fds, 1, -1);
-    results = fds[0].revents;
 
     switch (interrupt) {
         case -1:
@@ -76,7 +75,7 @@ int poll_one(int fd, int (*callback)(void)) {
 
 /* poll the loop n number of times, use -1 for infinite loop */
 int poll_loop(const char* value, int n) {
-    int fd, interrupt, count;
+    int fd, interrupt;
 
     if (n < 0) {
         printf("negative numbers not currently supported for poll_loop()\n");
@@ -87,13 +86,17 @@ int poll_loop(const char* value, int n) {
     if (fd < 0) {
         return EXIT_FAILURE;
     }
-    while (n != 0) {
+    while (n > 0) {
         interrupt = poll_one(fd, *interrupt_callback);
+        if (interrupt != EXIT_SUCCESS) {
+            return EXIT_FAILURE;
+        }
         n--;
     }
 
     if (close(fd) != 0) {
         perror("problem closing file");
+        return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
 }
@@ -101,5 +104,8 @@ int poll_loop(const char* value, int n) {
 int main(void) {
     int n = 10;
     const char* value = "/sys/class/gpio/gpio25/value";
-    return poll_loop(value, n) == EXIT_SUCCESS;
+    if (poll_loop(value, n) != EXIT_SUCCESS) {
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }
