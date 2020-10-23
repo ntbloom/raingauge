@@ -6,12 +6,12 @@
  * value in case it's already receiving data.
  */
 Pin* construct_pin(size_t number) {
-    // don't allow  illegal
+    /* don't allow  illegal */
     if (number > MAX_PIN || number == 4) {
         return NULL;
     };
 
-    // create the pin, set everything but the value
+    /* create the pin, set everything but the value */
     Pin* pin = malloc(sizeof(Pin));
     size_t base_n = strlen(SYSFS) + 1;
     size_t num_n;
@@ -50,7 +50,7 @@ Pin* construct_pin(size_t number) {
     sprintf(active_low, SYSFS "gpio%d/active_low", number);
     pin->active_low = active_low;
 
-    // export the pin, block until "value" is ready in the filesystem
+    /* export the pin, block until "value" is ready in the filesystem */
     if (write_to_file(num, EXPORT) != EXIT_SUCCESS) {
         perror("failure to export pin");
         fprintf(stderr, "\tnum=%s\n\tEXPORT=%s\n", num, EXPORT);

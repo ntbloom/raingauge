@@ -30,7 +30,7 @@ test: sysfs_test.out pin_test.out
 
 
 
-memcheck: pin_test.out sysfs_test.out poll_test.out
+memcheck: pin_test.out sysfs_test.out poll
 	@valgrind $(VFLAGS) ./pin_test.out ./sysfs_test.out ./poll_test.out
 		@echo "Memory check passed"
 
@@ -54,3 +54,4 @@ pin_test.out: src/pin/pin.c test/test_pin.c
 sysfs_test.out: src/sysfs/sysfs.c test/test_sysfs.c
 	@echo Compiling $@
 	@gcc $(CFLAGS) src/sysfs/sysfs.c test/vendor/unity.c test/test_sysfs.c -o sysfs_test.out
+
