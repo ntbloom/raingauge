@@ -1,5 +1,5 @@
-#include "../src/common/constants.h"
-#include "../src/sysfs/sysfs.h"
+#include "../src/constants.h"
+#include "../src/sysfs.h"
 #include "vendor/unity.h"
 
 const char* eighteen = "18";

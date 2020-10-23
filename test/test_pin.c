@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "../src/common/constants.h"
-#include "../src/pin/pin.h"
-#include "../src/sysfs/sysfs.h"
+#include "../src/constants.h"
+#include "../src/pin.h"
+#include "../src/sysfs.h"
 #include "vendor/unity.h"
 
 void setUp(void) {

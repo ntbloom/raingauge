@@ -8,8 +8,8 @@
 #include <sys/epoll.h>
 #include <time.h>
 #include <unistd.h>
-#include "../common/constants.h"
-#include "../sysfs/sysfs.h"
+#include "constants.h"
+#include "sysfs.h"
 
 /* Pin struct representing a GPIO Pin over sysfs using the file descriptors located at
  * on a Linux machine at `/sys/class/gpio/`. Create and destroy Pin objects using the

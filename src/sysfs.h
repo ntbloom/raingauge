@@ -6,7 +6,7 @@
 #include <string.h>
 #include <time.h>
 #include <unistd.h>
-#include "../common/constants.h"
+#include "constants.h"
 
 /*  Use this module to read and write to files in small quantities.  Uses short
  * strings like "in" or "out" with a variable but limited length, so these methods are

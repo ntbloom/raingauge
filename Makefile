@@ -1,4 +1,5 @@
-# gcc flags
+#
+#gcc flags
 FLAGS  = -std=c99
 CFLAGS += -g
 #CFLAGS += -Wall
@@ -36,22 +37,22 @@ memcheck: pin_test.out sysfs_test.out poll
 
 clean:
 	rm -rf *.o *.out *.out.dSYM
-	./src/poll/teardown.sh
+	./scripts/teardown.sh
 
-poll_test.out: src/poll/poll.c
+poll_test.out: src/poll.c
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/poll/poll.c -o poll_test.out
+	@gcc $(CFLAGS) src/poll.c -o poll_test.out
 
 poll: poll_test.out
-	@./src/poll/setup.sh
+	@./scripts/setup.sh
 	@./poll_test.out
-	@./src/poll/teardown.sh
+	@./scripts/teardown.sh
 
-pin_test.out: src/pin/pin.c test/test_pin.c 
+pin_test.out: src/pin.c test/test_pin.c 
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/pin/pin.c src/sysfs/sysfs.c test/vendor/unity.c test/test_pin.c -o pin_test.out
+	@gcc $(CFLAGS) src/pin.c src/sysfs.c test/vendor/unity.c test/test_pin.c -o pin_test.out
 
-sysfs_test.out: src/sysfs/sysfs.c test/test_sysfs.c
+sysfs_test.out: src/sysfs.c test/test_sysfs.c
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/sysfs/sysfs.c test/vendor/unity.c test/test_sysfs.c -o sysfs_test.out
+	@gcc $(CFLAGS) src/sysfs.c test/vendor/unity.c test/test_sysfs.c -o sysfs_test.out
 
