@@ -28,33 +28,20 @@ void test_construct_pin(void) {
     Pin* pin_ptr = construct_pin(num);
     TEST_ASSERT_NOT_NULL(pin_ptr);
 
-    const char* fdesc = "/sys/class/gpio/gpio18";
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(fdesc, pin_ptr->fdesc, "bad fdesc");
+    const char* desc = "/sys/class/gpio/gpio18";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(desc, pin_ptr->desc, "bad desc");
 
-    const char* fdirec = "/sys/class/gpio/gpio18/direction";
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(fdirec, pin_ptr->fdirec, "bad fdirect");
+    const char* direc = "/sys/class/gpio/gpio18/direction";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(direc, pin_ptr->direc, "bad direct");
 
-    const char* fvalue = "/sys/class/gpio/gpio18/value";
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(fvalue, pin_ptr->fvalue, "bad fvalue");
+    const char* value = "/sys/class/gpio/gpio18/value";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(value, pin_ptr->value, "bad value");
 
-    const char* fedge = "/sys/class/gpio/gpio18/edge";
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(fedge, pin_ptr->fedge, "bad fedge");
+    const char* edge = "/sys/class/gpio/gpio18/edge";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(edge, pin_ptr->edge, "bad edge");
 
-    const char* factive_low = "/sys/class/gpio/gpio18/active_low";
-    TEST_ASSERT_EQUAL_STRING_MESSAGE(factive_low, pin_ptr->factive_low,
-                                     "bad factive_low");
-
-    TEST_ASSERT_EQUAL_INT_MESSAGE(false, pin_ptr->direc_out, "bad direc_on");
-
-    TEST_ASSERT_EQUAL_INT_MESSAGE(0, pin_ptr->edge, "bad edge");
-
-    TEST_ASSERT_EQUAL_INT_MESSAGE(0, pin_ptr->active_low, "bad active_low");
-
-    /* WARNING: Since the `value` parameter is read from sysfs after the pin is created,
-     * the following assertion could fail on physical hardware if the test pin is
-     * receiving a current from another pin via a physical connection or external device.
-     */
-    TEST_ASSERT_EQUAL_INT_MESSAGE(false, pin_ptr->value_hi, "bad value_in");
+    const char* active_low = "/sys/class/gpio/gpio18/active_low";
+    TEST_ASSERT_EQUAL_STRING_MESSAGE(active_low, pin_ptr->active_low, "bad active_low");
 
     deconstruct_pin(pin_ptr);
 }
@@ -79,8 +66,7 @@ void test_all_legal_pins(void) {
     for (int i = 0; i <= MAX_PIN; i++) {
         Pin* pin_ptr = construct_pin(i);
 
-        // pin 4 not legal in sysfs.
-        // TODO: find out why?
+        /* pin 4 not legal on pi3b */
         if (i == 4) {
             TEST_ASSERT_NULL(pin_ptr);
             continue;
@@ -88,9 +74,9 @@ void test_all_legal_pins(void) {
 
         char* err = malloc(50);
         sprintf(err, "problem exporting pin %d", i);
-        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->fdesc, W_OK, 1) != EXIT_FAILURE, err);
-        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->fvalue, W_OK, 1) != EXIT_FAILURE, err);
-        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->fdirec, W_OK, 1) != EXIT_FAILURE, err);
+        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->desc, W_OK, 1) != EXIT_FAILURE, err);
+        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->value, W_OK, 1) != EXIT_FAILURE, err);
+        TEST_ASSERT_MESSAGE(file_exists(pin_ptr->direc, W_OK, 1) != EXIT_FAILURE, err);
         free(err);
         deconstruct_pin(pin_ptr);
     }
@@ -98,11 +84,11 @@ void test_all_legal_pins(void) {
 
 /* test the polling function */
 void test_poll(void) {
-    // create a pin, set edge to "rising"
+    /* create a pin, set edge to "rising" */
     Pin* pin_ptr = construct_pin(18);
-    write_to_file("rising", pin_ptr->fedge);
+    write_to_file("rising", pin_ptr->edge);
 
-    poll_pin(pin_ptr);  // TODO: do something with this!
+    poll_pin(pin_ptr); /* TODO: do something with this! */
 
     deconstruct_pin(pin_ptr);
 }
@@ -110,10 +96,10 @@ void test_poll(void) {
 int main(void) {
     UnityBegin("test/test_pin.c");
 
-    //    RUN_TEST(test_setup);
-    //    RUN_TEST(test_construct_pin);
-    //    RUN_TEST(test_automatic_export_unexport);
-    //    RUN_TEST(test_all_legal_pins);
+    RUN_TEST(test_setup);
+    RUN_TEST(test_construct_pin);
+    RUN_TEST(test_automatic_export_unexport);
+    RUN_TEST(test_all_legal_pins);
     RUN_TEST(test_poll);
 
     UnityEnd();

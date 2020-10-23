@@ -14,70 +14,53 @@ Pin* construct_pin(size_t number) {
     // create the pin, set everything but the value
     Pin* pin = malloc(sizeof(Pin));
     size_t base_n = strlen(SYSFS) + 1;
-    size_t snum_n;
+    size_t num_n;
     if (number < 10) {
-        snum_n = strlen("GPIOX/");
+        num_n = strlen("GPIOX/");
     } else {
-        snum_n = strlen("GPIOXX/");
+        num_n = strlen("GPIOXX/");
     }
-    size_t fdesc_n = base_n + snum_n;
-    size_t fdirec_n = fdesc_n + strlen("direction");
-    size_t fvalue_n = fdesc_n + strlen("value");
-    size_t fedge_n = fdesc_n + strlen("edge");
-    size_t factive_n = fdesc_n + strlen("active_low");
+    size_t desc_n = base_n + num_n;
+    size_t direc_n = desc_n + strlen("direction");
+    size_t value_n = desc_n + strlen("value");
+    size_t edge_n = desc_n + strlen("edge");
+    size_t factive_n = desc_n + strlen("active_low");
 
-    char* snum = malloc(snum_n);
-    sprintf(snum, "%d", number);
-    pin->snum = snum;
+    char* num = malloc(num_n);
+    sprintf(num, "%d", number);
+    pin->num = num;
 
-    char* fdesc = malloc(fdesc_n);
-    sprintf(fdesc, SYSFS "gpio%d", number);
-    pin->fdesc = fdesc;
+    char* desc = malloc(desc_n);
+    sprintf(desc, SYSFS "gpio%d", number);
+    pin->desc = desc;
 
-    char* fdirec = malloc(fdirec_n);
-    sprintf(fdirec, SYSFS "gpio%d/direction", number);
-    pin->fdirec = fdirec;
+    char* direc = malloc(direc_n);
+    sprintf(direc, SYSFS "gpio%d/direction", number);
+    pin->direc = direc;
 
-    char* fvalue = malloc(fvalue_n);
-    sprintf(fvalue, SYSFS "gpio%d/value", number);
-    pin->fvalue = fvalue;
+    char* value = malloc(value_n);
+    sprintf(value, SYSFS "gpio%d/value", number);
+    pin->value = value;
 
-    char* fedge = malloc(fedge_n);
-    sprintf(fedge, SYSFS "gpio%d/edge", number);
-    pin->fedge = fedge;
+    char* edge = malloc(edge_n);
+    sprintf(edge, SYSFS "gpio%d/edge", number);
+    pin->edge = edge;
 
-    char* factive_low = malloc(factive_n);
-    sprintf(factive_low, SYSFS "gpio%d/active_low", number);
-    pin->factive_low = factive_low;
-
-    pin->num = number;
-    pin->direc_out = false;
-    pin->edge = 0;
-    pin->active_low = false;
+    char* active_low = malloc(factive_n);
+    sprintf(active_low, SYSFS "gpio%d/active_low", number);
+    pin->active_low = active_low;
 
     // export the pin, block until "value" is ready in the filesystem
-    if (write_to_file(snum, EXPORT) != EXIT_SUCCESS) {
+    if (write_to_file(num, EXPORT) != EXIT_SUCCESS) {
         perror("failure to export pin");
-        fprintf(stderr, "\tsnum=%s\n\tEXPORT=%s\n", snum, EXPORT);
+        fprintf(stderr, "\tnum=%s\n\tEXPORT=%s\n", num, EXPORT);
         return NULL;
     }
-    if (file_exists(fvalue, W_OK, 1) != EXIT_SUCCESS) {
+    if (file_exists(value, W_OK, 1) != EXIT_SUCCESS) {
         perror("pin was not exported, no value exists");
         fprintf(stderr, "\tgpio%d\n", number);
         return NULL;
     }
-
-    // set the value now that we can look it up
-    char* value = read_file(fvalue);
-    if (value == NULL) {
-        return NULL;
-    } else if (strncmp(value, HIGH, strlen(HIGH)) == 0) {
-        pin->value_hi = true;
-    } else if (strncmp(value, LOW, strlen(LOW)) == 0) {
-        pin->value_hi = false;
-    }
-    free(value);
-
     return pin;
 }
 
@@ -85,17 +68,17 @@ Pin* construct_pin(size_t number) {
  * the filesystem using /sysfs/class/gpio/unexport, then frees all of the memory.
  */
 int deconstruct_pin(Pin* pin_ptr) {
-    if (write_to_file(pin_ptr->snum, UNEXPORT) != EXIT_SUCCESS) {
+    if (write_to_file(pin_ptr->num, UNEXPORT) != EXIT_SUCCESS) {
         perror("failure to unexport pin");
         return EXIT_FAILURE;
     }
 
-    free((void*)pin_ptr->snum);
-    free((void*)pin_ptr->fdesc);
-    free((void*)pin_ptr->fdirec);
-    free((void*)pin_ptr->fvalue);
-    free((void*)pin_ptr->fedge);
-    free((void*)pin_ptr->factive_low);
+    free((void*)pin_ptr->num);
+    free((void*)pin_ptr->desc);
+    free((void*)pin_ptr->direc);
+    free((void*)pin_ptr->value);
+    free((void*)pin_ptr->edge);
+    free((void*)pin_ptr->active_low);
     free(pin_ptr);
     return EXIT_SUCCESS;
 }
@@ -104,7 +87,7 @@ int deconstruct_pin(Pin* pin_ptr) {
  * TODO: learn how to do this
  */
 int poll_pin(Pin* pin_ptr) {
-    printf("value is found at %s\n", pin_ptr->fvalue);
+    printf("value is found at %s\n", pin_ptr->value);
     return EXIT_SUCCESS;
 }
 
