@@ -1,13 +1,10 @@
-#
-#gcc flags
-FLAGS  = -std=c99
+CFLAGS  = -std=c99
 CFLAGS += -g
-#CFLAGS += -Wall
+CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
 
-# valgrind flags
 VFLAGS  = --quiet
 VFLAGS += -v
 VFLAGS += --tool=memcheck
@@ -17,7 +14,6 @@ VFLAGS += --show-reachable=yes
 VFLAGS += --show-possibly-lost=yes
 VFLAGS += --undef-value-errors=yes
 
-# targets
 test: sysfs_test.out pin_test.out
 	@echo "=======================\n"
 	@echo "TESTING SYSFS MODULE...\n"
