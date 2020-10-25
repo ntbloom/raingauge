@@ -7,7 +7,7 @@ void setUp(void) { /* pass */
 void tearDown(void) { /* pass */
 }
 void test_basic_connection(void) {
-    const char* conninfo = "host=localhost port=5432 dbname=local connect_timeout=10";
+    const char* conninfo = "dbname=local connect_timeout=10";
     PGconn* conn = dbconnect(conninfo);
     TEST_ASSERT_NOT_NULL_MESSAGE(conn, "bad connection");
 }
