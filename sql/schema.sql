@@ -23,7 +23,7 @@ BEGIN;
     CREATE TABLE ticks (
         db_time TIMESTAMPTZ DEFAULT current_timestamp,
         gauge INT DEFAULT 1,
-        num INT,
+        num NUMERIC NOT NULL,
         FOREIGN KEY (gauge) REFERENCES gauge(id)
     );
 COMMIT;
