@@ -7,10 +7,11 @@ BEGIN;
         shortname TEXT NOT NULL,
         mm_per_click NUMERIC DEFAULT 0.2794,
         description TEXT NOT NULL,
-        created_at TIMESTAMPTZ DEFAULT current_timestamp
+        created_at TIMESTAMPTZ DEFAULT current_timestamp,
+        UNIQUE(shortname)
     );
 
-    /* current location */
+    /* location */
     INSERT INTO gauge (id, shortname, description)
         VALUES (
             1,
