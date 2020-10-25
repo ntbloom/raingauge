@@ -1,5 +1,5 @@
 /* schema.sql -- schema for the raingauge database */
-
+SET CLIENT_MIN_MESSAGES to WARNING;
 BEGIN;
     DROP TABLE IF EXISTS gauge CASCADE;
     CREATE TABLE gauge(
@@ -11,15 +11,6 @@ BEGIN;
         UNIQUE(shortname)
     );
 
-    /* location */
-    INSERT INTO gauge (id, shortname, description)
-        VALUES (
-            1,
-            'test', 
-            'sitting on my desk, I wonder if it will ever see real rain'
-        );
-
-    /* count the ticks */
     DROP TABLE IF EXISTS ticks CASCADE;
     CREATE TABLE ticks (
         db_time TIMESTAMPTZ DEFAULT current_timestamp,
