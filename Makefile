@@ -4,6 +4,9 @@ CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
+CFLAGS += -I/usr/include/postgresql
+CFLAGS += -L/usr/lib/arm-linux-gnueabihf -lpq
+	
 
 VFLAGS  = --quiet
 VFLAGS += -v
@@ -53,3 +56,9 @@ sysfs_test.out: src/sysfs.c test/test_sysfs.c
 raingauge:
 	@echo Compiling $@
 	@gcc $(CFLAGS) src/* -o raingauge
+
+sql_test.out: src/dbconnect.c test/test_dbconnect.c
+	@echo Compiling $@
+	@gcc $(CFLAGS) src/dbconnect.c test/vendor/unity.c test/test_dbconnect.c -o sql_test.o
+	@./sql_test.o
+	
