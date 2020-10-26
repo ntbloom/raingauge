@@ -30,7 +30,7 @@ test: sysfs_test.out pin_test.out
 
 memcheck: pin_test.out sysfs_test.out poll 
 	@valgrind $(VFLAGS) ./pin_test.out ./sysfs_test.out ./poll_test.out
-		@echo "Memory check passed"
+	@echo "Memory check passed"
 
 clean:
 	rm -rf *.o *.out *.out.dSYM
@@ -60,4 +60,7 @@ sql_test.out: src/dbconnect.c test/test_dbconnect.c
 	@echo Compiling $@
 	@gcc $(CFLAGS) src/dbconnect.c test/vendor/unity.c test/test_dbconnect.c -o sql_test.out
 	@./sql_test.out
-	
+
+memsql: sql_test.out
+	@valgrind $(VFLAGS) ./sql_test.out
+	@echo "Memory check passed"
