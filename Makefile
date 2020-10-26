@@ -34,7 +34,6 @@ memcheck: pin_test.out sysfs_test.out poll
 
 clean:
 	rm -rf *.o *.out *.out.dSYM
-	./scripts/teardown.sh
 
 poll_test.out: src/poll.c
 	@echo Compiling $@
@@ -59,6 +58,6 @@ raingauge:
 
 sql_test.out: src/dbconnect.c test/test_dbconnect.c
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/dbconnect.c test/vendor/unity.c test/test_dbconnect.c -o sql_test.o
-	@./sql_test.o
+	@gcc $(CFLAGS) src/dbconnect.c test/vendor/unity.c test/test_dbconnect.c -o sql_test.out
+	@./sql_test.out
 	
