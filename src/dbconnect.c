@@ -40,7 +40,7 @@ double all_ticks(PGconn* conn, int gauge) {
     } else {
         const char* strval = PQgetvalue(res, 0, 0);
         value = atof(strval);
-        if (value == 0 && strncmp(strval, "0.0", 2) != 0) {
+        if (value == 0 && strncmp(strval, "0.0", 3) != 0) {
             value = -1.0;
         }
     }
