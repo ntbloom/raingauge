@@ -1,4 +1,4 @@
-#include "poll.h"
+#include "../include/poll.h"
 
 static char buf[1];
 static int rd;
@@ -80,12 +80,3 @@ int poll_loop(const char* value, int n) {
     return EXIT_SUCCESS;
 }
 
-int main(void) {
-    printf("waiting for input from interrupt\n");
-    int n = 10;
-    const char* value = "/sys/class/gpio/gpio25/value";
-    if (poll_loop(value, n) != EXIT_SUCCESS) {
-        return EXIT_FAILURE;
-    }
-    return EXIT_SUCCESS;
-}

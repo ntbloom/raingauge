@@ -1,4 +1,4 @@
-#include "dbconnect.h"
+#include "../include/dbconnect.h"
 
 #define SETS "INSERT INTO ticks (gauge, num) SELECT 1, mm_per_click FROM gauge WHERE id ="
 #define GETS "SELECT SUM(num) FROM ticks WHERE gauge ="

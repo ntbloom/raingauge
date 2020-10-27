@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "../src/dbconnect.h"
+#include "../include/dbconnect.h"
 #include "vendor/unity.h"
 
 #define GAUGE 1

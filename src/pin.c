@@ -1,4 +1,4 @@
-#include "pin.h"
+#include "../include/pin.h"
 
 /* Create a new Pin struct corresponding to a legal GPIO pin. Provide an integer between
  * MIN_PIN and MAX_PIN and the constructor provides the rest, including exporting that
