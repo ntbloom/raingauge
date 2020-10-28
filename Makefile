@@ -46,7 +46,7 @@ poll: poll_test.out
 
 pin_test.out: src/pin.c test/test_pin.c 
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/pin.c src/sysfs.c test/vendor/unity.c test/test_pin.c -o pin_test.out
+	@gcc $(CFLAGS) src/pin.c src/sysfs.c src/poll.c test/vendor/unity.c test/test_pin.c -o pin_test.out
 
 sysfs_test.out: src/sysfs.c test/test_sysfs.c
 	@echo Compiling $@

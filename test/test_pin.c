@@ -6,20 +6,19 @@
 #include <unistd.h>
 #include "../include/constants.h"
 #include "../include/pin.h"
+#include "../include/poll.h"
 #include "../include/sysfs.h"
 #include "vendor/unity.h"
 
 void setUp(void) {
-    // export a pin where it previously did not exist
+    /* pass
+     *
+     */
 }
 void tearDown(void) {
-    // unexport pin at the end of the tests
-}
-
-/* if this test fails, the `setUp()` function was misconfigured */
-void test_setup(void) {
-    TEST_ASSERT_EQUAL_INT(1, 1);
-    TEST_ASSERT_EQUAL(false, 0);
+    /* pass
+     *
+     */
 }
 
 /* basic test of the constructor, run `make memtest` to confirm memory safety*/
@@ -82,25 +81,25 @@ void test_all_legal_pins(void) {
     }
 }
 
-/* test the polling function */
-void test_poll(void) {
-    /* create a pin, set edge to "rising" */
-    Pin* pin_ptr = construct_pin(18);
-    write_to_file("rising", pin_ptr->edge);
+/* test the infinite loop poll -- requires human interaction to pass */
+void test_prep_pin(void) {
+    int setup, test, cleanup;
+    Pin* pin = construct_pin(25);
+    TEST_ASSERT_NOT_NULL(pin);
+    setup = await_high(pin);
+    test = poll_loop(pin->value, 10);
 
-    poll_pin(pin_ptr); /* TODO: do something with this! */
-
-    deconstruct_pin(pin_ptr);
+    cleanup = deconstruct_pin(pin);
+    TEST_ASSERT_EQUAL(setup | test | cleanup, EXIT_SUCCESS);
 }
 
 int main(void) {
     UnityBegin("test/test_pin.c");
 
-    RUN_TEST(test_setup);
-    RUN_TEST(test_construct_pin);
-    RUN_TEST(test_automatic_export_unexport);
-    RUN_TEST(test_all_legal_pins);
-    RUN_TEST(test_poll);
+    // RUN_TEST(test_construct_pin);
+    // RUN_TEST(test_automatic_export_unexport);
+    // RUN_TEST(test_all_legal_pins);
+    RUN_TEST(test_prep_pin);
 
     UnityEnd();
 

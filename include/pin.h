@@ -1,6 +1,7 @@
 #ifndef PIN_H
 #define PIN_H
 
+#include <assert.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,14 +26,20 @@ struct Pin {
     const char* edge;        // file for edge, ie: ".../gpio18/edge"
     const char* active_low;  // file for active_low, ie : ".../gpio18/active_low"
 };
+
+/* Create a new Pin struct corresponding to a legal GPIO pin. Provide an integer between
+ * MIN_PIN and MAX_PIN and the constructor provides the rest, including exporting that
+ * number to /sys/class/gpio/export.  By default all pins are set to IN, so we read the
+ * value in case it's already receiving data.
+ */
 Pin* construct_pin(size_t);
+
+/* Remove a pin when you're done with it. The deconstructor first removes the pin from
+ * the filesystem using /sysfs/class/gpio/unexport, then frees all of the memory.
+ */
 int deconstruct_pin(Pin*);
 
-/* Methods to be used on a pin. Since they rely on the filesystem and the existence of the
- * basic file descriptor, these can only be called on a pin that has already been
- * exported. Additional criteria like pin direction or value may also be checked as
- * needed.
- */
-int poll_pin(Pin*);
+/* prep a pin to be polled high */
+int await_high(Pin*);
 
 #endif
