@@ -11,10 +11,10 @@
 int prep_file(const char*);
 
 /* poll a single file descriptor indefinitely on POLLPRI and POLLERR */
-int poll_one(int, int (*)(void));
+int poll_one(int, int, int (*)(void));
 
 /* poll the loop n number of times, use -1 for infinite loop */
-int poll_loop(const char*, int);
+int poll_loop(const char*, const char*, int);
 
 /* generic callback function to return on interrupt */
 int interrupt_callback(void);

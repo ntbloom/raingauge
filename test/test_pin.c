@@ -89,7 +89,8 @@ void test_prep_pin(void) {
     setup = await_high(pin);
     printf("\nWAITING FOR INPUT FROM USER...\n");
 
-    test = poll_loop(pin->value, 10);
+    const char* dummy = "/tmp/hello";
+    test = poll_loop(pin->value, dummy, 10);
 
     cleanup = deconstruct_pin(pin);
     TEST_ASSERT_EQUAL(setup | test | cleanup, EXIT_SUCCESS);
@@ -98,9 +99,9 @@ void test_prep_pin(void) {
 int main(void) {
     UnityBegin("test/test_pin.c");
 
-    RUN_TEST(test_construct_pin);
-    RUN_TEST(test_automatic_export_unexport);
-    RUN_TEST(test_all_legal_pins);
+    // RUN_TEST(test_construct_pin);
+    // RUN_TEST(test_automatic_export_unexport);
+    // RUN_TEST(test_all_legal_pins);
     RUN_TEST(test_prep_pin);
 
     UnityEnd();

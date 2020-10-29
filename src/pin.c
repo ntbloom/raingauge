@@ -122,27 +122,9 @@ int await_high(Pin* pin) {
 }
 
 /* poll a pin with a callback function in infinite loop exit condition */
-int poll_value(Pin* pin, int (*callback)(void)) {
-    int fd_direc, fd_val, leave_early;
-    struct pollfd fds[2];
-
-    fd_val = prep_file(pin->value);
-    fds[1].fd = fd_val;
-    fds[1].events = POLLPRI | POLLERR;
-
-    /* swap `direction` on the pin to give us a way to break early */
-    fd_direc = prep_file(pin->direc);
-    fds[0].fd = fd_direc;
-    fds[0].events = POLLPRI | POLLERR;
-    if (fd_val < 0 || fd_direc < 0) {
-        fprintf(stderr, "problem reading file descriptors for pin %s\n", pin->num);
-        return EXIT_FAILURE;
-    }
-
-    /* the main loop */
-    leave_early = -1;
-    while (leave_early != 0) {
-    }
-    return EXIT_SUCCESS;
-}
+// int poll_value(Pin* pin, int (*callback)(void)) {
+/* pass
+ *
+ */
+//}
 

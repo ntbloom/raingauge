@@ -21,59 +21,82 @@ int interrupt_callback(void) {
     return EXIT_SUCCESS;
 }
 
-int poll_one(int fd, int (*callback)(void)) {
-    int interrupt, results;
-    struct pollfd fds[1];
+/* return 0 for good, 1 for error, 2 for break early */
+int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
+    int interrupt;
+    struct pollfd fds[2];
 
-    fds[0].fd = fd;
-    fds[0].events = POLLPRI | POLLERR | POLLHUP;
-    interrupt = poll(fds, 1, -1);
+    fds[0].fd = fd_good;
+    fds[0].events = POLLPRI | POLLERR;
+
+    /* declare a second file descriptor to close loop from outside the function */
+    fds[1].fd = fd_break;
+    fds[1].events = 0;
+
+    interrupt = poll(fds, 2, -1);
 
     switch (interrupt) {
         case -1:
-            perror("bad poll()");
+            fprintf(stderr, "bad use of poll()\n");
             return EXIT_FAILURE;
         case 0:
-            printf("no interrupt detected\n");
+            fprintf(stderr, "no interrupt detected\n");
             return EXIT_FAILURE;
         default:
-            results = fds[0].revents;
-            if ((results & POLLPRI) == POLLPRI) {
+            /* interrupt detected on the good pin */
+            if ((fds[0].revents & POLLPRI) == POLLPRI) {
                 callback();
+            } else if (fds[1].revents != 0) {
+                printf("breaking out of loop early!\n");
+                return 2;
             } else
                 return EXIT_FAILURE;
     }
-    /* reset fd to beginning of file */
-    if (lseek(fd, 0, SEEK_SET) == -1) {
+    /* reset fd_good to beginning of file */
+    if (lseek(fd_good, 0, SEEK_SET) == -1) {
         perror("lseek");
         return EXIT_FAILURE;
     }
-    rd = read(fd, buf, 0);
+    rd = read(fd_good, buf, 0);
     return EXIT_SUCCESS;
 }
 
-int poll_loop(const char* value, int n) {
-    int fd, interrupt;
+int poll_loop(const char* value, const char* breakout, int n) {
+    int fd_value, fd_breakout, interrupt, quit;
 
     if (n < 0) {
         printf("negative numbers not currently supported for poll_loop()\n");
         return EXIT_FAILURE;
     }
 
-    fd = prep_file(value);
-    if (fd < 0) {
+    fd_value = prep_file(value);
+    fd_breakout = prep_file(breakout);
+    if (fd_value < 0 || fd_breakout < 0) {
         return EXIT_FAILURE;
     }
-    while (n > 0) {
-        interrupt = poll_one(fd, *interrupt_callback);
-        if (interrupt != EXIT_SUCCESS) {
-            return EXIT_FAILURE;
+
+    /* main loop */
+    quit = 0;
+    while (quit != 1) {
+        interrupt = poll_one(fd_value, fd_breakout, *interrupt_callback);
+        switch (interrupt) {
+            /* loop was cancelled by outside event */
+            case 2:
+                quit = 1;
+                break;
+            case EXIT_FAILURE:
+                quit = 1;
+                if (close(fd_value) != 0 || close(fd_breakout) != 0) {
+                    fprintf(stderr, "problem closing files %s, %s", value, breakout);
+                    return EXIT_FAILURE;
+                }
+            default:
+                continue;
         }
-        n--;
     }
 
-    if (close(fd) != 0) {
-        perror("problem closing file");
+    if (close(fd_value) != 0 || close(fd_breakout) != 0) {
+        fprintf(stderr, "problem closing files %s, %s", value, breakout);
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
