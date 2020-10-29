@@ -10,6 +10,7 @@
 #include <time.h>
 #include <unistd.h>
 #include "constants.h"
+#include "poll.h"
 #include "sysfs.h"
 
 /* Pin struct representing a GPIO Pin over sysfs using the file descriptors located at
@@ -41,5 +42,8 @@ int deconstruct_pin(Pin*);
 
 /* prep a pin to be polled high */
 int await_high(Pin*);
+
+/* poll a pin high until thread is called */
+int poll_value(Pin*, int (*)(void));
 
 #endif

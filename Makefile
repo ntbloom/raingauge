@@ -52,9 +52,9 @@ sysfs_test.out: src/sysfs.c test/test_sysfs.c
 	@echo Compiling $@
 	@gcc $(CFLAGS) src/sysfs.c test/vendor/unity.c test/test_sysfs.c -o sysfs_test.out
 
-raingauge:
+raingauge.out:
 	@echo Compiling $@
-	@gcc $(CFLAGS) src/* -o raingauge
+	@gcc $(CFLAGS) src/* -o raingauge.out
 
 sql_test.out: src/dbconnect.c test/test_dbconnect.c
 	@echo Compiling $@

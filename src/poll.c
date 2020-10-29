@@ -26,8 +26,7 @@ int poll_one(int fd, int (*callback)(void)) {
     struct pollfd fds[1];
 
     fds[0].fd = fd;
-    fds[0].events = POLLPRI | POLLERR;
-    fds[0].revents = -1;
+    fds[0].events = POLLPRI | POLLERR | POLLHUP;
     interrupt = poll(fds, 1, -1);
 
     switch (interrupt) {
