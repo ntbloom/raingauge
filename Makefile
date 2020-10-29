@@ -6,6 +6,7 @@ CFLAGS += -pedantic
 CFLAGS += -Werror
 CFLAGS += -I/usr/include/postgresql
 CFLAGS += -L/usr/lib/arm-linux-gnueabihf -lpq
+CFLAGS += -c
 	
 
 VFLAGS  = --quiet

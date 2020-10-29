@@ -49,7 +49,7 @@ Pin* construct_pin(size_t number) {
     pin->active_low = active_low;
 
     /* export the pin */
-    if (write_to_file(num, EXPORT) != EXIT_SUCCESS) {
+    if (write_to_file(EXPORT, num) != EXIT_SUCCESS) {
         perror("failure to export pin");
         fprintf(stderr, "failure to export pin %s to %s\n", num, EXPORT);
         return NULL;
@@ -77,7 +77,7 @@ Pin* construct_pin(size_t number) {
 }
 
 int deconstruct_pin(Pin* pin) {
-    if (write_to_file(pin->num, UNEXPORT) != EXIT_SUCCESS) {
+    if (write_to_file(UNEXPORT, pin->num) != EXIT_SUCCESS) {
         perror("failure to unexport pin");
         return EXIT_FAILURE;
     }
