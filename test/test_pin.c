@@ -82,17 +82,24 @@ void test_all_legal_pins(void) {
 }
 
 /* test the infinite loop poll -- requires human interaction to pass */
-void test_prep_pin(void) {
+void test_poll_loop(void) {
     int setup, test, cleanup;
-    Pin* pin = construct_pin(25);
-    TEST_ASSERT_NOT_NULL(pin);
-    setup = await_high(pin);
+    Pin *gauge, *stop_tx, *stop_rx;
+
+    gauge = construct_pin(25);
+    stop_tx = construct_pin(18);
+    stop_rx = construct_pin(23);
+
+    TEST_ASSERT_NOT_NULL(gauge);
+    TEST_ASSERT_NOT_NULL(stop_tx);
+    TEST_ASSERT_NOT_NULL(stop_rx);
+
+    setup = await_high(gauge) | await_high(stop_rx) | write_to_file(stop_tx->direc, OUT);
     printf("\nWAITING FOR INPUT FROM USER...\n");
 
-    const char* dummy = "/tmp/hello";
-    test = poll_loop(pin->value, dummy, 10);
+    test = poll_loop(gauge->value, stop_rx->value);
 
-    cleanup = deconstruct_pin(pin);
+    cleanup = deconstruct_pin(gauge) | deconstruct_pin(stop_tx) | deconstruct_pin(stop_rx);
     TEST_ASSERT_EQUAL(setup | test | cleanup, EXIT_SUCCESS);
 }
 
@@ -102,7 +109,7 @@ int main(void) {
     // RUN_TEST(test_construct_pin);
     // RUN_TEST(test_automatic_export_unexport);
     // RUN_TEST(test_all_legal_pins);
-    RUN_TEST(test_prep_pin);
+    RUN_TEST(test_poll_loop);
 
     UnityEnd();
 

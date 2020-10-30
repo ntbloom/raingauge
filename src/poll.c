@@ -7,7 +7,7 @@ static int rd;
 int prep_file(const char* file) {
     int fd;
 
-    fd = open(file, O_RDONLY);
+    fd = open(file, O_NONBLOCK);
     if (fd < 0) {
         perror("open");
         return EXIT_FAILURE;
@@ -31,7 +31,7 @@ int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
 
     /* declare a second file descriptor to close loop from outside the function */
     fds[1].fd = fd_break;
-    fds[1].events = 0;
+    fds[1].events = POLLPRI | POLLERR;
 
     interrupt = poll(fds, 2, -1);
 
@@ -46,7 +46,7 @@ int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
             /* interrupt detected on the good pin */
             if ((fds[0].revents & POLLPRI) == POLLPRI) {
                 callback();
-            } else if (fds[1].revents != 0) {
+            } else if ((fds[1].revents & POLLPRI) == POLLPRI) {
                 printf("breaking out of loop early!\n");
                 return 2;
             } else
@@ -61,13 +61,8 @@ int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
     return EXIT_SUCCESS;
 }
 
-int poll_loop(const char* value, const char* breakout, int n) {
+int poll_loop(const char* value, const char* breakout) {
     int fd_value, fd_breakout, interrupt, quit;
-
-    if (n < 0) {
-        printf("negative numbers not currently supported for poll_loop()\n");
-        return EXIT_FAILURE;
-    }
 
     fd_value = prep_file(value);
     fd_breakout = prep_file(breakout);
