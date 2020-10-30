@@ -25,7 +25,7 @@ test: sysfs_test.out pin_test.out
 	@echo "=======================\n"
 	@echo "TESTING PIN MODULE...\n"
 	@./pin_test.out &
-	@sleep 30 && echo 0 > /sys/class/gpio/gpio18/value
+	@sleep 10 && echo 0 > /sys/class/gpio/gpio18/value
 
 
 
