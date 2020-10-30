@@ -17,6 +17,6 @@ int poll_one(int, int, int (*)(void));
 int poll_loop(const char*, const char*, int (*)(void));
 
 /* generic callback function to return on interrupt */
-int interrupt_callback(void);
+int generic_callback(void);
 
 #endif

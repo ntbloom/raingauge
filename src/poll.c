@@ -2,6 +2,7 @@
 
 static char buf[1];
 static int rd;
+static int count = 0;
 
 /* prep a POSIX file name for polling */
 int prep_file(const char* file) {
@@ -16,8 +17,9 @@ int prep_file(const char* file) {
     return fd;
 }
 
-int interrupt_callback(void) {
-    printf("interrupt triggered\n");
+/* generic callback on an interrupt, replace with database call in prod */
+int generic_callback(void) {
+    printf("interrupt triggered: clicks = %d\n", count++ + 1);
     return EXIT_SUCCESS;
 }
 
@@ -63,6 +65,12 @@ int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
 
 int poll_loop(const char* value, const char* breakout, int (*callback)(void)) {
     int fd_value, fd_breakout, interrupt, quit;
+    int (*cb)(void);
+    if (callback == NULL) {
+        cb = *generic_callback;
+    } else {
+        cb = *callback;
+    }
 
     fd_value = prep_file(value);
     fd_breakout = prep_file(breakout);
@@ -73,7 +81,7 @@ int poll_loop(const char* value, const char* breakout, int (*callback)(void)) {
     /* main loop */
     quit = 0;
     while (quit != 1) {
-        interrupt = poll_one(fd_value, fd_breakout, *callback);
+        interrupt = poll_one(fd_value, fd_breakout, cb);
         switch (interrupt) {
             /* loop was cancelled by outside event */
             case 2:
