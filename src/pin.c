@@ -92,39 +92,18 @@ int deconstruct_pin(Pin* pin) {
     return EXIT_SUCCESS;
 }
 
-int await_high(Pin* pin) {
-    const char *direc, *edge, *active_low;
-
-    /* make sure you can access everything */
-    size_t i, size = 4;
-    const char* descriptors[] = {pin->direc, pin->value, pin->edge, pin->active_low};
-    for (i = 0; i < size; i++) {
-        assert(access(descriptors[i], W_OK | R_OK) == EXIT_SUCCESS);
-    }
-
-    direc = "in";
+int prep_pin(Pin* pin, const char* direc, const char* edge, const char* active_low) {
     if (write_to_file(pin->direc, direc) != EXIT_SUCCESS) {
         fprintf(stderr, "failure to set direction: \n`%s` to `%s`\n", pin->direc, direc);
         return EXIT_FAILURE;
     }
-
-    edge = "rising";
     if (write_to_file(pin->edge, edge) != EXIT_SUCCESS) {
         fprintf(stderr, "failure to set edge: `%s` to `%s`\n", pin->edge, edge);
         return EXIT_FAILURE;
     }
-    active_low = "1";
     if (write_to_file(pin->active_low, "1") != EXIT_SUCCESS) {
         fprintf(stderr, "failure to set active_low: `%s` to `%s`\n", pin->active_low, active_low);
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
 }
-
-/* poll a pin with a callback function in infinite loop exit condition */
-// int poll_value(Pin* pin, int (*callback)(void)) {
-/* pass
- *
- */
-//}
-

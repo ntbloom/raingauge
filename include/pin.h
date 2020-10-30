@@ -40,8 +40,8 @@ Pin* construct_pin(size_t);
  */
 int deconstruct_pin(Pin*);
 
-/* prep a pin to be polled high */
-int await_high(Pin*);
+/* set the pin parameters however you l*/
+int prep_pin(Pin*, const char*, const char*, const char*);
 
 /* poll a pin high until thread is called */
 int poll_value(Pin*, int (*)(void));

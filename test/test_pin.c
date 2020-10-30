@@ -94,7 +94,8 @@ void test_poll_loop(void) {
     TEST_ASSERT_NOT_NULL(stop_tx);
     TEST_ASSERT_NOT_NULL(stop_rx);
 
-    setup = await_high(gauge) | await_high(stop_rx) | write_to_file(stop_tx->direc, OUT);
+    setup = prep_pin(gauge, IN, RISING, HIGH) | prep_pin(stop_rx, IN, BOTH, LOW) |
+            prep_pin(stop_tx, OUT, NONE, LOW);
     printf("\nWAITING FOR INPUT FROM USER...\n");
 
     test = poll_loop(gauge->value, stop_rx->value);
@@ -106,9 +107,9 @@ void test_poll_loop(void) {
 int main(void) {
     UnityBegin("test/test_pin.c");
 
-    // RUN_TEST(test_construct_pin);
-    // RUN_TEST(test_automatic_export_unexport);
-    // RUN_TEST(test_all_legal_pins);
+    RUN_TEST(test_construct_pin);
+    RUN_TEST(test_automatic_export_unexport);
+    RUN_TEST(test_all_legal_pins);
     RUN_TEST(test_poll_loop);
 
     UnityEnd();
