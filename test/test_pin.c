@@ -98,7 +98,7 @@ void test_poll_loop(void) {
             prep_pin(stop_tx, OUT, NONE, LOW);
     printf("\nWAITING FOR INPUT FROM USER...\n");
 
-    test = poll_loop(gauge->value, stop_rx->value);
+    test = poll_loop(gauge->value, stop_rx->value, interrupt_callback);
 
     cleanup = deconstruct_pin(gauge) | deconstruct_pin(stop_tx) | deconstruct_pin(stop_rx);
     TEST_ASSERT_EQUAL(setup | test | cleanup, EXIT_SUCCESS);

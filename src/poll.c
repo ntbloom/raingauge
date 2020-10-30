@@ -47,7 +47,7 @@ int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
             if ((fds[0].revents & POLLPRI) == POLLPRI) {
                 callback();
             } else if ((fds[1].revents & POLLPRI) == POLLPRI) {
-                printf("breaking out of loop early!\n");
+                printf("stopping GPIO poll...\n");
                 return 2;
             } else
                 return EXIT_FAILURE;
@@ -61,7 +61,7 @@ int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
     return EXIT_SUCCESS;
 }
 
-int poll_loop(const char* value, const char* breakout) {
+int poll_loop(const char* value, const char* breakout, int (*callback)(void)) {
     int fd_value, fd_breakout, interrupt, quit;
 
     fd_value = prep_file(value);
@@ -73,7 +73,7 @@ int poll_loop(const char* value, const char* breakout) {
     /* main loop */
     quit = 0;
     while (quit != 1) {
-        interrupt = poll_one(fd_value, fd_breakout, *interrupt_callback);
+        interrupt = poll_one(fd_value, fd_breakout, *callback);
         switch (interrupt) {
             /* loop was cancelled by outside event */
             case 2:

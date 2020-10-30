@@ -14,7 +14,7 @@ int prep_file(const char*);
 int poll_one(int, int, int (*)(void));
 
 /* poll the loop n number of times, use -1 for infinite loop */
-int poll_loop(const char*, const char*);
+int poll_loop(const char*, const char*, int (*)(void));
 
 /* generic callback function to return on interrupt */
 int interrupt_callback(void);
