@@ -54,6 +54,6 @@ sqlite3* db_connect(const char*);
 int db_add_tick(sqlite3*, int);
 
 /* Prints all ticks from the database object */
-int db_count_ticks(sqlite3*, int);
+double db_count_ticks(sqlite3*, int);
 
 #endif

@@ -1,6 +1,7 @@
 #include "../include/localdb.h"
 
 static char* errmsg;
+static double total_ticks;
 
 int create_db(const char* db_file) {
     /* define the schema */
@@ -83,10 +84,11 @@ int print_row_callback(__attribute__((unused)) void* _, int argc, char** argv, c
     for (int i = 0; i < argc; i++) {
         printf("%s=%s\n", azColName[i], argv[i]);
     }
+    total_ticks = atof(argv[0]);
     return EXIT_SUCCESS;
 }
 
-int db_count_ticks(sqlite3* db, int gauge) {
+double db_count_ticks(sqlite3* db, int gauge) {
     int rc;
     char* sql = malloc(100);
     sprintf(sql, "SELECT sum(amount) FROM ticks WHERE gauge = %d", gauge);
@@ -95,7 +97,7 @@ int db_count_ticks(sqlite3* db, int gauge) {
 
     if (rc) {
         fprintf(stderr, "SQLITE ERROR %d: %s\n", rc, errmsg);
-        return EXIT_FAILURE;
+        return -1.0;
     }
-    return EXIT_SUCCESS;
+    return total_ticks;
 }
