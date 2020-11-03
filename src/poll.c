@@ -66,6 +66,8 @@ int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
 int poll_loop(const char* value, const char* breakout, int (*callback)(void)) {
     int fd_value, fd_breakout, interrupt, quit;
     int (*cb)(void);
+
+    /* default to generic_callback unless one is specified */
     if (callback == NULL) {
         cb = *generic_callback;
     } else {
@@ -83,17 +85,16 @@ int poll_loop(const char* value, const char* breakout, int (*callback)(void)) {
     while (quit != 1) {
         interrupt = poll_one(fd_value, fd_breakout, cb);
         switch (interrupt) {
-            /* loop was cancelled by outside event */
-            case 2:
+            case 2: /* loop was cancelled by outside event */
                 quit = 1;
                 break;
-            case EXIT_FAILURE:
+            case EXIT_FAILURE: /* problem in the poll function */
                 quit = 1;
                 if (close(fd_value) != 0 || close(fd_breakout) != 0) {
                     fprintf(stderr, "problem closing files %s, %s", value, breakout);
                     return EXIT_FAILURE;
                 }
-            default:
+            default: /* continue the infinite loop */
                 continue;
         }
     }
