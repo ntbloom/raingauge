@@ -1,14 +1,13 @@
 #include "../include/localdb.h"
 
-#define LOCALDB "/home/pi/rain/local.db"
-
-int dbconnect(sqlite3 *db) {
+sqlite3* dbconnect(const char* filename) {
     int rc;
+    sqlite3* db;
 
-    rc = sqlite3_open(LOCALDB, &db);
+    rc = sqlite3_open(filename, &db);
     if (rc) {
         fprintf(stderr, "error opening sqlite3 file at %s\n", LOCALDB);
-        return EXIT_FAILURE;
+        return NULL;
     }
-    return EXIT_SUCCESS;
+    return db;
 }

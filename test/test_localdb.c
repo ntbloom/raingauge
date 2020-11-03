@@ -10,9 +10,9 @@ void tearDown(void) {}
 
 /* database file is created */
 void test_basic_connection(void) {
-    int c;
-    c = dbconnect();
-    TEST_ASSERT_EQUAL(c, EXIT_SUCCESS);
+    sqlite3 *db;
+    db = dbconnect(LOCALDB);
+    TEST_ASSERT_NOT_NULL(db);
 }
 
 int main(void) {

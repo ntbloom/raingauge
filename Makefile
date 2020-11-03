@@ -6,6 +6,7 @@ CFLAGS += -pedantic
 CFLAGS += -Werror
 CFLAGS += -pthread
 CFLAGS += -ldl
+CFLAGS += -lsqlite3
 
 VFLAGS  = --quiet
 VFLAGS += -v

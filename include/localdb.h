@@ -1,8 +1,12 @@
 #ifndef LOCALDB_H
 #define LOCALDB_H
 
-#include "../src/common/sqlite3.c"
+#include <sqlite3.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-int dbconnect(sqlite3 *db);
+#define LOCALDB "/home/pi/rain/local.db"
+
+sqlite3* dbconnect(const char*);
 
 #endif
