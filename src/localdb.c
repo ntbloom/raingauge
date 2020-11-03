@@ -1,5 +1,13 @@
 #include "../include/localdb.h"
 
+int create_db(const char* db_file) {
+    /* define the schema */
+
+    /* put it in the file */
+    printf("%s\n", db_file);
+    return EXIT_SUCCESS;
+}
+
 sqlite3* db_connect(const char* filename) {
     int rc, db_flags;
     sqlite3* db;
@@ -13,12 +21,4 @@ sqlite3* db_connect(const char* filename) {
     }
     return db;
 }
-
-// int db_add_click(sqlite3* db) {
-/* pass
- *
- */
-
-//    return -1;
-//}
 

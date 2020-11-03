@@ -2,11 +2,19 @@
 #include "../include/localdb.h"
 #include "vendor/unity.h"
 
-/* open the database connection */
-void setUp(void) {}
+/* create a database file with schema */
+void setUp(void) {
+    if (create_db(LOCALDB) != EXIT_SUCCESS) {
+        TEST_ASSERT_EQUAL(1, 0);
+    }
+}
 
-/* close the databse connection */
-void tearDown(void) {}
+/* delete the database file */
+void tearDown(void) {
+    if (remove(LOCALDB) != EXIT_SUCCESS) {
+        TEST_ASSERT_EQUAL(1, 0);
+    }
+}
 
 /* database file is created */
 void test_basic_connection(void) {
