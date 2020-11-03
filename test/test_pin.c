@@ -81,7 +81,9 @@ void test_all_legal_pins(void) {
     }
 }
 
-/* test the infinite loop poll -- requires human interaction to pass */
+/* test the infinite loop poll
+ * Currently this test is run by the Makefile that runs asynchronously
+ */
 void test_poll_loop(void) {
     int setup, test, cleanup;
     Pin *gauge, *stop_tx, *stop_rx;
