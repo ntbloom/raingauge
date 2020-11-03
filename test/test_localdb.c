@@ -11,7 +11,7 @@ void tearDown(void) {}
 /* database file is created */
 void test_basic_connection(void) {
     sqlite3 *db;
-    db = dbconnect(LOCALDB);
+    db = db_connect(LOCALDB);
     TEST_ASSERT_NOT_NULL(db);
 }
 
