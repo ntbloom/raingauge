@@ -20,6 +20,8 @@ Turn a single board computer into a rain gauge using C and some very simple depe
 - gcc on a Linux system like a Raspberry Pi
 - Paho MQTT client library
 
+The sqlite3.c library has been vendored in the `src/common/` directory.
+
 #### Cloud
 
 - postgresql
