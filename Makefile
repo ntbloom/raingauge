@@ -18,10 +18,10 @@ VFLAGS += --show-possibly-lost=yes
 VFLAGS += --undef-value-errors=yes
 
 test: sysfs_test.out pin_test.out localdb_test.out
-	@echo "=======================\n"
-	@echo "TESTING SYSFS MODULE...\n"
-	@./sysfs_test.out
-	@echo
+	#@echo "=======================\n"
+	#@echo "TESTING SYSFS MODULE...\n"
+	#@./sysfs_test.out
+	#@echo
 	#@echo "=======================\n"
 	#@echo "TESTING PIN MODULE...\n"
 	#@./pin_test.out &
