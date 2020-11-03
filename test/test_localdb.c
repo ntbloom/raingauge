@@ -11,9 +11,9 @@ void setUp(void) {
 
 /* delete the database file */
 void tearDown(void) {
-    //    if (remove(LOCALDB) != EXIT_SUCCESS) {
-    //       TEST_FAIL_MESSAGE("error deleting database");
-    //  }
+    if (remove(LOCALDB) != EXIT_SUCCESS) {
+        TEST_FAIL_MESSAGE("error deleting database");
+    }
 }
 
 /* database file is created */

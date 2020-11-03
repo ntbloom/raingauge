@@ -61,28 +61,39 @@ int db_add_tick(sqlite3* db, int gauge) {
         return EXIT_FAILURE;
     }
     int rc;
-    char* insert;
+    char* sql;
 
-    insert = malloc(255);
-    sprintf(insert,
-            "INSERT INTO ticks (db_time, gauge, num) SELECT Datetime('now'), %d, mm_per_click FROM "
-            "gauge WHERE id = %d;",
+    sql = malloc(255);
+    sprintf(sql,
+            "BEGIN; INSERT INTO ticks (db_time, gauge, num) SELECT Datetime('now'), %d, "
+            "mm_per_click FROM "
+            "gauge WHERE id = %d; COMMIT;",
             gauge, gauge);
-    printf("%s\n", insert);
-    rc = sqlite3_exec(db, insert, NULL, NULL, &errmsg);
-    printf("errmsg in add_tick = %s\n", errmsg);
+    rc = sqlite3_exec(db, sql, NULL, NULL, &errmsg);
     if (rc) {
         fprintf(stderr, "SQLITE ERROR %d: %s\n", rc, errmsg);
         return EXIT_FAILURE;
     }
 
-    free(insert);
+    free(sql);
     return EXIT_SUCCESS;
 }
 
-// void db_print_ticks(sqlite3* db, int gauge) {
-/*
- *
- */
-//}
+int print_row_callback(void* _, int argc, char** argv, char** azColName) {
+    printf("%p", _);
+    for (int i = 0; i < argc; i++) {
+        printf("i%s=%s\n", azColName[i], argv[i]);
+    }
+    return EXIT_SUCCESS;
+}
+
+void db_print_ticks(sqlite3* db, int gauge) {
+    int rc;
+    char* sql = malloc(100);
+    sprintf(sql, "SELECT * FROM ticks WHERE id = %d", gauge);
+    rc = sqlite3_exec(db, sql, print_row_callback, 0, &errmsg);
+    if (rc) {
+        fprintf(stderr, "SQLITE ERROR %d: %s\n", rc, errmsg);
+    }
+}
 
