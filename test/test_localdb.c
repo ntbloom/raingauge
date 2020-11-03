@@ -18,19 +18,23 @@ void tearDown(void) {
 
 /* database file is created */
 void test_basic_connection(void) {
-    int gauge, click;
+    int prep, click, gauge;
     sqlite3 *db;
+
     db = db_connect(LOCALDB);
+    gauge = 1;
+
     TEST_ASSERT_NOT_NULL_MESSAGE(db, "failure to connect to database file");
-    gauge = create_sample_gauge(db);
-    TEST_ASSERT_EQUAL_MESSAGE(gauge, EXIT_SUCCESS, "sample gauge not created");
+    prep = create_sample_gauge(db);
+    TEST_ASSERT_EQUAL_MESSAGE(prep, EXIT_SUCCESS, "sample gauge not created");
 
     for (int i = 0; i < 10; i++) {
-        click = db_add_tick(db, 1);
+        click = db_add_tick(db, gauge);
         TEST_ASSERT_EQUAL_MESSAGE(click, EXIT_SUCCESS, "tick not added to database");
     }
+    TEST_ASSERT_EQUAL(EXIT_SUCCESS, db_count_ticks(db, gauge));
 
-    TEST_ASSERT_EQUAL(0, sqlite3_close(db));
+    TEST_ASSERT_EQUAL(EXIT_SUCCESS, sqlite3_close(db));
 }
 
 int main(void) {

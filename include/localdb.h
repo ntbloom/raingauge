@@ -21,7 +21,7 @@
     "CREATE TABLE ticks ("                     \
     "db_time TEXT,"                            \
     "gauge INT DEFAULT 1,"                     \
-    "num REAL NOT NULL,"                       \
+    "amount REAL NOT NULL,"                    \
     "FOREIGN KEY (gauge) REFERENCES gauge(id)" \
     ");"                                       \
     "COMMIT;"
@@ -54,6 +54,6 @@ sqlite3* db_connect(const char*);
 int db_add_tick(sqlite3*, int);
 
 /* Prints all ticks from the database object */
-void db_print_ticks(sqlite3*, int);
+int db_count_ticks(sqlite3*, int);
 
 #endif
