@@ -9,7 +9,11 @@ void setUp(void) {}
 void tearDown(void) {}
 
 /* database file is created */
-void test_basic_connection(void) { printf("tests working\n"); }
+void test_basic_connection(void) {
+    int c;
+    c = dbconnect();
+    TEST_ASSERT_EQUAL(c, EXIT_SUCCESS);
+}
 
 int main(void) {
     UnityBegin("test/test_localdb.c");
