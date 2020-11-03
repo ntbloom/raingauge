@@ -4,9 +4,8 @@ CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
-CFLAGS += -I/usr/include/postgresql
-CFLAGS += -L/usr/lib/arm-linux-gnueabihf -lpq
-	
+CFLAGS += -pthread
+CFLAGS += -ldl
 
 VFLAGS  = --quiet
 VFLAGS += -v
@@ -36,6 +35,10 @@ memcheck: pin_test.out sysfs_test.out poll
 clean:
 	rm -rf *.o *.out *.out.dSYM
 
+localdb_test.out: src/localdb.c
+	@echo Compiling $@
+	@gcc $(CFLAGS) src/localdb.c test/vendor/unity.c test/test_localdb.c -o localdb_test.out
+
 poll_test.out: src/poll.c
 	@echo Compiling $@
 	@gcc $(CFLAGS) src/poll.c -o poll_test.out
@@ -56,12 +59,3 @@ sysfs_test.out: src/sysfs.c test/test_sysfs.c
 raingauge.out:
 	@echo Compiling $@
 	@gcc $(CFLAGS) src/* -o raingauge.out
-
-sql_test.out: src/dbconnect.c test/test_dbconnect.c
-	@echo Compiling $@
-	@gcc $(CFLAGS) src/dbconnect.c test/vendor/unity.c test/test_dbconnect.c -o sql_test.out
-	@./sql_test.out
-
-memsql: sql_test.out
-	@valgrind $(VFLAGS) ./sql_test.out
-	@echo "Memory check passed"
