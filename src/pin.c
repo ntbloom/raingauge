@@ -52,24 +52,21 @@ Pin* construct_pin(size_t number) {
     if (write_to_file(EXPORT, num) != EXIT_SUCCESS) {
         perror("failure to export pin");
         fprintf(stderr, "failure to export pin %s to %s\n", num, EXPORT);
-        return NULL;
+        pin = NULL;
+        return pin;
     }
 
     /* make sure all values are accessible before moving forward */
     size_t i, size;
-    int success;
     size = 4;
     char* descriptors[] = {direc, value, edge, active_low};
     for (i = 0; i < size; i++) {
         char* filename = descriptors[i];
         if (file_exists(filename, W_OK, 1) != EXIT_SUCCESS) {
             fprintf(stderr, "failure to access `%s`", filename);
-            success = EXIT_FAILURE;
+            pin = NULL;
+            return pin;
         }
-    }
-
-    if (success == EXIT_FAILURE) {
-        return NULL;
     }
     return pin;
 }

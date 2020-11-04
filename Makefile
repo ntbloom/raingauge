@@ -19,6 +19,7 @@ VFLAGS += --show-possibly-lost=yes
 VFLAGS += --undef-value-errors=yes
 VFLAGS += --suppressions=suppressions/custom.supp
 VFLAGS += --suppressions=suppressions/sqlite3.supp
+VFLAGS += --track-origins=yes
 #VFLAGS += --gen-suppressions=all
 
 test: sysfs_test.out pin_test.out localdb_test.out
