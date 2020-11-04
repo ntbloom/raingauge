@@ -65,8 +65,6 @@ Pin* construct_pin(size_t number) {
         if (file_exists(filename, W_OK, 1) != EXIT_SUCCESS) {
             fprintf(stderr, "failure to access `%s`", filename);
             success = EXIT_FAILURE;
-        } else {
-            printf("%s\n", filename);
         }
     }
 

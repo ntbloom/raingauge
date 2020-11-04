@@ -1,0 +1,3 @@
+gcc: fatal error: cannot specify -o with -c, -S or -E with multiple files
+compilation terminated.
+make: *** [Makefile:65: pin_test.out] Error 1
