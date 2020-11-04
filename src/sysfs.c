@@ -32,6 +32,7 @@ char* read_file(const char* fdesc) {
     FILE* handler = fopen(fdesc, "r");
     if (!handler) {
         perror("read_file fopen error");
+        free(contents);
         return NULL;
     }
     if (fgets(contents, sizeof(contents), handler) == NULL) {
@@ -39,6 +40,7 @@ char* read_file(const char* fdesc) {
     }
     if (fclose(handler) == EXIT_FAILURE) {
         perror("read_file() fclose error");
+        free(contents);
         return NULL;
     }
     return contents;

@@ -29,14 +29,19 @@ void test_file_exists_without_timeout(void) {
 void test_read_and_write_file(void) {
     /* read and write a direction file to IN and OUT */
     const char* direction = "/sys/class/gpio/gpio18/direction";
+    char *results_out, *results_in;
 
     // set to out
     TEST_ASSERT_EQUAL_INT(EXIT_SUCCESS, write_to_file(direction, OUT));
-    TEST_ASSERT_EQUAL_INT(0, strncmp(OUT, read_file(direction), strlen(OUT)));
+    results_out = read_file(direction);
+    TEST_ASSERT_EQUAL_INT(0, strncmp(OUT, results_out, strlen(OUT)));
 
     // set to in
     TEST_ASSERT_EQUAL_INT(EXIT_SUCCESS, write_to_file(direction, IN));
-    TEST_ASSERT_EQUAL_INT(0, strncmp(IN, read_file(direction), strlen(IN)));
+    results_in = read_file(direction);
+    TEST_ASSERT_EQUAL_INT(0, strncmp(IN, results_in, strlen(IN)));
+    free(results_out);
+    free(results_in);
 }
 
 int main(void) {

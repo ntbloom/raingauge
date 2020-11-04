@@ -4,9 +4,9 @@ CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
-CFLAGS += -pthread
-CFLAGS += -ldl
-CFLAGS += -lsqlite3
+#CFLAGS += -pthread
+#CFLAGS += -ldl
+#CFLAGS += -lsqlite3
 
 VFLAGS  = --quiet
 VFLAGS += -v
@@ -16,16 +16,19 @@ VFLAGS += --error-exitcode=1
 VFLAGS += --show-reachable=yes
 VFLAGS += --show-possibly-lost=yes
 VFLAGS += --undef-value-errors=yes
+VFLAGS += --suppressions=suppressions/raspbian5-4-72.supp
+
+VFLAGS += --gen-suppressions=all
 
 test: sysfs_test.out pin_test.out localdb_test.out
-	#@echo "=======================\n"
-	#@echo "TESTING SYSFS MODULE...\n"
-	#@./sysfs_test.out
-	#@echo
-	#@echo "=======================\n"
-	#@echo "TESTING PIN MODULE...\n"
-	#@./pin_test.out &
-	#@sleep 10 && echo 0 > /sys/class/gpio/gpio18/value
+	@echo "=======================\n"
+	@echo "TESTING SYSFS MODULE...\n"
+	@./sysfs_test.out
+	@echo
+	@echo "=======================\n"
+	@echo "TESTING PIN MODULE...\n"
+	@./pin_test.out &
+	@sleep 10 && echo 0 > /sys/class/gpio/gpio18/value
 	@echo "=======================\n"
 	@echo "TESTING LOCALDB MODULE...\n"
 	@./localdb_test.out
@@ -33,8 +36,8 @@ test: sysfs_test.out pin_test.out localdb_test.out
 
 
 
-memcheck: pin_test.out sysfs_test.out poll 
-	@valgrind $(VFLAGS) ./pin_test.out ./sysfs_test.out ./poll_test.out
+memcheck: pin_test.out sysfs_test.out localdb_test.out
+	@valgrind $(VFLAGS) ./sysfs_test.out #./pin_test.out ./sysfs_test.out ./localdb_test.out
 	@echo "Memory check passed"
 
 clean:
