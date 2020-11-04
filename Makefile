@@ -4,6 +4,7 @@ CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
+#CFLAGS += -c
 CFLAGS += -pthread
 CFLAGS += -ldl
 CFLAGS += -lsqlite3
@@ -16,9 +17,9 @@ VFLAGS += --error-exitcode=1
 VFLAGS += --show-reachable=yes
 VFLAGS += --show-possibly-lost=yes
 VFLAGS += --undef-value-errors=yes
-VFLAGS += --suppressions=suppressions/raspbian5-4-72.supp
-
-VFLAGS += --gen-suppressions=all
+VFLAGS += --suppressions=suppressions/custom.supp
+VFLAGS += --suppressions=suppressions/sqlite3.supp
+#VFLAGS += --gen-suppressions=all
 
 test: sysfs_test.out pin_test.out localdb_test.out
 	@echo "=======================\n"
@@ -38,9 +39,9 @@ test: sysfs_test.out pin_test.out localdb_test.out
 
 memcheck: pin_test.out sysfs_test.out localdb_test.out poll_test.out
 	@valgrind $(VFLAGS) ./sysfs_test.out 
-	@valgrind ./pin_test.out &
+	@valgrind $(VFLAGS) ./pin_test.out &
 	@sleep 15 && echo 0 > /sys/class/gpio/gpio18/value
-	@valgrind ./localdb_test.out
+	@valgrind $(VFLAGS) ./localdb_test.out
 	@echo "Memory check passed"
 
 clean:

@@ -1,0 +1,1431 @@
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr8
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:malloc
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   stat64(file_name)
+   fun:__xstat64
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr8
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:sqlite3_str_vappendf
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:sqlite3_str_append
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:sqlite3_str_append
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:is_overlap
+   fun:is_overlap
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   fun:__memcpy_chk
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   openat(filename)
+   fun:open64
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:sqlite3_str_vappendf
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   fun:sqlite3_vsnprintf
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   pwrite64(buf)
+   fun:pwrite64
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Param
+   unlink(pathname)
+   fun:unlink
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   fun:realloc
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Cond
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libarmmem-v7l.so
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Value4
+   obj:/usr/lib/arm-linux-gnueabihf/libsqlite3.so.0.8.6
+}
