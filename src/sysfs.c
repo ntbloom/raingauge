@@ -3,24 +3,21 @@
 /* write a string to a file */
 int write_to_file(const char* fdesc, const char* msg) {
     if (file_exists(fdesc, W_OK, 1) != 0) {
-        char* err = malloc(strlen(fdesc) + 50);
-        sprintf(err, "file `%s` does not exist", fdesc);
-        perror("err");
-        free(err);
+        fprintf(stderr, "file `%s` does not exist\n", fdesc);
         return EXIT_FAILURE;
     }
 
     FILE* handler = fopen(fdesc, "r+");
     if (!handler) {
-        perror("write_to_file() fopen error");
+        fprintf(stderr, "fopen error on %s\n", fdesc);
         return EXIT_FAILURE;
     }
     if (fputs(msg, handler) == EOF) {
-        perror("write_to_file() fputs error");
+        fprintf(stderr, "fputs error on %s\n", fdesc);
         return EXIT_FAILURE;
     }
     if (fclose(handler) == EXIT_FAILURE) {
-        perror("write_to_file() fclose error");
+        fprintf(stderr, "fclose error on %s\n", fdesc);
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
@@ -31,15 +28,15 @@ char* read_file(const char* fdesc) {
     char* contents = malloc(5);
     FILE* handler = fopen(fdesc, "r");
     if (!handler) {
-        perror("read_file fopen error");
+        fprintf(stderr, "fopen error on %s\n", fdesc);
         free(contents);
         return NULL;
     }
     if (fgets(contents, sizeof(contents), handler) == NULL) {
-        perror("fgets");
+        fprintf(stderr, "fgets error on %s\n", fdesc);
     }
     if (fclose(handler) == EXIT_FAILURE) {
-        perror("read_file() fclose error");
+        fprintf(stderr, "fclose error on %s\n", fdesc);
         free(contents);
         return NULL;
     }
@@ -56,6 +53,7 @@ int file_exists(const char* fdesc, int mode, int timeout) {
         if (access(fdesc, mode) == 0) {
             return EXIT_SUCCESS;
         } else {
+            fprintf(stderr, "file %s doesn't exist\n", fdesc);
             return EXIT_FAILURE;
         }
     }
@@ -66,5 +64,6 @@ int file_exists(const char* fdesc, int mode, int timeout) {
             return EXIT_SUCCESS;
         }
     }
+    fprintf(stderr, "file %s isn't accessible in %d mode\n", fdesc, mode);
     return EXIT_FAILURE;
 }

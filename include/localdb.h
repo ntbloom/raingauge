@@ -37,7 +37,7 @@
     ");"                                                                             \
     "COMMIT;"
 
-#define LOCALDB "/home/pi/rain/local.db"
+#define LOCALDB "/home/pi/raingauge/local.db"
 #define INSERTCLICK "INSERT INTO ticks (gauge, num) SELECT 1, mm_per_click FROM gauge WHERE id = "
 
 /* Creates a sqlite database file.  Schema is embedded within the function for simplicity over

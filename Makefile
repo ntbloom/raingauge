@@ -8,6 +8,7 @@ CFLAGS += -Werror
 CFLAGS += -pthread
 CFLAGS += -ldl
 CFLAGS += -lsqlite3
+CFLAGS += -g
 
 VFLAGS  = --quiet
 VFLAGS += -v
@@ -30,12 +31,13 @@ test: sysfs_test.out pin_test.out localdb_test.out
 	@echo "=======================\n"
 	@echo "TESTING PIN MODULE...\n"
 	@./pin_test.out &
-	@sleep 10 && echo 0 > /sys/class/gpio/gpio18/value
+	@sleep 5 && echo 0 > /sys/class/gpio/gpio18/value
 	@echo "=======================\n"
 	@echo "TESTING LOCALDB MODULE...\n"
-	@./localdb_test.out
+	@ ./localdb_test.out
 
-
+debug: sysfs_test.out pin_test.out localdb_test.out
+	gdb ./localdb_test.out
 
 
 memcheck: pin_test.out sysfs_test.out localdb_test.out poll_test.out

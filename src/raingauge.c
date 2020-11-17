@@ -1,6 +1,5 @@
 #include "../include/raingauge.h"
 
-#define PIN_NUM 25
 #define CONNINFO "dbname=local connect_timeout=10"
 
 static Pin* PIN;
@@ -9,7 +8,7 @@ static PGconn* CONN;
 int start(void) {
     short prep;
 
-    PIN = construct_pin(PIN_NUM);
+    PIN = construct_pin(GAUGE_RX);
     prep = write_to_file(PIN->direc, "in") | write_to_file(PIN->edge, "rising") |
            write_to_file(PIN->active_low, "1");
     if (prep != EXIT_SUCCESS) {

@@ -10,7 +10,7 @@ int prep_file(const char* file) {
 
     fd = open(file, O_NONBLOCK);
     if (fd < 0) {
-        perror("open");
+        fprintf(stderr, "problem opening %s\n", file);
         return EXIT_FAILURE;
     }
     rd = read(fd, buf, 0);
@@ -56,7 +56,7 @@ int poll_one(int fd_good, int fd_break, int (*callback)(void)) {
     }
     /* reset fd_good to beginning of file */
     if (lseek(fd_good, 0, SEEK_SET) == -1) {
-        perror("lseek");
+        fprintf(stderr, "problem with lseek on file descriptor %d\n", fd_good);
         return EXIT_FAILURE;
     }
     rd = read(fd_good, buf, 0);
