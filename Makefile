@@ -4,11 +4,10 @@ CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
-#CFLAGS += -c
+CFLAGS += -c
 CFLAGS += -pthread
 CFLAGS += -ldl
 CFLAGS += -lsqlite3
-CFLAGS += -g
 
 VFLAGS  = --quiet
 VFLAGS += -v
@@ -36,14 +35,14 @@ test: sysfs_test.out pin_test.out localdb_test.out
 	@echo "TESTING LOCALDB MODULE...\n"
 	@ ./localdb_test.out
 
-debug: sysfs_test.out pin_test.out localdb_test.out
-	gdb ./localdb_test.out
+debug: sysfs_test.out pin_test.out localdb_test.outt
+	gdb ./pin_test.out
 
 
 memcheck: pin_test.out sysfs_test.out localdb_test.out poll_test.out
 	@valgrind $(VFLAGS) ./sysfs_test.out 
 	@valgrind $(VFLAGS) ./pin_test.out &
-	@sleep 15 && echo 0 > /sys/class/gpio/gpio18/value
+	@sleep 5 && echo 0 > /sys/class/gpio/gpio18/value
 	@valgrind $(VFLAGS) ./localdb_test.out
 	@echo "Memory check passed"
 

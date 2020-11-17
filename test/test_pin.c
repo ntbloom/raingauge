@@ -52,10 +52,11 @@ void test_automatic_export_unexport(void) {
     TEST_ASSERT_NOT_NULL(pin_ptr);
 
     const char* gpio18 = "/sys/class/gpio/gpio18";
-    TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) == 0, "pin not exported");
+    TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) == EXIT_SUCCESS, "pin not exported");
 
     deconstruct_pin(pin_ptr);
-    TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) != 0, "pin not unexported");
+    fprintf(stderr, "expected test error message: ");
+    TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) == EXIT_FAILURE, "pin not unexported");
 }
 
 /* check that the constructor/desctructor works with all legal pins, 0 through 26
