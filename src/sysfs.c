@@ -1,4 +1,4 @@
-#include "../include/sysfs.h"
+#include "sysfs.h"
 
 /* write a string to a file */
 int write_to_file(const char* fdesc, const char* msg) {

@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "../include/localdb.h"
-#include "vendor/unity.h"
+#include "../src/localdb.h"
+#include "unity.h"
 
 /* create a database file with schema */
 void setUp(void) {

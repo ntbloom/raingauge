@@ -4,7 +4,7 @@ CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
-#CFLAGS += -c
+CFLAGS += -c
 CFLAGS += -pthread
 CFLAGS += -ldl
 CFLAGS += -lsqlite3
@@ -22,21 +22,18 @@ VFLAGS += --suppressions=suppressions/sqlite3.supp
 VFLAGS += --track-origins=yes
 #VFLAGS += --gen-suppressions=all
 
-PATHS = src/
-PATHT = test/
-SRC = $(wildcard $(PATHS)/*.c)
-TST = $(wildcard $(PATHT)/*.c)
-
-.PHONY: build test clean
-
-build: 
-	@echo "Building raingauge"
-	@gcc $(CFLAGS) $(SRC) -o raingauge
-	@echo "Done"
-
-test: 
-	@gcc $(CFLAGS) $(SRC) $(TST) -o tests.out
-
+test: sysfs_test.out pin_test.out localdb_test.out
+	@echo "=======================\n"
+	@echo "TESTING SYSFS MODULE...\n"
+	@./sysfs_test.out
+	@echo
+	@echo "=======================\n"
+	@echo "TESTING PIN MODULE...\n"
+	@./pin_test.out &
+	@sleep 5 && echo 0 > /sys/class/gpio/gpio18/value
+	@echo "=======================\n"
+	@echo "TESTING LOCALDB MODULE...\n"
+	@ ./localdb_test.out
 
 debug: sysfs_test.out pin_test.out localdb_test.outt
 	gdb ./pin_test.out

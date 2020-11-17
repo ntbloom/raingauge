@@ -1,4 +1,4 @@
-#include "../include/poll.h"
+#include "poll.h"
 
 static char buf[1];
 static int rd;

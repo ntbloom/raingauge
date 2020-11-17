@@ -1,9 +1,8 @@
-#include "../include/raingauge.h"
+#include "raingauge.h"
 
 #define CONNINFO "dbname=local connect_timeout=10"
 
 static Pin* PIN;
-static PGconn* CONN;
 
 int start(void) {
     short prep;
@@ -12,32 +11,39 @@ int start(void) {
     prep = write_to_file(PIN->direc, "in") | write_to_file(PIN->edge, "rising") |
            write_to_file(PIN->active_low, "1");
     if (prep != EXIT_SUCCESS) {
-        perror("error setting up pin");
+        fprintf(stderr, "error setting up pin %d\n", GAUGE_RX);
         return EXIT_FAILURE;
     }
 
-    CONN = dbconnect(CONNINFO);
-    if (CONN == NULL) {
-        perror("bad database connection");
-        return EXIT_FAILURE;
-    }
-    if (poll_loop(PIN->value, 10) != EXIT_SUCCESS) {
-        perror("bad poll");
-        return EXIT_FAILURE;
-    }
+    /* TODO: export other pins, connect to database
+     * TODO: start poll loops
+     *
+     */
+
     return EXIT_SUCCESS;
 }
 
 int stop(void) {
-    /* TODO: end the infinite poll thread */
-    PQfinish(CONN);
-    deconstruct_pin(PIN);
+    /* TODO: end the infinite poll thread
+     *
+     *
+     *
+     */
+
     return EXIT_SUCCESS;
 }
 
 int main(void) {
-    int begin, finish;
-    begin = start();
-    finish = stop();
-    return begin | finish;
+    /*
+      int begin, finish;
+      begin = start();
+      finish = stop();
+      return begin | finish;
+      */
+    /* TODO: fix all of this
+     *
+     *
+     */
+    printf("Hello, world!\n");
+    return EXIT_SUCCESS;
 }

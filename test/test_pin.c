@@ -4,11 +4,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "../include/constants.h"
-#include "../include/pin.h"
-#include "../include/poll.h"
-#include "../include/sysfs.h"
-#include "vendor/unity.h"
+#include "../src/constants.h"
+#include "../src/pin.h"
+#include "../src/poll.h"
+#include "../src/sysfs.h"
+#include "unity.h"
 
 void setUp(void) {
     /* pass

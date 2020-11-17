@@ -1,4 +1,4 @@
-#include "../include/pin.h"
+#include "pin.h"
 
 Pin* construct_pin(size_t number) {
     Pin* pin;

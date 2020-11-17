@@ -2,11 +2,10 @@
 #define RAINGAUGE_H
 
 #include <stdlib.h>
-#include "../include/constants.h"
-#include "../include/dbconnect.h"
-#include "../include/pin.h"
-#include "../include/poll.h"
-#include "../include/sysfs.h"
+#include "constants.h"
+#include "pin.h"
+#include "poll.h"
+#include "sysfs.h"
 
 /* startup pins, allocate memory, connect to the database */
 int start(void);

@@ -1,4 +1,4 @@
-#include "../include/localdb.h"
+#include "localdb.h"
 
 static char* errmsg;
 static double total_ticks;
