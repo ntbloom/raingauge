@@ -88,9 +88,9 @@ void test_poll_loop(void) {
     int setup, test, cleanup;
     Pin *gauge, *stop_tx, *stop_rx;
 
-    gauge = construct_pin(25);
-    stop_tx = construct_pin(18);
-    stop_rx = construct_pin(23);
+    gauge = construct_pin(GAUGE_RX);
+    stop_tx = construct_pin(STOP_TX);
+    stop_rx = construct_pin(STOP_RX);
 
     TEST_ASSERT_NOT_NULL(gauge);
     TEST_ASSERT_NOT_NULL(stop_tx);
