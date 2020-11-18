@@ -1,13 +1,12 @@
+CC      = gcc
 CFLAGS  = -std=c99
 CFLAGS += -g
 CFLAGS += -Wall
 CFLAGS += -Wextra
 CFLAGS += -pedantic
 CFLAGS += -Werror
-#CFLAGS += -c
 CFLAGS += -pthread
 CFLAGS += -ldl
-CFLAGS += -lsqlite3
 
 VFLAGS  = --quiet
 VFLAGS += -v
@@ -22,57 +21,36 @@ VFLAGS += --suppressions=suppressions/sqlite3.supp
 VFLAGS += --track-origins=yes
 #VFLAGS += --gen-suppressions=all
 
-PATHS = src/
-PATHT = test/
-SRC = $(wildcard $(PATHS)/*.c)
-TST = $(wildcard $(PATHT)/*.c)
+.PHONY: test clean
 
-.PHONY: build test clean
+build: sysfs.o poll.o pin.o localdb.o raingauge.o
+	@echo "Building raingauge..."
+	@echo Done
 
-build: 
-	@echo "Building raingauge"
-	@gcc $(CFLAGS) $(SRC) -o raingauge
-	@echo "Done"
+sysfs.o: lib/sysfs.c
+	$(CC) -c $(CFLAGS) -o build/sysfs.o lib/sysfs.c 
 
-test: 
-	@gcc $(CFLAGS) $(SRC) $(TST) -o tests.out
+poll.o: lib/poll.c
+	$(CC) -c $(CFLAGS) -o build/poll.o lib/poll.c 
 
+pin.o: lib/pin.c
+	$(CC) -c $(CFLAGS) -o build/pin.o lib/pin.c 
 
-debug: sysfs_test.out pin_test.out localdb_test.outt
-	gdb ./pin_test.out
+localdb.o: lib/localdb.c
+	$(CC) -c $(CFLAGS) -o build/localdb.o -lsqlite3 lib/localdb.c 
 
+raingauge.o: lib/raingauge.c
+	$(CC) -c $(CFLAGS) -o build/raingauge.o lib/raingauge.c 
 
-memcheck: pin_test.out sysfs_test.out localdb_test.out poll_test.out
-	@valgrind $(VFLAGS) ./sysfs_test.out 
-	@valgrind $(VFLAGS) ./pin_test.out &
-	@sleep 5 && echo 0 > /sys/class/gpio/gpio18/value
-	@valgrind $(VFLAGS) ./localdb_test.out
-	@echo "Memory check passed"
+raingauge.a: sysfs.o poll.o pin.o localdb.o raingauge.o
+	ar rcs build/raingauge.a build/*.o
+
+unity.o: test/unity.c raingauge.a
+	$(CC) -c $(CFLAGS) -o build/unity.o test/unity.c -lbuild/raingauge.a
+
+test_sysfs.out: unity.o sysfs.o
+	$(CC) $(CFLAGS) -o build/test_sysfs.out build/sysfs.o test/sysfs.c 
+	./build/test_sysfs.out
 
 clean:
-	rm -rf *.o *.out *.out.dSYM
-
-localdb_test.out: src/localdb.c
-	@echo Compiling $@
-	@gcc $(CFLAGS) src/localdb.c test/vendor/unity.c test/test_localdb.c -o localdb_test.out
-
-poll_test.out: src/poll.c
-	@echo Compiling $@
-	@gcc $(CFLAGS) src/poll.c -o poll_test.out
-
-poll: poll_test.out
-	@./scripts/setup.sh
-	@./poll_test.out
-	@./scripts/teardown.sh
-
-pin_test.out: src/pin.c test/test_pin.c 
-	@echo Compiling $@
-	@gcc $(CFLAGS) src/pin.c src/sysfs.c src/poll.c test/vendor/unity.c test/test_pin.c -o pin_test.out
-
-sysfs_test.out: src/sysfs.c test/test_sysfs.c
-	@echo Compiling $@
-	@gcc $(CFLAGS) src/sysfs.c test/vendor/unity.c test/test_sysfs.c -o sysfs_test.out
-
-raingauge.out:
-	@echo Compiling $@
-	@gcc $(CFLAGS) src/* -o raingauge.out
+	rm -rf build/*.o build/*.a build/*.out

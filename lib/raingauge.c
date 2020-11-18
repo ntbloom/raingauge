@@ -33,17 +33,3 @@ int stop(void) {
     return EXIT_SUCCESS;
 }
 
-int main(void) {
-    /*
-      int begin, finish;
-      begin = start();
-      finish = stop();
-      return begin | finish;
-      */
-    /* TODO: fix all of this
-     *
-     *
-     */
-    printf("Hello, world!\n");
-    return EXIT_SUCCESS;
-}
