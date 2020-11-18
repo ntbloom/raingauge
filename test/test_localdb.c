@@ -1,5 +1,5 @@
 #include <stdlib.h>
-#include "../src/localdb.h"
+#include "../lib/localdb.h"
 #include "unity.h"
 
 /* create a database file with schema */

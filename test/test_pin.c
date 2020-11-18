@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "../src/constants.h"
-#include "../src/pin.h"
-#include "../src/poll.h"
-#include "../src/sysfs.h"
+#include "../lib/constants.h"
+#include "../lib/pin.h"
+#include "../lib/poll.h"
+#include "../lib/sysfs.h"
 #include "unity.h"
 
 void setUp(void) {

@@ -23,9 +23,11 @@ VFLAGS += --track-origins=yes
 
 .PHONY: test clean
 
-build: sysfs.o poll.o pin.o localdb.o raingauge.o
+build: raingauge.a
 	@echo "Building raingauge..."
 	@echo Done
+
+# library builds
 
 sysfs.o: lib/sysfs.c
 	$(CC) -c $(CFLAGS) -o build/sysfs.o lib/sysfs.c 
@@ -45,12 +47,8 @@ raingauge.o: lib/raingauge.c
 raingauge.a: sysfs.o poll.o pin.o localdb.o raingauge.o
 	ar rcs build/raingauge.a build/*.o
 
-unity.o: test/unity.c raingauge.a
-	$(CC) -c $(CFLAGS) -o build/unity.o test/unity.c -lbuild/raingauge.a
-
-test_sysfs.out: unity.o sysfs.o
-	$(CC) $(CFLAGS) -o build/test_sysfs.out build/sysfs.o test/sysfs.c 
-	./build/test_sysfs.out
+# test suite
+#TODO: write me
 
 clean:
 	rm -rf build/*.o build/*.a build/*.out
