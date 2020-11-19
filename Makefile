@@ -45,20 +45,21 @@ raingauge.o: lib/raingauge.c lib/raingauge.h
 	$(CC) -c $(CFLAGS) -o build/$@ $<
 
 # test suite
+test: test_localdb.out test_sysfs.out test_pin.out
 
 test_localdb.out: test/unity.c test/test_localdb.c lib/localdb.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
-	@echo "TESTING LOCALDB MODULE..."
+	@printf "\nTESTING LOCALDB MODULE...\n"
 	@./build/test/$@
 
 test_sysfs.out: test/unity.c test/test_sysfs.c lib/sysfs.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^
-	@echo "TESTING SYSFS MODULE..."
+	@printf "\nTESTING SYSFS MODULE...\n"
 	@./build/test/$@
 
 test_pin.out: test/unity.c test/test_pin.c lib/pin.c lib/sysfs.c lib/poll.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
-	@echo "TESTING PIN MODULE..."
+	@printf "\nTESTING PIN MODULE...\n"
 	@echo "setting pins..."
 	@./build/test/$@ &
 	@sleep 10 && echo 0 > /sys/class/gpio/gpio23/value
