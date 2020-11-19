@@ -27,7 +27,8 @@ build: sysfs.o poll.o pin.o localdb.o raingauge.o
 	@echo "Building raingauge..."
 	@echo Done
 
-# library builds
+
+## library builds
 
 sysfs.o: lib/sysfs.c lib/sysfs.h
 	$(CC) -c $(CFLAGS) -o build/$@ $<
@@ -44,25 +45,37 @@ localdb.o: lib/localdb.c lib/localdb.h
 raingauge.o: lib/raingauge.c lib/raingauge.h
 	$(CC) -c $(CFLAGS) -o build/$@ $<
 
-# test suite
+
+## test suite
+
 test: test_localdb.out test_sysfs.out test_pin.out
+	@printf "\nTESTING LOCALDB MODULE...\n"
+	@./build/test/test_localdb.out
+	@printf "\nTESTING SYSFS MODULE...\n"
+	@./build/test/test_sysfs.out
+	@printf "\nTESTING PIN MODULE...\n"
+	@echo "setting pins..."
+	@./build/test/test_pin.out &
+	@sleep 10 && echo 0 > /sys/class/gpio/gpio23/value
 
 test_localdb.out: test/unity.c test/test_localdb.c lib/localdb.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
-	@printf "\nTESTING LOCALDB MODULE...\n"
-	@./build/test/$@
 
 test_sysfs.out: test/unity.c test/test_sysfs.c lib/sysfs.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^
-	@printf "\nTESTING SYSFS MODULE...\n"
-	@./build/test/$@
 
 test_pin.out: test/unity.c test/test_pin.c lib/pin.c lib/sysfs.c lib/poll.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
-	@printf "\nTESTING PIN MODULE...\n"
-	@echo "setting pins..."
-	@./build/test/$@ &
-	@sleep 10 && echo 0 > /sys/class/gpio/gpio23/value
+
+
+## static analysis and memory checking
+
+memcheck: test_localdb.out test_sysfs.out test_pin.out
+	@valgrind $(VFLAGS) build/test/test_localdb.out
+	@valgrind $(VFLAGS) build/test/test_sysfs.out
+	@valgrind $(VFLAGS) build/test/test_pin.out & 
+	@sleep 15 && echo 0 > /sys/class/gpio/gpio23/value
+
 
 clean:
 	rm -rf build/*.o build/*.a build/*.out build/test/*.out build/test/*.o build/test/*.a
