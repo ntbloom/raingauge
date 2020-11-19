@@ -47,20 +47,21 @@ raingauge.o: lib/raingauge.c lib/raingauge.h
 # test suite
 
 test_localdb.out: test/unity.c test/test_localdb.c lib/localdb.c
-	$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
+	@$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
+	@echo "TESTING LOCALDB MODULE..."
 	@./build/test/$@
 
 test_sysfs.out: test/unity.c test/test_sysfs.c lib/sysfs.c
-	$(CC) $(CFLAGS) -o build/test/$@ $^
+	@$(CC) $(CFLAGS) -o build/test/$@ $^
+	@echo "TESTING SYSFS MODULE..."
 	@./build/test/$@
 
 test_pin.out: test/unity.c test/test_pin.c lib/pin.c lib/sysfs.c lib/poll.c
-	$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
+	@$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
+	@echo "TESTING PIN MODULE..."
 	@echo "setting pins..."
-	@./scripts/setup.sh
 	@./build/test/$@ &
-	@sleep 5 && echo 0 > /sys/class/gpio/gpio18/value
-	@./scripts/teardown.sh
+	@sleep 10 && echo 0 > /sys/class/gpio/gpio23/value
 
 clean:
 	rm -rf build/*.o build/*.a build/*.out build/test/*.out build/test/*.o build/test/*.a
