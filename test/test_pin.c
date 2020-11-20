@@ -112,9 +112,9 @@ void test_poll_loop(void) {
 int main(void) {
     UnityBegin("test/test_pin.c");
 
-    RUN_TEST(test_construct_pin);
-    RUN_TEST(test_automatic_export_unexport);
-    RUN_TEST(test_all_legal_pins);
+    // RUN_TEST(test_construct_pin);
+    // RUN_TEST(test_automatic_export_unexport);
+    // RUN_TEST(test_all_legal_pins);
     // RUN_TEST(test_poll_loop);
 
     UnityEnd();
