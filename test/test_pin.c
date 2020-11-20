@@ -55,7 +55,7 @@ void test_automatic_export_unexport(void) {
     TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) == EXIT_SUCCESS, "pin not exported");
 
     deconstruct_pin(pin_ptr);
-    fprintf(stderr, "expected test error message: ");
+    fprintf(stderr, "\texpected test error message: ");
     TEST_ASSERT_MESSAGE(file_exists(gpio18, F_OK, 1) == EXIT_FAILURE, "pin not unexported");
 }
 
@@ -87,23 +87,25 @@ void test_all_legal_pins(void) {
  */
 void test_poll_loop(void) {
     int setup, test, cleanup;
-    Pin *gauge, *stop_tx, *stop_rx;
+    Pin *gauge_rx, *stop_tx, *stop_rx;
 
-    gauge = construct_pin(GAUGE_RX);
+    gauge_rx = construct_pin(GAUGE_RX);
     stop_tx = construct_pin(STOP_TX);
     stop_rx = construct_pin(STOP_RX);
 
-    TEST_ASSERT_NOT_NULL(gauge);
+    TEST_ASSERT_NOT_NULL(gauge_rx);
     TEST_ASSERT_NOT_NULL(stop_tx);
     TEST_ASSERT_NOT_NULL(stop_rx);
 
-    setup = prep_pin(gauge, IN, RISING, HIGH) | prep_pin(stop_rx, IN, BOTH, LOW) |
+    setup = prep_pin(gauge_rx, IN, RISING, HIGH) | prep_pin(stop_rx, IN, BOTH, LOW) |
             prep_pin(stop_tx, OUT, NONE, LOW);
+    test = poll_loop(gauge_rx->value, stop_rx->value, NULL);
+
     printf("\nWAITING FOR INPUT FROM USER...\n");
 
-    test = poll_loop(gauge->value, stop_rx->value, NULL);
+    /* TODO: write thread to trip the interrupt */
 
-    cleanup = deconstruct_pin(gauge) | deconstruct_pin(stop_tx) | deconstruct_pin(stop_rx);
+    cleanup = deconstruct_pin(gauge_rx) | deconstruct_pin(stop_tx) | deconstruct_pin(stop_rx);
     TEST_ASSERT_EQUAL(setup | test | cleanup, EXIT_SUCCESS);
 }
 
@@ -113,7 +115,7 @@ int main(void) {
     RUN_TEST(test_construct_pin);
     RUN_TEST(test_automatic_export_unexport);
     RUN_TEST(test_all_legal_pins);
-    RUN_TEST(test_poll_loop);
+    // RUN_TEST(test_poll_loop);
 
     UnityEnd();
 
