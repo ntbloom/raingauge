@@ -1,5 +1,6 @@
 #include <fcntl.h>
 #include <poll.h>
+#include <pthread.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
@@ -82,30 +83,54 @@ void test_all_legal_pins(void) {
     }
 }
 
+/* send a stop signal */
+void* stop_tx(void* len) {
+    Pin* stop_tx;
+    stop_tx = construct_pin(STOP_TX);
+    if (prep_pin(stop_tx, OUT, NONE, LOW) != EXIT_SUCCESS) {
+        TEST_FAIL_MESSAGE("failure to prep stop_tx pin");
+    }
+    sleep((int)len);
+    printf("breaking out");
+    if (write_to_file(stop_tx->value, LOW) != EXIT_SUCCESS) {
+        TEST_FAIL_MESSAGE("failure sending value over stop_tx pin");
+    }
+    if (deconstruct_pin(stop_tx) != EXIT_SUCCESS) {
+        TEST_FAIL_MESSAGE("failure deconstructing stop_tx pin");
+    }
+    pthread_exit(NULL);
+}
+
 /* test the infinite loop poll
  * Currently this test is run by the Makefile that runs asynchronously
  */
 void test_poll_loop(void) {
     int setup, test, cleanup;
-    Pin *gauge_rx, *stop_tx, *stop_rx;
+    Pin *gauge_rx, *stop_rx;
 
     gauge_rx = construct_pin(GAUGE_RX);
-    stop_tx = construct_pin(STOP_TX);
     stop_rx = construct_pin(STOP_RX);
 
     TEST_ASSERT_NOT_NULL(gauge_rx);
     TEST_ASSERT_NOT_NULL(stop_tx);
     TEST_ASSERT_NOT_NULL(stop_rx);
 
-    setup = prep_pin(gauge_rx, IN, RISING, HIGH) | prep_pin(stop_rx, IN, BOTH, LOW) |
-            prep_pin(stop_tx, OUT, NONE, LOW);
+    setup = prep_pin(gauge_rx, IN, RISING, HIGH) | prep_pin(stop_rx, IN, BOTH, LOW);
     test = poll_loop(gauge_rx->value, stop_rx->value, NULL);
 
     printf("\nWAITING FOR INPUT FROM USER...\n");
 
     /* TODO: write thread to trip the interrupt */
+    pthread_t threads[1];
+    int rc;
+    rc = pthread_create(&threads[0], NULL, stop_tx, NULL);
+    if (rc) {
+        printf("pthread error %d\n", rc);
+        TEST_FAIL_MESSAGE("error creating thread");
+    }
+    pthread_exit(NULL);
 
-    cleanup = deconstruct_pin(gauge_rx) | deconstruct_pin(stop_tx) | deconstruct_pin(stop_rx);
+    cleanup = deconstruct_pin(gauge_rx) | deconstruct_pin(stop_rx);
     TEST_ASSERT_EQUAL(setup | test | cleanup, EXIT_SUCCESS);
 }
 
@@ -115,7 +140,7 @@ int main(void) {
     // RUN_TEST(test_construct_pin);
     // RUN_TEST(test_automatic_export_unexport);
     // RUN_TEST(test_all_legal_pins);
-    // RUN_TEST(test_poll_loop);
+    RUN_TEST(test_poll_loop);
 
     UnityEnd();
 
