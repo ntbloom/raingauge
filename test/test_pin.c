@@ -83,55 +83,75 @@ void test_all_legal_pins(void) {
     }
 }
 
-/* send a stop signal */
-void* stop_tx(void* len) {
-    Pin* stop_tx;
-    stop_tx = construct_pin(STOP_TX);
-    if (prep_pin(stop_tx, OUT, NONE, LOW) != EXIT_SUCCESS) {
-        TEST_FAIL_MESSAGE("failure to prep stop_tx pin");
-    }
-    sleep((int)len);
-    printf("breaking out");
-    if (write_to_file(stop_tx->value, LOW) != EXIT_SUCCESS) {
-        TEST_FAIL_MESSAGE("failure sending value over stop_tx pin");
-    }
-    if (deconstruct_pin(stop_tx) != EXIT_SUCCESS) {
-        TEST_FAIL_MESSAGE("failure deconstructing stop_tx pin");
-    }
-    pthread_exit(NULL);
-}
-
 /* test the infinite loop poll
  * Currently this test is run by the Makefile that runs asynchronously
  */
+void* _poll_thread(void* t) {
+    int poll;
+    long tid;
+
+    tid = (long)t;
+    const char* grv = "/sys/class/gpio/gpio25/value";
+    const char* srv = "/sys/class/gpio/gpio18/value";
+
+    printf("\nWAITING FOR INPUT FROM USER...\n");
+    poll = poll_loop(grv, srv, NULL);
+    TEST_ASSERT_EQUAL(poll, EXIT_SUCCESS);
+    printf("poll test loop complete for thread %ld\n", tid);
+
+    pthread_exit((void*)t);
+}
+void* _kill_loop(void* t) {
+    int kill;
+    long tid;
+    tid = (long)t;
+    const char* stv = "/sys/class/gpio/gpio23/value";
+
+    sleep(5);
+    kill = write_to_file(stv, LOW);
+
+    TEST_ASSERT_EQUAL(kill, EXIT_SUCCESS);
+    printf("sent kill signal from %ld \n", tid);
+    pthread_exit((void*)t);
+}
+
 void test_poll_loop(void) {
     int setup, test, cleanup;
-    Pin *gauge_rx, *stop_rx;
+    Pin *gauge_rx, *stop_rx, *stop_tx;
 
     gauge_rx = construct_pin(GAUGE_RX);
     stop_rx = construct_pin(STOP_RX);
+    stop_tx = construct_pin(STOP_TX);
 
     TEST_ASSERT_NOT_NULL(gauge_rx);
     TEST_ASSERT_NOT_NULL(stop_tx);
     TEST_ASSERT_NOT_NULL(stop_rx);
 
-    setup = prep_pin(gauge_rx, IN, RISING, HIGH) | prep_pin(stop_rx, IN, BOTH, LOW);
-    test = poll_loop(gauge_rx->value, stop_rx->value, NULL);
+    setup = prep_pin(gauge_rx, IN, RISING, HIGH) | prep_pin(stop_rx, IN, BOTH, LOW) |
+            prep_pin(stop_tx, OUT, NONE, LOW);
+    TEST_ASSERT_EQUAL(setup, EXIT_SUCCESS);
 
-    printf("\nWAITING FOR INPUT FROM USER...\n");
+    /* launch loop as background thread */
+    pthread_t thread[2];
+    // pthread_attr_t attr;
+    // pthread_attr_init(&attr);
+    // pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
+    int rc1, rc2;
+    // void* status;
 
-    /* TODO: write thread to trip the interrupt */
-    pthread_t threads[1];
-    int rc;
-    rc = pthread_create(&threads[0], NULL, stop_tx, NULL);
-    if (rc) {
-        printf("pthread error %d\n", rc);
-        TEST_FAIL_MESSAGE("error creating thread");
-    }
+    rc1 = pthread_create(&thread[0], NULL, _poll_thread, NULL);
+    rc2 = pthread_create(&thread[1], NULL, _kill_loop, NULL);
+    TEST_ASSERT_EQUAL(rc1 | rc2, EXIT_SUCCESS);
+
+    // pthread_attr_destroy(&attr);
+
     pthread_exit(NULL);
 
-    cleanup = deconstruct_pin(gauge_rx) | deconstruct_pin(stop_rx);
-    TEST_ASSERT_EQUAL(setup | test | cleanup, EXIT_SUCCESS);
+    printf("made it to the end\n");
+    TEST_ASSERT_EQUAL(test, EXIT_SUCCESS);
+
+    cleanup = deconstruct_pin(gauge_rx) | deconstruct_pin(stop_rx) | deconstruct_pin(stop_tx);
+    TEST_ASSERT_EQUAL(cleanup, EXIT_SUCCESS);
 }
 
 int main(void) {

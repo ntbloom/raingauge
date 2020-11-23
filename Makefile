@@ -64,9 +64,6 @@ test_sysfs.out: test/unity.c test/test_sysfs.c lib/sysfs.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^
 
 test_pin.out: test/unity.c test/test_pin.c lib/pin.c lib/sysfs.c lib/poll.c
-	@$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
-
-testpin.out: test/unity.c test/test_pin.c lib/pin.c lib/sysfs.c lib/poll.c
 	@$(CC) -pthread $(CFLAGS) -o build/test/$@ $^ 
 	@./build/test/$@
 
