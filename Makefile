@@ -53,9 +53,7 @@ test: test_localdb.out test_sysfs.out test_pin.out
 	@printf "\nTESTING SYSFS MODULE...\n"
 	@./build/test/test_sysfs.out
 	@printf "\nTESTING PIN MODULE...\n"
-	@echo "setting pins..."
-	@./build/test/test_pin.out &
-	@sleep 10 && echo 0 > /sys/class/gpio/gpio23/value
+	@./build/test/test_pin.out
 
 test_localdb.out: test/unity.c test/test_localdb.c lib/localdb.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^ -lsqlite3
@@ -65,15 +63,13 @@ test_sysfs.out: test/unity.c test/test_sysfs.c lib/sysfs.c
 
 test_pin.out: test/unity.c test/test_pin.c lib/pin.c lib/sysfs.c lib/poll.c
 	@$(CC) -pthread $(CFLAGS) -o build/test/$@ $^ 
-	@./build/test/$@
 
 ## static analysis and memory checking
 
 memcheck: test_localdb.out test_sysfs.out test_pin.out
 	@valgrind $(VFLAGS) build/test/test_localdb.out
 	@valgrind $(VFLAGS) build/test/test_sysfs.out
-	@valgrind $(VFLAGS) build/test/test_pin.out & 
-	@sleep 15 && echo 0 > /sys/class/gpio/gpio23/value
+	@valgrind $(VFLAGS) build/test/test_pin.out
 
 
 clean:
