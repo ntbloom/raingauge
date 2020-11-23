@@ -1,3 +1,4 @@
+#include <assert.h>
 #include <fcntl.h>
 #include <poll.h>
 #include <pthread.h>
@@ -114,10 +115,13 @@ void* _kill_loop(void* t) {
     printf("sent kill signal from %ld \n", tid);
     pthread_exit((void*)t);
 }
-
 void test_poll_loop(void) {
-    int setup, test, cleanup;
+    int setup, cleanup;
     Pin *gauge_rx, *stop_rx, *stop_tx;
+    long tid = 0;
+    pthread_t thread[2];
+    pthread_attr_t attr;
+    int rc0, rc1, j0, j1;
 
     gauge_rx = construct_pin(GAUGE_RX);
     stop_rx = construct_pin(STOP_RX);
@@ -132,26 +136,37 @@ void test_poll_loop(void) {
     TEST_ASSERT_EQUAL(setup, EXIT_SUCCESS);
 
     /* launch loop as background thread */
-    pthread_t thread[2];
-    // pthread_attr_t attr;
-    // pthread_attr_init(&attr);
-    // pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
-    int rc1, rc2;
-    // void* status;
+    struct thread_data {
+        Pin* gauge;
+        Pin* stop_rx;
+        Pin* stop_tx;
+        long* thread_id;
+    };
+    struct thread_data data = {
+        .gauge = gauge_rx,
+        .stop_rx = stop_rx,
+        .stop_tx = stop_tx,
+        .thread_id = &tid,
+    };
 
-    rc1 = pthread_create(&thread[0], NULL, _poll_thread, NULL);
-    rc2 = pthread_create(&thread[1], NULL, _kill_loop, NULL);
-    TEST_ASSERT_EQUAL(rc1 | rc2, EXIT_SUCCESS);
+    pthread_attr_init(&attr);
+    pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-    // pthread_attr_destroy(&attr);
+    void *status0, *status1;
 
-    pthread_exit(NULL);
+    rc0 = pthread_create(&thread[0], NULL, _poll_thread, (void*)&data);
+    rc1 = pthread_create(&thread[1], NULL, _kill_loop, NULL);
+    TEST_ASSERT_EQUAL(rc0 | rc1, EXIT_SUCCESS);
 
-    printf("made it to the end\n");
-    TEST_ASSERT_EQUAL(test, EXIT_SUCCESS);
+    pthread_attr_destroy(&attr);
+    j0 = pthread_join(thread[0], &status0);
+    j1 = pthread_join(thread[1], &status1);
+    TEST_ASSERT_EQUAL(j0 | j1, EXIT_SUCCESS);
+    printf("%ld and %ld\n", (long)status0, (long)status1);
 
     cleanup = deconstruct_pin(gauge_rx) | deconstruct_pin(stop_rx) | deconstruct_pin(stop_tx);
     TEST_ASSERT_EQUAL(cleanup, EXIT_SUCCESS);
+    pthread_exit(NULL);
 }
 
 int main(void) {
