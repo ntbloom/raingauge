@@ -12,6 +12,8 @@
 #include "../lib/sysfs.h"
 #include "unity.h"
 
+#define SLEEP_SECONDS 5
+
 void setUp(void) {
     /* pass
      *
@@ -84,41 +86,39 @@ void test_all_legal_pins(void) {
     }
 }
 
-/* test the infinite loop poll
- * Currently this test is run by the Makefile that runs asynchronously
- */
+/* test the infinite loop poll */
+struct thread_data {
+    Pin* gauge;
+    Pin* stop_rx;
+    Pin* stop_tx;
+    int thread_id;
+};
 void* _poll_thread(void* t) {
     int poll;
-    long tid;
+    struct thread_data* data;
 
-    tid = (long)t;
-    const char* grv = "/sys/class/gpio/gpio25/value";
-    const char* srv = "/sys/class/gpio/gpio18/value";
-
-    printf("\nWAITING FOR INPUT FROM USER...\n");
-    poll = poll_loop(grv, srv, NULL);
+    data = (struct thread_data*)t;
+    printf("\nMANUALLY TESTING GAUGE SWITCH FOR %d SECONDS...\n", SLEEP_SECONDS);
+    poll = poll_loop(data->gauge->value, data->stop_rx->value, NULL);
     TEST_ASSERT_EQUAL(poll, EXIT_SUCCESS);
-    printf("poll test loop complete for thread %ld\n", tid);
 
     pthread_exit((void*)t);
 }
 void* _kill_loop(void* t) {
     int kill;
-    long tid;
-    tid = (long)t;
-    const char* stv = "/sys/class/gpio/gpio23/value";
+    struct thread_data* data;
+    data = (struct thread_data*)t;
 
-    sleep(5);
-    kill = write_to_file(stv, LOW);
-
+    sleep(SLEEP_SECONDS);
+    kill = write_to_file(data->stop_tx->value, LOW);
     TEST_ASSERT_EQUAL(kill, EXIT_SUCCESS);
-    printf("sent kill signal from %ld \n", tid);
+
     pthread_exit((void*)t);
 }
 void test_poll_loop(void) {
     int setup, cleanup;
     Pin *gauge_rx, *stop_rx, *stop_tx;
-    long tid = 0;
+    int tid = 0;
     pthread_t thread[2];
     pthread_attr_t attr;
     int rc0, rc1, j0, j1;
@@ -135,49 +135,40 @@ void test_poll_loop(void) {
             prep_pin(stop_tx, OUT, NONE, LOW);
     TEST_ASSERT_EQUAL(setup, EXIT_SUCCESS);
 
-    /* launch loop as background thread */
-    struct thread_data {
-        Pin* gauge;
-        Pin* stop_rx;
-        Pin* stop_tx;
-        long* thread_id;
-    };
     struct thread_data data = {
         .gauge = gauge_rx,
         .stop_rx = stop_rx,
         .stop_tx = stop_tx,
-        .thread_id = &tid,
+        .thread_id = tid,
     };
 
     pthread_attr_init(&attr);
     pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
-    void *status0, *status1;
-
     rc0 = pthread_create(&thread[0], NULL, _poll_thread, (void*)&data);
-    rc1 = pthread_create(&thread[1], NULL, _kill_loop, NULL);
+    tid++;
+    rc1 = pthread_create(&thread[1], NULL, _kill_loop, (void*)&data);
     TEST_ASSERT_EQUAL(rc0 | rc1, EXIT_SUCCESS);
 
     pthread_attr_destroy(&attr);
-    j0 = pthread_join(thread[0], &status0);
-    j1 = pthread_join(thread[1], &status1);
+    j0 = pthread_join(thread[0], NULL);
+    j1 = pthread_join(thread[1], NULL);
     TEST_ASSERT_EQUAL(j0 | j1, EXIT_SUCCESS);
-    printf("%ld and %ld\n", (long)status0, (long)status1);
 
     cleanup = deconstruct_pin(gauge_rx) | deconstruct_pin(stop_rx) | deconstruct_pin(stop_tx);
     TEST_ASSERT_EQUAL(cleanup, EXIT_SUCCESS);
-    pthread_exit(NULL);
 }
 
 int main(void) {
     UnityBegin("test/test_pin.c");
 
-    // RUN_TEST(test_construct_pin);
-    // RUN_TEST(test_automatic_export_unexport);
-    // RUN_TEST(test_all_legal_pins);
+    RUN_TEST(test_construct_pin);
+    RUN_TEST(test_automatic_export_unexport);
+    RUN_TEST(test_all_legal_pins);
     RUN_TEST(test_poll_loop);
 
     UnityEnd();
 
+    pthread_exit(NULL);
     return EXIT_SUCCESS;
 }
