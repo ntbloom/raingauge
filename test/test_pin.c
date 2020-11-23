@@ -86,7 +86,7 @@ void test_all_legal_pins(void) {
     }
 }
 
-/* test the infinite loop poll */
+/* Test the infinite loop poll. Uses multithreading to cancel poll loop using another pin */
 struct thread_data {
     Pin* gauge;
     Pin* stop_rx;

@@ -15,16 +15,20 @@ Turn a single board computer into a rain gauge using C and some very simple depe
 
 ### Development dependencies
 
-#### Local
-
-Debian packages:
+Necessary Debian packages:
 
     - build-essential
     - libsqlite3-dev
 
-- Paho MQTT client library
+Additonal Dependencies:
 
-#### Cloud
+    - [Paho MQTT C client](https://www.eclipse.org/paho/index.php?page=clients/c/index.php)
 
-- postgresql
-- TBD
+Optional dependencies packages (debian packages unless otherwise noted):
+
+    - clang-format
+    - mosquitto
+    - mosquitto-clients
+    - mosquitto-dev
+    - valgrind (Debian package is outdated, consider [building from source](https://valgrind.org/downloads/current.html)
+    - [pinfo](https://github.com/ntbloom/pinfo)
