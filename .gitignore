@@ -5,3 +5,7 @@
 *.dSYM
 *.db
 *.a
+*.crt
+*.key
+*.srl
+*.csr
