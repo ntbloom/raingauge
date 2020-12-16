@@ -11,7 +11,7 @@ void test_create_gauge(void) {
     /* for now just print debugging
      *
      */
-    char* timestamp = make_timestamp();
+    char* timestamp = make_timestamp(ISO8601_LEN, ISO8601);
     printf("timestamp = %s\n", timestamp);
     free(timestamp);
 }
