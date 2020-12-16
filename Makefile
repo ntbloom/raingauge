@@ -72,6 +72,7 @@ test_pin.out: test/unity.c test/test_pin.c lib/pin.c lib/sysfs.c lib/poll.c
 test_mqtt_messages.out: test/unity.c test/test_mqtt_messages.c lib/mqtt_messages.c
 	@$(CC) $(CFLAGS) -o build/test/$@ $^ 
 
+
 ## static analysis and memory checking
 
 memcheck: test_localdb.out test_sysfs.out test_pin.out
@@ -83,3 +84,12 @@ memcheck: test_localdb.out test_sysfs.out test_pin.out
 
 clean:
 	rm -rf build/*.o build/*.a build/*.out build/test/*.out build/test/*.o build/test/*.a
+
+
+# dirty scripts for dev
+
+wip: test_mqtt_messages.out
+	./build/test/test_mqtt_messages.out	
+
+vwip: test_mqtt_messages.out
+	valgrind $(VFLAGS) ./build/test/test_mqtt_messages.out	
