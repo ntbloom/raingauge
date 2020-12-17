@@ -7,23 +7,23 @@ void setUp(void) {}
 void tearDown(void) {}
 
 /* Can we create a basic MQTT message */
-void test_create_gauge(void) {
-    /* for now just print debugging
-     *
-     */
+void test_timestamps(void) {
+    /* for now just print debugging*/
     char* timestamp = make_timestamp(ISO8601_LEN, ISO8601);
     printf("timestamp = %s\n", timestamp);
     free(timestamp);
 
     char* up = uptime();
     printf("uptime = %s\n", up);
-    free(up);
+    if (up) {
+        free(up);
+    }
 }
 
 int main(void) {
     UnityBegin("test/test_mqtt_messages.c");
 
-    RUN_TEST(test_create_gauge);
+    RUN_TEST(test_timestamps);
     UnityEnd();
 
     return EXIT_SUCCESS;

@@ -13,30 +13,33 @@ char* make_timestamp(size_t len, const char* fmt) {
 }
 
 char* uptime(void) {
-    char* seconds;
-    seconds = malloc(UPTIME_LEN);
+    char *intermed, *seconds;
+    size_t i;
+    char c;
+
+    intermed = malloc(UPTIME_LEN);
     FILE* handler = fopen(PROC_UPTIME, "r");
     if (!handler) {
-        free(seconds);
+        free(intermed);
         fprintf(stderr, "error reading %s\n", PROC_UPTIME);
         return NULL;
     }
-    /* TODO: read one char at a time into `seconds` until space */
-    int i;
-    char c;
     for (i = 0; i < UPTIME_LEN; i++) {
         c = fgetc(handler);
         if (c == ' ') {
             break;
         }
-        seconds[i] = c;
+        intermed[i] = c;
     }
-    printf("i = %d\n", i);
-
     if (fclose(handler) == EXIT_FAILURE) {
-        free(seconds);
+        free(intermed);
         fprintf(stderr, "error closing %s\n", PROC_UPTIME);
         return NULL;
     }
+
+    seconds = malloc(i + 1);
+    strncpy(seconds, intermed, i);
+    free(intermed);
+
     return seconds;
 }
