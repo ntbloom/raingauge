@@ -9,15 +9,18 @@ void tearDown(void) {}
 /* Can we create a basic MQTT message */
 void test_timestamps(void) {
     /* for now just print debugging*/
-    char* timestamp = make_timestamp(ISO8601_LEN, ISO8601);
+    char *timestamp, *up;
+    timestamp = make_timestamp(ISO8601_LEN, ISO8601);
     printf("timestamp = %s\n", timestamp);
     free(timestamp);
 
-    char* up = uptime();
-    printf("uptime = %s\n", up);
+    up = get_uptime();
+    /*
     if (up) {
-        free(up);
+        printf("uptime = %s\n", up);
     }
+    */
+    free(up);
 }
 
 int main(void) {

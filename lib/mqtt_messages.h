@@ -15,6 +15,6 @@
 char* make_timestamp(size_t, const char*);
 
 /* get system uptime in seconds since last reboot as string */
-char* uptime(void);
+char* get_uptime(void);
 
 #endif

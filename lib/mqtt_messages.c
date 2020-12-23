@@ -12,7 +12,7 @@ char* make_timestamp(size_t len, const char* fmt) {
     return timestamp;
 }
 
-char* uptime(void) {
+char* get_uptime(void) {
     char *intermed, *seconds;
     size_t i;
     char c;
