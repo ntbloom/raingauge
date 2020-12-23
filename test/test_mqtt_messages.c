@@ -15,11 +15,9 @@ void test_timestamps(void) {
     free(timestamp);
 
     up = get_uptime();
-    /*
-    if (up) {
+    if (up != NULL) {
         printf("uptime = %s\n", up);
     }
-    */
     free(up);
 }
 

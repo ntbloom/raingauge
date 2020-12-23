@@ -37,9 +37,11 @@ char* get_uptime(void) {
         return NULL;
     }
 
-    seconds = malloc(i + 1);
+    seconds = calloc(i + 1, sizeof(char));
     strncpy(seconds, intermed, i);
     free(intermed);
-
-    return seconds;
+    if (seconds) {
+        return seconds;
+    }
+    return NULL;
 }
