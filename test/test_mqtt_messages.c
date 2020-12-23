@@ -10,7 +10,7 @@ void tearDown(void) {}
 void test_timestamps(void) {
     /* for now just print debugging*/
     char *timestamp, *up;
-    timestamp = make_timestamp(ISO8601_LEN, ISO8601);
+    timestamp = get_timestamp();
     printf("timestamp = %s\n", timestamp);
     free(timestamp);
 
@@ -21,10 +21,18 @@ void test_timestamps(void) {
     free(up);
 }
 
+/* can we make an MQTT rain message */
+void test_make_message_rain(void) {
+    // const char *gauge, *amt;
+    // gauge = "bluehouse";
+    // amt = "0.2794";
+}
+
 int main(void) {
     UnityBegin("test/test_mqtt_messages.c");
 
     RUN_TEST(test_timestamps);
+    RUN_TEST(test_make_message_rain);
     UnityEnd();
 
     return EXIT_SUCCESS;

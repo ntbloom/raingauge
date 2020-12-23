@@ -37,7 +37,7 @@ sample payload: "['2020-12-09T22:56:47,3446917-05:00','0.2794']"
 
 Sent on a regular basis, possibly 2x per day? Message timestamp will be recorded by the broker.
 
-topic: "v1/daily/{gauge}"
+topic: "v1/status/{gauge}"
 schema:
 
 ```json
@@ -57,5 +57,5 @@ schema:
 ]
 ```
 
-sample topic: "v1/daily/bluehouse"
+sample topic: "v1/status/bluehouse"
 payload: "['2020-12-20T22:56:47,3446917-05:00', '92563.04']"

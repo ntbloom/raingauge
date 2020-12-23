@@ -1,14 +1,16 @@
 #include "mqtt_messages.h"
 
-char* make_timestamp(size_t len, const char* fmt) {
+char* get_timestamp() {
     time_t now;
     char* timestamp;
+    size_t len;
 
+    len = ISO8601_LEN;
     time(&now);
     timestamp = malloc(len);
 
     struct tm* timestruct = localtime(&now);
-    strftime(timestamp, len, fmt, timestruct);
+    strftime(timestamp, len, ISO8601, timestruct);
     return timestamp;
 }
 
@@ -45,3 +47,4 @@ char* get_uptime(void) {
     }
     return NULL;
 }
+
