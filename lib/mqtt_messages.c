@@ -42,10 +42,7 @@ char* get_uptime(void) {
     seconds = calloc(i + 1, sizeof(char));
     strncpy(seconds, intermed, i);
     free(intermed);
-    if (seconds) {
-        return seconds;
-    }
-    return NULL;
+    return seconds;
 }
 
 Message* construct_message(char* topic, char* payload) {
@@ -66,17 +63,28 @@ int deconstruct_message(Message* msg) {
     return EXIT_SUCCESS;
 }
 
-Message* message_rain(const char* gauge, const char* amt) {
+Message* _generic_message(char* topic_base, char* gauge, char* data) {
     Message* msg;
     char *topic, *payload;
 
-    topic = calloc(strlen(gauge) + strlen(TOPIC_RAIN_BASE) + 1, sizeof(char));
-    strncpy(topic, TOPIC_RAIN_BASE, strlen(TOPIC_RAIN_BASE) + 1);
+    topic = calloc(strlen(gauge) + strlen(topic_base) + 1, sizeof(char));
+    strncpy(topic, topic_base, strlen(topic_base) + 1);
     strncat(topic, gauge, strlen(gauge));
 
-    payload = calloc(strlen(amt) + 1, sizeof(char));
-    strcpy(payload, amt);
+    payload = calloc(strlen(data) + 1, sizeof(char));
+    strcpy(payload, data);
 
     msg = construct_message(topic, payload);
     return msg;
+}
+
+Message* message_rain(char* gauge, char* amt) {
+    return _generic_message(TOPIC_RAIN_BASE, gauge, amt);
+}
+
+Message* message_status(char* gauge) {
+    char* uptime;
+
+    uptime = get_uptime();
+    return _generic_message(TOPIC_STATUS_BASE, gauge, uptime);
 }

@@ -12,7 +12,7 @@
 #define PROC_UPTIME "/proc/uptime"
 
 #define TOPIC_RAIN_BASE "v1/rain/"
-#define MESSAGE_STATUS_BASE "v1/status/"
+#define TOPIC_STATUS_BASE "v1/status/"
 
 /* get the current time as a string in ISO8601 format */
 char* get_timestamp();
@@ -31,6 +31,9 @@ Message* construct_message(char*, char*);
 int deconstruct_message(Message*);
 
 /* make a rain event */
-Message* message_rain(const char*, const char*);
+Message* message_rain(char*, char*);
+
+/* make a daily status message */
+Message* message_status(char*);
 
 #endif
