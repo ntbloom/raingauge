@@ -11,7 +11,7 @@
 #define UPTIME_LEN 16
 #define PROC_UPTIME "/proc/uptime"
 
-#define MESSAGE_RAIN_BASE "v1/rain/"
+#define TOPIC_RAIN_BASE "v1/rain/"
 #define MESSAGE_STATUS_BASE "v1/status/"
 
 /* get the current time as a string in ISO8601 format */
@@ -20,11 +20,17 @@ char* get_timestamp();
 /* get system uptime in seconds since last reboot as string */
 char* get_uptime(void);
 
-/* struct for passing along mqtt messages and topics */
+/* struct for passing along mqtt messages and topics, along with constructor and deconstructor */
 typedef struct Message Message;
 struct Message {
     char* topic;
+    char* timestamp;
     char* payload;
 };
+Message* construct_message(char*, char*);
+int deconstruct_message(Message*);
+
+/* make a rain event */
+Message* message_rain(const char*, const char*);
 
 #endif

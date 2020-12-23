@@ -48,3 +48,35 @@ char* get_uptime(void) {
     return NULL;
 }
 
+Message* construct_message(char* topic, char* payload) {
+    Message* msg;
+    msg = malloc(sizeof(Message));
+    msg->topic = topic;
+    msg->timestamp = get_timestamp();
+    msg->payload = payload;
+
+    return msg;
+}
+
+int deconstruct_message(Message* msg) {
+    free((void*)msg->topic);
+    free((void*)msg->timestamp);
+    free((void*)msg->payload);
+    free(msg);
+    return EXIT_SUCCESS;
+}
+
+Message* message_rain(const char* gauge, const char* amt) {
+    Message* msg;
+    char *topic, *payload;
+
+    topic = calloc(strlen(gauge) + strlen(TOPIC_RAIN_BASE) + 1, sizeof(char));
+    strncpy(topic, TOPIC_RAIN_BASE, strlen(TOPIC_RAIN_BASE) + 1);
+    strncat(topic, gauge, strlen(gauge));
+
+    payload = calloc(strlen(amt) + 1, sizeof(char));
+    strcpy(payload, amt);
+
+    msg = construct_message(topic, payload);
+    return msg;
+}

@@ -23,9 +23,15 @@ void test_timestamps(void) {
 
 /* can we make an MQTT rain message */
 void test_make_message_rain(void) {
-    // const char *gauge, *amt;
-    // gauge = "bluehouse";
-    // amt = "0.2794";
+    Message *msg;
+    const char *gauge = "bluehouse";
+    const char *amt = "0.2794";
+
+    msg = message_rain(gauge, amt);
+
+    printf("topic=%s, payload=%s, timestamp=%s\n", msg->topic, msg->payload, msg->timestamp);
+
+    TEST_ASSERT_EQUAL_INT(deconstruct_message(msg), EXIT_SUCCESS);
 }
 
 int main(void) {
